@@ -1,0 +1,10 @@
+scrape_configs:
+  - job_name: saturn
+
+    scrape_interval: 3m
+    scrape_timeout: 1m
+    metrics_path: /
+
+    static_configs:
+      - targets:
+        - prometheus-exporter:9000

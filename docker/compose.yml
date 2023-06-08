@@ -1,0 +1,31 @@
+name: saturn-monitoring
+
+services:
+  prometheus-exporter:
+    build:
+      context: ..
+      dockerfile: docker/prometheus-exporter/Dockerfile
+    pull_policy: build
+    ports:
+      - '127.0.0.1:9000:9000/tcp'
+
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    ports:
+      - '127.0.0.1:9090:9090/tcp'
+    depends_on:
+      - prometheus-exporter
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+
+  grafana:
+    image: grafana/grafana-oss:9.5.3
+    ports:
+      - '127.0.0.1:3000:3000/tcp'
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  prometheus-data:
+  grafana-data:
