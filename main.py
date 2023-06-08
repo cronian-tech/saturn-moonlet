@@ -26,15 +26,18 @@ class StatsCollector(object):
 
     def _node_info_from_stats(self, stats):
         m = InfoMetricFamily("saturn_node", "")
+        found = set()
 
         for node in stats:
             if self._node_ids and node["id"] not in self._node_ids:
                 continue
 
+            found.add(node["id"])
             m.add_metric(
                 [],
                 {
                     "id": node["id"],
+                    "state": node["state"],
                     "core": _bool_to_str(node["core"]),
                     "ip_address": node["ipAddress"],
                     "sunrise": _bool_to_str(node["sunrise"]),
@@ -44,6 +47,16 @@ class StatsCollector(object):
                     "geoloc_city": node["geoloc"]["city"],
                     "geoloc_country": node["geoloc"]["country"],
                     "geoloc_country_code": node["geoloc"]["countryCode"],
+                },
+            )
+
+        # Every not found node considered inactive.
+        for i in self._node_ids - found:
+            m.add_metric(
+                [],
+                {
+                    "id": i,
+                    "state": "inactive",
                 },
             )
 
