@@ -8,6 +8,8 @@ services:
     pull_policy: build
     ports:
       - '127.0.0.1:9000:9000/tcp'
+    volumes:
+      - ./prometheus-exporter/conf:/conf
 
   prometheus:
     image: prom/prometheus:v2.44.0
@@ -24,6 +26,7 @@ services:
     ports:
       - '127.0.0.1:3000:3000/tcp'
     volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
       - grafana-data:/var/lib/grafana
 
 volumes:

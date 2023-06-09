@@ -84,9 +84,9 @@ if __name__ == "__main__":
     REGISTRY.unregister(PLATFORM_COLLECTOR)
     REGISTRY.unregister(PROCESS_COLLECTOR)
 
-    # Try reading node IDs from "nodes.txt".
+    # Try reading node IDs from "conf/nodes.txt".
     try:
-        with open("nodes.txt") as f:
+        with open("conf/nodes.txt") as f:
             node_ids = [l.strip() for l in f]
     except FileNotFoundError:
         node_ids = []

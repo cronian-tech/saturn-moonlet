@@ -1,0 +1,200 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "active": {
+                  "color": "green",
+                  "index": 0
+                },
+                "down": {
+                  "color": "red",
+                  "index": 3
+                },
+                "draining": {
+                  "color": "blue",
+                  "index": 2
+                },
+                "inactive": {
+                  "color": "#808080",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "State"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.5.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_info",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "cassini": true,
+              "core": true,
+              "geoloc_country_code": true,
+              "geoloc_region": true,
+              "instance": true,
+              "job": true,
+              "sunrise": true
+            },
+            "indexByName": {
+              "Time": 4,
+              "Value": 15,
+              "__name__": 5,
+              "cassini": 6,
+              "core": 7,
+              "geoloc_city": 8,
+              "geoloc_country": 9,
+              "geoloc_country_code": 10,
+              "geoloc_region": 11,
+              "id": 1,
+              "instance": 12,
+              "ip_address": 3,
+              "job": 13,
+              "state": 0,
+              "sunrise": 14,
+              "version": 2
+            },
+            "renameByName": {
+              "geoloc_city": "City",
+              "geoloc_country": "Country",
+              "id": "ID",
+              "ip_address": "IP",
+              "state": "State",
+              "version": "Version"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Saturn Nodes",
+  "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
+  "version": 1,
+  "weekStart": ""
+}
