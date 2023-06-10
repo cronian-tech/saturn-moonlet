@@ -1,5 +1,6 @@
 import json
 import signal
+from datetime import datetime
 
 import requests
 from prometheus_client import (
@@ -27,6 +28,9 @@ class StatsCollector(object):
     def _node_metrics_from_stats(self, stats):
         info = InfoMetricFamily("saturn_node", "")
         bias = GaugeMetricFamily("saturn_node_bias", "", labels=["id"])
+        last_registration = GaugeMetricFamily(
+            "saturn_node_last_registration_timestamp", "", labels=["id"]
+        )
 
         found = set()
 
@@ -54,6 +58,12 @@ class StatsCollector(object):
             )
             bias.add_metric([node["id"]], node["bias"])
 
+            last_registration_ts = datetime.strptime(
+                node["lastRegistration"], "%Y-%m-%dT%H:%M:%S.%fZ"
+            ).timestamp()
+            # Grafana expects Unix timestamps in milliseconds, not seconds.
+            last_registration.add_metric([node["id"]], last_registration_ts * 1000)
+
         # Every not found node considered inactive.
         for i in self._node_ids - found:
             info.add_metric(
@@ -64,7 +74,7 @@ class StatsCollector(object):
                 },
             )
 
-        return (info, bias)
+        return (info, bias, last_registration)
 
     def collect(self):
         # Do not query orchestrator if "stats.json" is present.

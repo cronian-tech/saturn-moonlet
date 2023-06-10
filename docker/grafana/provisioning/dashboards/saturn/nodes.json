@@ -29,7 +29,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "text",
+            "mode": "fixed"
           },
           "custom": {
             "align": "auto",
@@ -39,33 +40,7 @@
             "filterable": false,
             "inspect": false
           },
-          "mappings": [
-            {
-              "options": {
-                "-1": {
-                  "color": "orange",
-                  "index": 4
-                },
-                "active": {
-                  "color": "green",
-                  "index": 0
-                },
-                "down": {
-                  "color": "red",
-                  "index": 3
-                },
-                "draining": {
-                  "color": "blue",
-                  "index": 2
-                },
-                "inactive": {
-                  "color": "#808080",
-                  "index": 1
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -92,6 +67,72 @@
                 "value": {
                   "type": "color-text"
                 }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "active": {
+                        "color": "green",
+                        "index": 0
+                      },
+                      "down": {
+                        "color": "red",
+                        "index": 2
+                      },
+                      "draining": {
+                        "color": "blue",
+                        "index": 3
+                      },
+                      "inactive": {
+                        "color": "#808080",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last Registration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeFromNow"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weight"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "-1": {
+                        "color": "red",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
               }
             ]
           }
@@ -148,6 +189,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_last_registration_timestamp",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
         }
       ],
       "transformations": [
@@ -194,6 +250,7 @@
             },
             "renameByName": {
               "Value #B": "Weight",
+              "Value #C": "Last Registration",
               "geoloc_city": "City",
               "geoloc_country": "Country",
               "id": "ID",
