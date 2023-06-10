@@ -29,7 +29,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "text",
             "mode": "fixed"
           },
           "custom": {
@@ -37,7 +36,6 @@
             "cellOptions": {
               "type": "auto"
             },
-            "filterable": false,
             "inspect": false
           },
           "mappings": [],
@@ -55,50 +53,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "State"
-            },
-            "properties": [
-              {
-                "id": "custom.filterable",
-                "value": true
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-text"
-                }
-              },
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "active": {
-                        "color": "green",
-                        "index": 0
-                      },
-                      "down": {
-                        "color": "red",
-                        "index": 2
-                      },
-                      "draining": {
-                        "color": "blue",
-                        "index": 3
-                      },
-                      "inactive": {
-                        "color": "#808080",
-                        "index": 1
-                      }
-                    },
-                    "type": "value"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Last Registration"
             },
             "properties": [
@@ -111,9 +65,35 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Weight"
+              "options": "State"
             },
             "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "active": {
+                        "color": "green",
+                        "index": 0
+                      },
+                      "down": {
+                        "color": "red",
+                        "index": 3
+                      },
+                      "draining": {
+                        "color": "blue",
+                        "index": 2
+                      },
+                      "inactive": {
+                        "color": "#808080",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
               {
                 "id": "custom.cellOptions",
                 "value": {
@@ -121,18 +101,32 @@
                 }
               },
               {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "-1": {
-                        "color": "red",
-                        "index": 0
-                      }
-                    },
-                    "type": "value"
-                  }
-                ]
+                "id": "custom.width",
+                "value": 109
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 315
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ID"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
               }
             ]
           }
@@ -144,7 +138,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
+      "id": 2,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -155,7 +149,6 @@
           ],
           "show": false
         },
-        "frameIndex": 0,
         "showHeader": true,
         "sortBy": []
       },
@@ -167,28 +160,10 @@
             "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "saturn_node_info",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-          },
-          "editorMode": "code",
-          "exemplar": false,
           "expr": "saturn_node_bias",
-          "format": "table",
-          "hide": false,
-          "instant": true,
           "legendFormat": "__auto",
-          "range": false,
-          "refId": "B"
+          "range": true,
+          "refId": "A"
         },
         {
           "datasource": {
@@ -203,10 +178,29 @@
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_info",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "C"
         }
       ],
       "transformations": [
+        {
+          "id": "timeSeriesTable",
+          "options": {}
+        },
         {
           "id": "joinByField",
           "options": {
@@ -219,42 +213,63 @@
           "options": {
             "excludeByName": {
               "Time": true,
-              "Value": true,
-              "Value #A": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Value #C": true,
               "__name__": true,
+              "__name__ 1": true,
+              "__name__ 2": true,
+              "__name__ 3": true,
               "cassini": true,
               "core": true,
               "geoloc_country_code": true,
               "geoloc_region": true,
               "instance": true,
+              "instance 1": true,
+              "instance 2": true,
+              "instance 3": true,
               "job": true,
+              "job 1": true,
+              "job 2": true,
+              "job 3": true,
+              "state": false,
               "sunrise": true
             },
             "indexByName": {
-              "Time": 4,
-              "Value": 15,
-              "__name__": 5,
-              "cassini": 6,
-              "core": 7,
-              "geoloc_city": 8,
-              "geoloc_country": 9,
-              "geoloc_country_code": 10,
-              "geoloc_region": 11,
+              "Time 1": 10,
+              "Time 2": 15,
+              "Trend": 9,
+              "Value #B": 14,
+              "Value #C": 24,
+              "__name__ 1": 6,
+              "__name__ 2": 11,
+              "__name__ 3": 16,
+              "cassini": 17,
+              "core": 18,
+              "geoloc_city": 4,
+              "geoloc_country": 5,
+              "geoloc_country_code": 19,
+              "geoloc_region": 20,
               "id": 1,
-              "instance": 12,
+              "instance 1": 7,
+              "instance 2": 12,
+              "instance 3": 21,
               "ip_address": 3,
-              "job": 13,
+              "job 1": 8,
+              "job 2": 13,
+              "job 3": 22,
               "state": 0,
-              "sunrise": 14,
+              "sunrise": 23,
               "version": 2
             },
             "renameByName": {
-              "Value #B": "Weight",
-              "Value #C": "Last Registration",
+              "Trend": "Weight",
+              "Value": "Last Registration",
+              "Value #B": "Last Registration",
+              "__name__ 1": "",
               "geoloc_city": "City",
               "geoloc_country": "Country",
               "id": "ID",
-              "id 1": "ID",
               "ip_address": "IP",
               "job 2": "",
               "state": "State",
@@ -282,6 +297,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
