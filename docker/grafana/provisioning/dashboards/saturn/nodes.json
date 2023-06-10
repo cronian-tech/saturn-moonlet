@@ -18,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -43,6 +42,10 @@
           "mappings": [
             {
               "options": {
+                "-1": {
+                  "color": "orange",
+                  "index": 4
+                },
                 "active": {
                   "color": "green",
                   "index": 0
@@ -111,6 +114,7 @@
           ],
           "show": false
         },
+        "frameIndex": 0,
         "showHeader": true,
         "sortBy": []
       },
@@ -129,15 +133,38 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_bias",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
         }
       ],
       "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "id",
+            "mode": "outer"
+          }
+        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
               "Value": true,
+              "Value #A": true,
               "__name__": true,
               "cassini": true,
               "core": true,
@@ -166,10 +193,13 @@
               "version": 2
             },
             "renameByName": {
+              "Value #B": "Weight",
               "geoloc_city": "City",
               "geoloc_country": "Country",
               "id": "ID",
+              "id 1": "ID",
               "ip_address": "IP",
+              "job 2": "",
               "state": "State",
               "version": "Version"
             }

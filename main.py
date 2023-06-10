@@ -9,7 +9,7 @@ from prometheus_client import (
     REGISTRY,
     start_http_server,
 )
-from prometheus_client.core import InfoMetricFamily
+from prometheus_client.core import GaugeMetricFamily, InfoMetricFamily
 
 
 def _bool_to_str(v):
@@ -24,8 +24,10 @@ class StatsCollector(object):
         """
         self._node_ids = frozenset(node_ids)
 
-    def _node_info_from_stats(self, stats):
-        m = InfoMetricFamily("saturn_node", "")
+    def _node_metrics_from_stats(self, stats):
+        info = InfoMetricFamily("saturn_node", "")
+        bias = GaugeMetricFamily("saturn_node_bias", "", labels=["id"])
+
         found = set()
 
         for node in stats:
@@ -33,7 +35,8 @@ class StatsCollector(object):
                 continue
 
             found.add(node["id"])
-            m.add_metric(
+
+            info.add_metric(
                 [],
                 {
                     "id": node["id"],
@@ -49,10 +52,11 @@ class StatsCollector(object):
                     "geoloc_country_code": node["geoloc"]["countryCode"],
                 },
             )
+            bias.add_metric([node["id"]], node["bias"])
 
         # Every not found node considered inactive.
         for i in self._node_ids - found:
-            m.add_metric(
+            info.add_metric(
                 [],
                 {
                     "id": i,
@@ -60,7 +64,7 @@ class StatsCollector(object):
                 },
             )
 
-        return m
+        return (info, bias)
 
     def collect(self):
         # Do not query orchestrator if "stats.json" is present.
@@ -75,7 +79,8 @@ class StatsCollector(object):
             )
             stats = r.json()
 
-        yield self._node_info_from_stats(stats["nodes"])
+        for m in self._node_metrics_from_stats(stats["nodes"]):
+            yield m
 
 
 if __name__ == "__main__":
