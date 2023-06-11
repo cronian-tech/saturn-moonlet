@@ -17,6 +17,86 @@ def _bool_to_str(v):
     return str(v).lower()
 
 
+class NodeInfoMetric(InfoMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node", "")
+
+    def add(self, node):
+        version = _bool_to_str(node["version"])
+        version_short = version.split("_")[0]
+        self.add_metric(
+            [],
+            {
+                "id": node["id"],
+                "id_short": node["id"][:8],
+                "state": node["state"],
+                "core": _bool_to_str(node["core"]),
+                "ip_address": node["ipAddress"],
+                "sunrise": _bool_to_str(node["sunrise"]),
+                "cassini": _bool_to_str(node["cassini"]),
+                "version": version,
+                "version_short": version_short,
+                "geoloc_region": node["geoloc"]["region"],
+                "geoloc_city": node["geoloc"]["city"],
+                "geoloc_country": node["geoloc"]["country"],
+                "geoloc_country_code": node["geoloc"]["countryCode"],
+            },
+        )
+
+    def add_inactive(self, node_id):
+        self.add_metric(
+            [],
+            {
+                "id": node_id,
+                "state": "inactive",
+            },
+        )
+
+
+class NodeBiasMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_bias", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["bias"])
+
+
+class NodeLastRegistrationMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_last_registration_timestamp", "", labels=["id"])
+
+    def add(self, node):
+        last_registration_ts = datetime.strptime(
+            node["lastRegistration"], "%Y-%m-%dT%H:%M:%S.%fZ"
+        ).timestamp()
+        # Grafana expects Unix timestamps in milliseconds, not seconds.
+        self.add_metric([node["id"]], last_registration_ts * 1000)
+
+
+class NodeDiskTotalMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_disk_total_megabytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["diskStats"]["totalDiskMB"])
+
+
+class NodeDiskUsedMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_disk_used_megabytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["diskStats"]["usedDiskMB"])
+
+
+class NodeDiskAvailableMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_disk_available_megabytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["diskStats"]["availableDiskMB"])
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -26,75 +106,30 @@ class StatsCollector(object):
         self._node_ids = frozenset(node_ids)
 
     def _node_metrics_from_stats(self, stats):
-        info = InfoMetricFamily("saturn_node", "")
-        bias = GaugeMetricFamily("saturn_node_bias", "", labels=["id"])
-        last_registration = GaugeMetricFamily(
-            "saturn_node_last_registration_timestamp", "", labels=["id"]
-        )
-        disk_total = GaugeMetricFamily(
-            "saturn_node_disk_total_megabytes", "", labels=["id"]
-        )
-        disk_used = GaugeMetricFamily(
-            "saturn_node_disk_used_megabytes", "", labels=["id"]
-        )
-        disk_available = GaugeMetricFamily(
-            "saturn_node_disk_available_megabytes", "", labels=["id"]
+        info = NodeInfoMetric()
+        metrics = (
+            info,
+            NodeBiasMetric(),
+            NodeLastRegistrationMetric(),
+            NodeDiskTotalMetric(),
+            NodeDiskUsedMetric(),
+            NodeDiskAvailableMetric(),
         )
 
         found = set()
-
         for node in stats:
             if self._node_ids and node["id"] not in self._node_ids:
                 continue
-
             found.add(node["id"])
 
-            version = _bool_to_str(node["version"])
-            version_short = version.split("_")[0]
-            info.add_metric(
-                [],
-                {
-                    "id": node["id"],
-                    "id_short": node["id"][:8],
-                    "state": node["state"],
-                    "core": _bool_to_str(node["core"]),
-                    "ip_address": node["ipAddress"],
-                    "sunrise": _bool_to_str(node["sunrise"]),
-                    "cassini": _bool_to_str(node["cassini"]),
-                    "version": version,
-                    "version_short": version_short,
-                    "geoloc_region": node["geoloc"]["region"],
-                    "geoloc_city": node["geoloc"]["city"],
-                    "geoloc_country": node["geoloc"]["country"],
-                    "geoloc_country_code": node["geoloc"]["countryCode"],
-                },
-            )
-
-            bias.add_metric([node["id"]], node["bias"])
-
-            last_registration_ts = datetime.strptime(
-                node["lastRegistration"], "%Y-%m-%dT%H:%M:%S.%fZ"
-            ).timestamp()
-            # Grafana expects Unix timestamps in milliseconds, not seconds.
-            last_registration.add_metric([node["id"]], last_registration_ts * 1000)
-
-            disk_total.add_metric([node["id"]], node["diskStats"]["totalDiskMB"])
-            disk_used.add_metric([node["id"]], node["diskStats"]["usedDiskMB"])
-            disk_available.add_metric(
-                [node["id"]], node["diskStats"]["availableDiskMB"]
-            )
+            for m in metrics:
+                m.add(node)
 
         # Every not found node considered inactive.
         for i in self._node_ids - found:
-            info.add_metric(
-                [],
-                {
-                    "id": i,
-                    "state": "inactive",
-                },
-            )
+            info.add_inactive(i)
 
-        return (info, bias, last_registration, disk_total, disk_used, disk_available)
+        return metrics
 
     def collect(self):
         # Do not query orchestrator if "stats.json" is present.
