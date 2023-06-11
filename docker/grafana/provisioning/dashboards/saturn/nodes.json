@@ -197,6 +197,21 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Location"
+            },
+            "properties": [
+              {
+                "id": "filterable"
+              },
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
           }
         ]
       },
@@ -255,7 +270,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "saturn_node_info",
+          "expr": "label_join(saturn_node_info, \"geoloc\", \", \", \"geoloc_city\", \"geoloc_country\")",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -305,6 +320,8 @@
               "__name__ 3": true,
               "cassini": true,
               "core": true,
+              "geoloc_city": true,
+              "geoloc_country": true,
               "geoloc_country_code": true,
               "geoloc_region": true,
               "instance": true,
@@ -319,34 +336,35 @@
               "sunrise": true
             },
             "indexByName": {
-              "Time 1": 12,
-              "Time 2": 16,
-              "Time 3": 26,
-              "Trend": 6,
-              "Value #B": 8,
-              "Value #C": 25,
-              "Value #D": 7,
-              "__name__ 1": 9,
-              "__name__ 2": 13,
-              "__name__ 3": 17,
-              "cassini": 18,
-              "core": 19,
-              "geoloc_city": 4,
-              "geoloc_country": 5,
-              "geoloc_country_code": 20,
-              "geoloc_region": 21,
+              "Time 1": 13,
+              "Time 2": 17,
+              "Time 3": 27,
+              "Trend": 5,
+              "Value #B": 7,
+              "Value #C": 26,
+              "Value #D": 6,
+              "__name__ 1": 10,
+              "__name__ 2": 14,
+              "__name__ 3": 18,
+              "cassini": 19,
+              "core": 20,
+              "geoloc": 4,
+              "geoloc_city": 8,
+              "geoloc_country": 9,
+              "geoloc_country_code": 21,
+              "geoloc_region": 22,
               "id": 1,
-              "instance 1": 10,
-              "instance 2": 14,
-              "instance 3": 22,
-              "instance 4": 27,
+              "instance 1": 11,
+              "instance 2": 15,
+              "instance 3": 23,
+              "instance 4": 28,
               "ip_address": 3,
-              "job 1": 11,
-              "job 2": 15,
-              "job 3": 23,
-              "job 4": 28,
+              "job 1": 12,
+              "job 2": 16,
+              "job 3": 24,
+              "job 4": 29,
               "state": 0,
-              "sunrise": 24,
+              "sunrise": 25,
               "version": 2
             },
             "renameByName": {
@@ -355,8 +373,9 @@
               "Value #B": "Last Registration",
               "Value #D": "Disk Usage",
               "__name__ 1": "",
-              "geoloc_city": "City",
-              "geoloc_country": "Country",
+              "geoloc": "Location",
+              "geoloc_city": "",
+              "geoloc_country": "",
               "id": "ID",
               "ip_address": "IP",
               "job 2": "",
