@@ -101,8 +101,8 @@
                 }
               },
               {
-                "id": "custom.width",
-                "value": 109
+                "id": "custom.filterable",
+                "value": true
               }
             ]
           },
@@ -115,21 +115,6 @@
               {
                 "id": "custom.filterable",
                 "value": true
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "State"
-            },
-            "properties": [
-              {
-                "id": "custom.filterable",
-                "value": true
-              },
-              {
-                "id": "filterable"
               }
             ]
           },
@@ -160,6 +145,56 @@
               },
               {
                 "id": "filterable"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disk Usage"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge",
+                  "valueDisplayMode": "text"
+                }
+              },
+              {
+                "id": "max",
+                "value": 1
+              },
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "percentage",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 90
+                    },
+                    {
+                      "color": "red",
+                      "value": 95
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
               }
             ]
           }
@@ -227,6 +262,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(saturn_node_disk_total_megabytes - saturn_node_disk_available_megabytes) / saturn_node_disk_total_megabytes",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
         }
       ],
       "transformations": [
@@ -269,36 +319,41 @@
               "sunrise": true
             },
             "indexByName": {
-              "Time 1": 10,
-              "Time 2": 15,
-              "Trend": 9,
-              "Value #B": 14,
-              "Value #C": 24,
-              "__name__ 1": 6,
-              "__name__ 2": 11,
-              "__name__ 3": 16,
-              "cassini": 17,
-              "core": 18,
+              "Time 1": 12,
+              "Time 2": 16,
+              "Time 3": 26,
+              "Trend": 6,
+              "Value #B": 8,
+              "Value #C": 25,
+              "Value #D": 7,
+              "__name__ 1": 9,
+              "__name__ 2": 13,
+              "__name__ 3": 17,
+              "cassini": 18,
+              "core": 19,
               "geoloc_city": 4,
               "geoloc_country": 5,
-              "geoloc_country_code": 19,
-              "geoloc_region": 20,
+              "geoloc_country_code": 20,
+              "geoloc_region": 21,
               "id": 1,
-              "instance 1": 7,
-              "instance 2": 12,
-              "instance 3": 21,
+              "instance 1": 10,
+              "instance 2": 14,
+              "instance 3": 22,
+              "instance 4": 27,
               "ip_address": 3,
-              "job 1": 8,
-              "job 2": 13,
-              "job 3": 22,
+              "job 1": 11,
+              "job 2": 15,
+              "job 3": 23,
+              "job 4": 28,
               "state": 0,
-              "sunrise": 23,
+              "sunrise": 24,
               "version": 2
             },
             "renameByName": {
               "Trend": "Weight",
               "Value": "Last Registration",
               "Value #B": "Last Registration",
+              "Value #D": "Disk Usage",
               "__name__ 1": "",
               "geoloc_city": "City",
               "geoloc_country": "Country",
@@ -335,7 +390,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},

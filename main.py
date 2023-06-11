@@ -31,6 +31,15 @@ class StatsCollector(object):
         last_registration = GaugeMetricFamily(
             "saturn_node_last_registration_timestamp", "", labels=["id"]
         )
+        disk_total = GaugeMetricFamily(
+            "saturn_node_disk_total_megabytes", "", labels=["id"]
+        )
+        disk_used = GaugeMetricFamily(
+            "saturn_node_disk_used_megabytes", "", labels=["id"]
+        )
+        disk_available = GaugeMetricFamily(
+            "saturn_node_disk_available_megabytes", "", labels=["id"]
+        )
 
         found = set()
 
@@ -64,6 +73,12 @@ class StatsCollector(object):
             # Grafana expects Unix timestamps in milliseconds, not seconds.
             last_registration.add_metric([node["id"]], last_registration_ts * 1000)
 
+            disk_total.add_metric([node["id"]], node["diskStats"]["totalDiskMB"])
+            disk_used.add_metric([node["id"]], node["diskStats"]["usedDiskMB"])
+            disk_available.add_metric(
+                [node["id"]], node["diskStats"]["availableDiskMB"]
+            )
+
         # Every not found node considered inactive.
         for i in self._node_ids - found:
             info.add_metric(
@@ -74,7 +89,7 @@ class StatsCollector(object):
                 },
             )
 
-        return (info, bias, last_registration)
+        return (info, bias, last_registration, disk_total, disk_used, disk_available)
 
     def collect(self):
         # Do not query orchestrator if "stats.json" is present.
