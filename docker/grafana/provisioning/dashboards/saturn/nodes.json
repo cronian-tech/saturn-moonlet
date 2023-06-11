@@ -103,6 +103,9 @@
               {
                 "id": "custom.filterable",
                 "value": true
+              },
+              {
+                "id": "filterable"
               }
             ]
           },
@@ -115,6 +118,9 @@
               {
                 "id": "custom.filterable",
                 "value": true
+              },
+              {
+                "id": "filterable"
               }
             ]
           },
@@ -324,6 +330,7 @@
               "geoloc_country": true,
               "geoloc_country_code": true,
               "geoloc_region": true,
+              "id": true,
               "instance": true,
               "instance 1": true,
               "instance 2": true,
@@ -333,39 +340,42 @@
               "job 2": true,
               "job 3": true,
               "state": false,
-              "sunrise": true
+              "sunrise": true,
+              "version": true
             },
             "indexByName": {
-              "Time 1": 13,
-              "Time 2": 17,
-              "Time 3": 27,
+              "Time 1": 15,
+              "Time 2": 19,
+              "Time 3": 29,
               "Trend": 5,
               "Value #B": 7,
-              "Value #C": 26,
+              "Value #C": 28,
               "Value #D": 6,
-              "__name__ 1": 10,
-              "__name__ 2": 14,
-              "__name__ 3": 18,
-              "cassini": 19,
-              "core": 20,
+              "__name__ 1": 12,
+              "__name__ 2": 16,
+              "__name__ 3": 20,
+              "cassini": 21,
+              "core": 22,
               "geoloc": 4,
-              "geoloc_city": 8,
-              "geoloc_country": 9,
-              "geoloc_country_code": 21,
-              "geoloc_region": 22,
-              "id": 1,
-              "instance 1": 11,
-              "instance 2": 15,
-              "instance 3": 23,
-              "instance 4": 28,
+              "geoloc_city": 10,
+              "geoloc_country": 11,
+              "geoloc_country_code": 23,
+              "geoloc_region": 24,
+              "id": 9,
+              "id_short": 1,
+              "instance 1": 13,
+              "instance 2": 17,
+              "instance 3": 25,
+              "instance 4": 30,
               "ip_address": 3,
-              "job 1": 12,
-              "job 2": 16,
-              "job 3": 24,
-              "job 4": 29,
+              "job 1": 14,
+              "job 2": 18,
+              "job 3": 26,
+              "job 4": 31,
               "state": 0,
-              "sunrise": 25,
-              "version": 2
+              "sunrise": 27,
+              "version": 8,
+              "version_short": 2
             },
             "renameByName": {
               "Trend": "Weight",
@@ -376,11 +386,13 @@
               "geoloc": "Location",
               "geoloc_city": "",
               "geoloc_country": "",
-              "id": "ID",
+              "id": "",
+              "id_short": "ID",
               "ip_address": "IP",
               "job 2": "",
               "state": "State",
-              "version": "Version"
+              "version": "",
+              "version_short": "Version"
             }
           }
         }
@@ -416,6 +428,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 2,
+  "version": 7,
   "weekStart": ""
 }

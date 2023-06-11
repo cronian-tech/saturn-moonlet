@@ -49,22 +49,27 @@ class StatsCollector(object):
 
             found.add(node["id"])
 
+            version = _bool_to_str(node["version"])
+            version_short = version.split("_")[0]
             info.add_metric(
                 [],
                 {
                     "id": node["id"],
+                    "id_short": node["id"][:8],
                     "state": node["state"],
                     "core": _bool_to_str(node["core"]),
                     "ip_address": node["ipAddress"],
                     "sunrise": _bool_to_str(node["sunrise"]),
                     "cassini": _bool_to_str(node["cassini"]),
-                    "version": _bool_to_str(node["version"]),
+                    "version": version,
+                    "version_short": version_short,
                     "geoloc_region": node["geoloc"]["region"],
                     "geoloc_city": node["geoloc"]["city"],
                     "geoloc_country": node["geoloc"]["country"],
                     "geoloc_country_code": node["geoloc"]["countryCode"],
                 },
             )
+
             bias.add_metric([node["id"]], node["bias"])
 
             last_registration_ts = datetime.strptime(
