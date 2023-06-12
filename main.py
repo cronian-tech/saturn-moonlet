@@ -156,6 +156,51 @@ class NodeResponseDurationMetric(GaugeMetricFamily):
                 return
 
 
+class NodeRequestsMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requests", "", labels=["id"])
+
+    def add(self, node):
+        ttfb = node.get("ttfbStats")
+        if not ttfb:
+            return
+
+        try:
+            self.add_metric([node["id"]], ttfb["reqs_served_1h"])
+        except KeyError:
+            return
+
+
+class NodeRequestHits(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_request_hits", "", labels=["id"])
+
+    def add(self, node):
+        ttfb = node.get("ttfbStats")
+        if not ttfb:
+            return
+
+        try:
+            self.add_metric([node["id"]], ttfb["hits_1h"])
+        except KeyError:
+            return
+
+
+class NodeRequestErrors(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_request_errors", "", labels=["id"])
+
+    def add(self, node):
+        ttfb = node.get("ttfbStats")
+        if not ttfb:
+            return
+
+        try:
+            self.add_metric([node["id"]], ttfb["errors_1h"])
+        except KeyError:
+            return
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -179,6 +224,9 @@ class StatsCollector(object):
             NodeCPUNumberMetric(),
             NodeCPULoadAvgMetric(),
             NodeResponseDurationMetric(),
+            NodeRequestsMetric(),
+            NodeRequestHits(),
+            NodeRequestErrors(),
         )
 
         found = set()

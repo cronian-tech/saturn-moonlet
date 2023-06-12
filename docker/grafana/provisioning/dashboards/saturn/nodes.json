@@ -118,6 +118,10 @@
               },
               {
                 "id": "filterable"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
               }
             ]
           },
@@ -133,6 +137,16 @@
               },
               {
                 "id": "filterable"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "json-view"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 90
               }
             ]
           },
@@ -148,6 +162,10 @@
               },
               {
                 "id": "filterable"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
               }
             ]
           },
@@ -282,11 +300,11 @@
                       "value": null
                     },
                     {
-                      "color": "super-light-yellow",
+                      "color": "#eab839",
                       "value": 1000
                     },
                     {
-                      "color": "light-orange",
+                      "color": "orange",
                       "value": 1200
                     },
                     {
@@ -295,6 +313,116 @@
                     }
                   ]
                 }
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cache Hits"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 0.8
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 0.9
+                    },
+                    {
+                      "color": "text",
+                      "value": 0.95
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Errors"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 0.02
+                    },
+                    {
+                      "color": "orange",
+                      "value": 0.1
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.2
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.width",
+                "value": 100
               }
             ]
           }
@@ -422,6 +550,36 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_request_hits / saturn_node_requests",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_request_errors / saturn_node_requests",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "I"
         }
       ],
       "transformations": [
@@ -469,51 +627,59 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 18,
-              "Time 2": 22,
-              "Time 3": 32,
-              "Time 4": 35,
-              "Time 5": 38,
-              "Time 6": 41,
+              "Time 1": 20,
+              "Time 2": 24,
+              "Time 3": 34,
+              "Time 4": 37,
+              "Time 5": 40,
+              "Time 6": 43,
+              "Time 7": 48,
+              "Time 8": 51,
               "Trend": 5,
-              "Value #B": 10,
-              "Value #C": 31,
+              "Value #B": 12,
+              "Value #C": 33,
               "Value #D": 6,
               "Value #E": 7,
               "Value #F": 8,
               "Value #G": 9,
-              "__name__ 1": 15,
-              "__name__ 2": 19,
-              "__name__ 3": 23,
-              "__name__ 4": 42,
-              "cassini": 24,
-              "core": 25,
+              "Value #H": 10,
+              "Value #I": 11,
+              "__name__ 1": 17,
+              "__name__ 2": 21,
+              "__name__ 3": 25,
+              "__name__ 4": 44,
+              "cassini": 26,
+              "core": 27,
               "geoloc": 4,
-              "geoloc_city": 13,
-              "geoloc_country": 14,
-              "geoloc_country_code": 26,
-              "geoloc_region": 27,
-              "id": 12,
+              "geoloc_city": 15,
+              "geoloc_country": 16,
+              "geoloc_country_code": 28,
+              "geoloc_region": 29,
+              "id": 14,
               "id_short": 1,
-              "instance 1": 16,
-              "instance 2": 20,
-              "instance 3": 28,
-              "instance 4": 33,
-              "instance 5": 36,
-              "instance 6": 39,
-              "instance 7": 43,
+              "instance 1": 18,
+              "instance 2": 22,
+              "instance 3": 30,
+              "instance 4": 35,
+              "instance 5": 38,
+              "instance 6": 41,
+              "instance 7": 45,
+              "instance 8": 49,
+              "instance 9": 52,
               "ip_address": 3,
-              "job 1": 17,
-              "job 2": 21,
-              "job 3": 29,
-              "job 4": 34,
-              "job 5": 37,
-              "job 6": 40,
-              "job 7": 44,
-              "quantile": 45,
+              "job 1": 19,
+              "job 2": 23,
+              "job 3": 31,
+              "job 4": 36,
+              "job 5": 39,
+              "job 6": 42,
+              "job 7": 46,
+              "job 8": 50,
+              "job 9": 53,
+              "quantile": 47,
               "state": 0,
-              "sunrise": 30,
-              "version": 11,
+              "sunrise": 32,
+              "version": 13,
               "version_short": 2
             },
             "renameByName": {
@@ -524,6 +690,8 @@
               "Value #E": "Memory Usage",
               "Value #F": "CPU",
               "Value #G": "TTFB",
+              "Value #H": "Cache Hits",
+              "Value #I": "Errors",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
@@ -563,7 +731,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
