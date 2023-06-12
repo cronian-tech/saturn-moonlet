@@ -121,6 +121,22 @@ class NodeMemoryAvailableMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["memoryStats"]["availableMemoryKB"])
 
 
+class NodeCPUNumberMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_cpu_number", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["cpuStats"]["numCPUs"])
+
+
+class NodeCPULoadAvgMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_cpu_load_avg", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["cpuStats"]["loadAvgs"][0])
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -141,6 +157,8 @@ class StatsCollector(object):
             NodeMemoryTotalMetric(),
             NodeMemoryFreeMetric(),
             NodeMemoryAvailableMetric(),
+            NodeCPUNumberMetric(),
+            NodeCPULoadAvgMetric(),
         )
 
         found = set()

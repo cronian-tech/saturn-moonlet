@@ -40,11 +40,23 @@
           },
           "mappings": [],
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 80
+              },
+              {
+                "color": "orange",
+                "value": 90
+              },
+              {
+                "color": "red",
+                "value": 95
               }
             ]
           }
@@ -173,30 +185,6 @@
                 "value": 1
               },
               {
-                "id": "unit",
-                "value": "percentunit"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "percentage",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 90
-                    },
-                    {
-                      "color": "red",
-                      "value": 95
-                    }
-                  ]
-                }
-              },
-              {
                 "id": "color",
                 "value": {
                   "mode": "thresholds"
@@ -226,16 +214,38 @@
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "percentunit"
-              },
-              {
                 "id": "custom.cellOptions",
                 "value": {
                   "mode": "basic",
                   "type": "gauge",
                   "valueDisplayMode": "hidden"
                 }
+              },
+              {
+                "id": "max",
+                "value": 1
+              },
+              {
+                "id": "color"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "lcd",
+                  "type": "gauge",
+                  "valueDisplayMode": "hidden"
+                }
+              },
+              {
+                "id": "color"
               },
               {
                 "id": "max",
@@ -263,7 +273,12 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "CPU"
+          }
+        ]
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -337,6 +352,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_cpu_load_avg / saturn_node_cpu_number",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
         }
       ],
       "transformations": [
@@ -383,41 +413,45 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 16,
-              "Time 2": 20,
-              "Time 3": 30,
-              "Time 4": 33,
+              "Time 1": 17,
+              "Time 2": 21,
+              "Time 3": 31,
+              "Time 4": 34,
+              "Time 5": 37,
               "Trend": 5,
-              "Value #B": 8,
-              "Value #C": 29,
+              "Value #B": 9,
+              "Value #C": 30,
               "Value #D": 6,
               "Value #E": 7,
-              "__name__ 1": 13,
-              "__name__ 2": 17,
-              "__name__ 3": 21,
-              "cassini": 22,
-              "core": 23,
+              "Value #F": 8,
+              "__name__ 1": 14,
+              "__name__ 2": 18,
+              "__name__ 3": 22,
+              "cassini": 23,
+              "core": 24,
               "geoloc": 4,
-              "geoloc_city": 11,
-              "geoloc_country": 12,
-              "geoloc_country_code": 24,
-              "geoloc_region": 25,
-              "id": 10,
+              "geoloc_city": 12,
+              "geoloc_country": 13,
+              "geoloc_country_code": 25,
+              "geoloc_region": 26,
+              "id": 11,
               "id_short": 1,
-              "instance 1": 14,
-              "instance 2": 18,
-              "instance 3": 26,
-              "instance 4": 31,
-              "instance 5": 34,
+              "instance 1": 15,
+              "instance 2": 19,
+              "instance 3": 27,
+              "instance 4": 32,
+              "instance 5": 35,
+              "instance 6": 38,
               "ip_address": 3,
-              "job 1": 15,
-              "job 2": 19,
-              "job 3": 27,
-              "job 4": 32,
-              "job 5": 35,
+              "job 1": 16,
+              "job 2": 20,
+              "job 3": 28,
+              "job 4": 33,
+              "job 5": 36,
+              "job 6": 39,
               "state": 0,
-              "sunrise": 28,
-              "version": 9,
+              "sunrise": 29,
+              "version": 10,
               "version_short": 2
             },
             "renameByName": {
@@ -426,6 +460,7 @@
               "Value #B": "Last Registration",
               "Value #D": "Disk Usage",
               "Value #E": "Memory Usage",
+              "Value #F": "CPU",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
@@ -465,7 +500,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
