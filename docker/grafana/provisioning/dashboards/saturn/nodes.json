@@ -252,6 +252,51 @@
                 "value": 1
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TTFB"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    },
+                    {
+                      "color": "super-light-yellow",
+                      "value": 1000
+                    },
+                    {
+                      "color": "light-orange",
+                      "value": 1200
+                    },
+                    {
+                      "color": "red",
+                      "value": 1500
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       },
@@ -273,12 +318,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "CPU"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -367,6 +407,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_response_duration_milliseconds{quantile=\"0.95\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "G"
         }
       ],
       "transformations": [
@@ -408,50 +463,57 @@
               "job 1": true,
               "job 2": true,
               "job 3": true,
+              "quantile": true,
               "state": false,
               "sunrise": true,
               "version": true
             },
             "indexByName": {
-              "Time 1": 17,
-              "Time 2": 21,
-              "Time 3": 31,
-              "Time 4": 34,
-              "Time 5": 37,
+              "Time 1": 18,
+              "Time 2": 22,
+              "Time 3": 32,
+              "Time 4": 35,
+              "Time 5": 38,
+              "Time 6": 41,
               "Trend": 5,
-              "Value #B": 9,
-              "Value #C": 30,
+              "Value #B": 10,
+              "Value #C": 31,
               "Value #D": 6,
               "Value #E": 7,
               "Value #F": 8,
-              "__name__ 1": 14,
-              "__name__ 2": 18,
-              "__name__ 3": 22,
-              "cassini": 23,
-              "core": 24,
+              "Value #G": 9,
+              "__name__ 1": 15,
+              "__name__ 2": 19,
+              "__name__ 3": 23,
+              "__name__ 4": 42,
+              "cassini": 24,
+              "core": 25,
               "geoloc": 4,
-              "geoloc_city": 12,
-              "geoloc_country": 13,
-              "geoloc_country_code": 25,
-              "geoloc_region": 26,
-              "id": 11,
+              "geoloc_city": 13,
+              "geoloc_country": 14,
+              "geoloc_country_code": 26,
+              "geoloc_region": 27,
+              "id": 12,
               "id_short": 1,
-              "instance 1": 15,
-              "instance 2": 19,
-              "instance 3": 27,
-              "instance 4": 32,
-              "instance 5": 35,
-              "instance 6": 38,
+              "instance 1": 16,
+              "instance 2": 20,
+              "instance 3": 28,
+              "instance 4": 33,
+              "instance 5": 36,
+              "instance 6": 39,
+              "instance 7": 43,
               "ip_address": 3,
-              "job 1": 16,
-              "job 2": 20,
-              "job 3": 28,
-              "job 4": 33,
-              "job 5": 36,
-              "job 6": 39,
+              "job 1": 17,
+              "job 2": 21,
+              "job 3": 29,
+              "job 4": 34,
+              "job 5": 37,
+              "job 6": 40,
+              "job 7": 44,
+              "quantile": 45,
               "state": 0,
-              "sunrise": 29,
-              "version": 10,
+              "sunrise": 30,
+              "version": 11,
               "version_short": 2
             },
             "renameByName": {
@@ -461,6 +523,7 @@
               "Value #D": "Disk Usage",
               "Value #E": "Memory Usage",
               "Value #F": "CPU",
+              "Value #G": "TTFB",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
@@ -507,6 +570,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 7,
+  "version": 10,
   "weekStart": ""
 }

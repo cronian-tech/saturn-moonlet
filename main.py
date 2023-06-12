@@ -137,6 +137,25 @@ class NodeCPULoadAvgMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["cpuStats"]["loadAvgs"][0])
 
 
+class NodeResponseDurationMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__(
+            "saturn_node_response_duration_milliseconds", "", labels=["id", "quantile"]
+        )
+
+    def add(self, node):
+        ttfb = node.get("ttfbStats")
+        if not ttfb:
+            return
+
+        for q in (0.01, 0.05, 0.5, 0.95, 0.99):
+            p = int(q * 100)
+            try:
+                self.add_metric([node["id"], str(q)], ttfb[f"p{p}_1h"])
+            except KeyError:
+                return
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -159,6 +178,7 @@ class StatsCollector(object):
             NodeMemoryAvailableMetric(),
             NodeCPUNumberMetric(),
             NodeCPULoadAvgMetric(),
+            NodeResponseDurationMetric(),
         )
 
         found = set()
