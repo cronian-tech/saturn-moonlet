@@ -1,5 +1,6 @@
 import json
 import signal
+from collections import defaultdict
 from datetime import datetime
 
 import requests
@@ -171,7 +172,7 @@ class NodeRequestsMetric(GaugeMetricFamily):
             return
 
 
-class NodeRequestHits(GaugeMetricFamily):
+class NodeRequestHitsMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__("saturn_node_request_hits", "", labels=["id"])
 
@@ -186,7 +187,7 @@ class NodeRequestHits(GaugeMetricFamily):
             return
 
 
-class NodeRequestErrors(GaugeMetricFamily):
+class NodeRequestErrorsMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__("saturn_node_request_errors", "", labels=["id"])
 
@@ -199,6 +200,25 @@ class NodeRequestErrors(GaugeMetricFamily):
             self.add_metric([node["id"]], ttfb["errors_1h"])
         except KeyError:
             return
+
+
+class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__(
+            "saturn_node_health_check_failures", "", labels=["id", "error"]
+        )
+
+    def add(self, node):
+        failures = node.get("HealthCheckFailures")
+        if not failures:
+            return
+
+        errors = defaultdict(int)
+        for f in failures:
+            errors[f["error"]] += 1
+
+        for k, v in errors.items():
+            self.add_metric([node["id"], k], v)
 
 
 class StatsCollector(object):
@@ -225,8 +245,9 @@ class StatsCollector(object):
             NodeCPULoadAvgMetric(),
             NodeResponseDurationMetric(),
             NodeRequestsMetric(),
-            NodeRequestHits(),
-            NodeRequestErrors(),
+            NodeRequestHitsMetric(),
+            NodeRequestErrorsMetric(),
+            NodeHealthCheckFailuresMetric(),
         )
 
         found = set()

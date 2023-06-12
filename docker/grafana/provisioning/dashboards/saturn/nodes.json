@@ -207,6 +207,10 @@
                 "value": {
                   "mode": "thresholds"
                 }
+              },
+              {
+                "id": "custom.width",
+                "value": 120
               }
             ]
           },
@@ -245,6 +249,10 @@
               },
               {
                 "id": "color"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
               }
             ]
           },
@@ -268,6 +276,10 @@
               {
                 "id": "max",
                 "value": 1
+              },
+              {
+                "id": "custom.width",
+                "value": 132
               }
             ]
           },
@@ -425,6 +437,73 @@
                 "value": 100
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Health"
+            },
+            "properties": [
+              {
+                "id": "noValue",
+                "value": "healthy"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    },
+                    {
+                      "color": "red",
+                      "value": 4
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "count:fails"
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "index": 0,
+                        "text": "1 fail"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -580,6 +659,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "I"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(saturn_node_health_check_failures) by (id)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "J"
         }
       ],
       "transformations": [
@@ -627,59 +721,61 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 20,
-              "Time 2": 24,
-              "Time 3": 34,
-              "Time 4": 37,
-              "Time 5": 40,
-              "Time 6": 43,
-              "Time 7": 48,
-              "Time 8": 51,
-              "Trend": 5,
-              "Value #B": 12,
-              "Value #C": 33,
-              "Value #D": 6,
-              "Value #E": 7,
-              "Value #F": 8,
-              "Value #G": 9,
-              "Value #H": 10,
-              "Value #I": 11,
-              "__name__ 1": 17,
-              "__name__ 2": 21,
-              "__name__ 3": 25,
-              "__name__ 4": 44,
-              "cassini": 26,
-              "core": 27,
+              "Time 1": 21,
+              "Time 2": 25,
+              "Time 3": 35,
+              "Time 4": 38,
+              "Time 5": 41,
+              "Time 6": 44,
+              "Time 7": 49,
+              "Time 8": 52,
+              "Time 9": 55,
+              "Trend": 6,
+              "Value #B": 13,
+              "Value #C": 34,
+              "Value #D": 7,
+              "Value #E": 8,
+              "Value #F": 9,
+              "Value #G": 10,
+              "Value #H": 11,
+              "Value #I": 12,
+              "Value #J": 5,
+              "__name__ 1": 18,
+              "__name__ 2": 22,
+              "__name__ 3": 26,
+              "__name__ 4": 45,
+              "cassini": 27,
+              "core": 28,
               "geoloc": 4,
-              "geoloc_city": 15,
-              "geoloc_country": 16,
-              "geoloc_country_code": 28,
-              "geoloc_region": 29,
-              "id": 14,
+              "geoloc_city": 16,
+              "geoloc_country": 17,
+              "geoloc_country_code": 29,
+              "geoloc_region": 30,
+              "id": 15,
               "id_short": 1,
-              "instance 1": 18,
-              "instance 2": 22,
-              "instance 3": 30,
-              "instance 4": 35,
-              "instance 5": 38,
-              "instance 6": 41,
-              "instance 7": 45,
-              "instance 8": 49,
-              "instance 9": 52,
+              "instance 1": 19,
+              "instance 2": 23,
+              "instance 3": 31,
+              "instance 4": 36,
+              "instance 5": 39,
+              "instance 6": 42,
+              "instance 7": 46,
+              "instance 8": 50,
+              "instance 9": 53,
               "ip_address": 3,
-              "job 1": 19,
-              "job 2": 23,
-              "job 3": 31,
-              "job 4": 36,
-              "job 5": 39,
-              "job 6": 42,
-              "job 7": 46,
-              "job 8": 50,
-              "job 9": 53,
-              "quantile": 47,
+              "job 1": 20,
+              "job 2": 24,
+              "job 3": 32,
+              "job 4": 37,
+              "job 5": 40,
+              "job 6": 43,
+              "job 7": 47,
+              "job 8": 51,
+              "job 9": 54,
+              "quantile": 48,
               "state": 0,
-              "sunrise": 32,
-              "version": 13,
+              "sunrise": 33,
+              "version": 14,
               "version_short": 2
             },
             "renameByName": {
@@ -692,6 +788,7 @@
               "Value #G": "TTFB",
               "Value #H": "Cache Hits",
               "Value #I": "Errors",
+              "Value #J": "Health",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
@@ -738,6 +835,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 10,
+  "version": 12,
   "weekStart": ""
 }
