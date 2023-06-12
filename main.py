@@ -97,6 +97,30 @@ class NodeDiskAvailableMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["diskStats"]["availableDiskMB"])
 
 
+class NodeMemoryTotalMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_memory_total_kilobytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["memoryStats"]["totalMemoryKB"])
+
+
+class NodeMemoryFreeMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_memory_free_kilobytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["memoryStats"]["freeMemoryKB"])
+
+
+class NodeMemoryAvailableMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_memory_available_kilobytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["memoryStats"]["availableMemoryKB"])
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -114,6 +138,9 @@ class StatsCollector(object):
             NodeDiskTotalMetric(),
             NodeDiskUsedMetric(),
             NodeDiskAvailableMetric(),
+            NodeMemoryTotalMetric(),
+            NodeMemoryFreeMetric(),
+            NodeMemoryAvailableMetric(),
         )
 
         found = set()

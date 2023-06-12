@@ -165,7 +165,7 @@
                 "value": {
                   "mode": "basic",
                   "type": "gauge",
-                  "valueDisplayMode": "text"
+                  "valueDisplayMode": "hidden"
                 }
               },
               {
@@ -216,6 +216,30 @@
               {
                 "id": "custom.filterable",
                 "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Usage"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge",
+                  "valueDisplayMode": "hidden"
+                }
+              },
+              {
+                "id": "max",
+                "value": 1
               }
             ]
           }
@@ -298,6 +322,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_memory_free_kilobytes / saturn_node_memory_total_kilobytes",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
         }
       ],
       "transformations": [
@@ -344,37 +383,41 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 15,
-              "Time 2": 19,
-              "Time 3": 29,
+              "Time 1": 16,
+              "Time 2": 20,
+              "Time 3": 30,
+              "Time 4": 33,
               "Trend": 5,
-              "Value #B": 7,
-              "Value #C": 28,
+              "Value #B": 8,
+              "Value #C": 29,
               "Value #D": 6,
-              "__name__ 1": 12,
-              "__name__ 2": 16,
-              "__name__ 3": 20,
-              "cassini": 21,
-              "core": 22,
+              "Value #E": 7,
+              "__name__ 1": 13,
+              "__name__ 2": 17,
+              "__name__ 3": 21,
+              "cassini": 22,
+              "core": 23,
               "geoloc": 4,
-              "geoloc_city": 10,
-              "geoloc_country": 11,
-              "geoloc_country_code": 23,
-              "geoloc_region": 24,
-              "id": 9,
+              "geoloc_city": 11,
+              "geoloc_country": 12,
+              "geoloc_country_code": 24,
+              "geoloc_region": 25,
+              "id": 10,
               "id_short": 1,
-              "instance 1": 13,
-              "instance 2": 17,
-              "instance 3": 25,
-              "instance 4": 30,
+              "instance 1": 14,
+              "instance 2": 18,
+              "instance 3": 26,
+              "instance 4": 31,
+              "instance 5": 34,
               "ip_address": 3,
-              "job 1": 14,
-              "job 2": 18,
-              "job 3": 26,
-              "job 4": 31,
+              "job 1": 15,
+              "job 2": 19,
+              "job 3": 27,
+              "job 4": 32,
+              "job 5": 35,
               "state": 0,
-              "sunrise": 27,
-              "version": 8,
+              "sunrise": 28,
+              "version": 9,
               "version_short": 2
             },
             "renameByName": {
@@ -382,6 +425,7 @@
               "Value": "Last Registration",
               "Value #B": "Last Registration",
               "Value #D": "Disk Usage",
+              "Value #E": "Memory Usage",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
