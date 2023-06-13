@@ -1,4 +1,5 @@
 import json
+import os
 import signal
 from collections import defaultdict
 from datetime import datetime
@@ -288,12 +289,12 @@ if __name__ == "__main__":
     REGISTRY.unregister(PLATFORM_COLLECTOR)
     REGISTRY.unregister(PROCESS_COLLECTOR)
 
-    # Try reading node IDs from "conf/nodes.txt".
-    try:
-        with open("conf/nodes.txt") as f:
+    node_ids = []
+    # Try reading node IDs from file set in SATURN_PROMETHEUS_EXPORTER_NODES.
+    nodes_file = os.environ.get("SATURN_PROMETHEUS_EXPORTER_NODES")
+    if nodes_file:
+        with open(nodes_file) as f:
             node_ids = [l.strip() for l in f]
-    except FileNotFoundError:
-        node_ids = []
 
     REGISTRY.register(StatsCollector(node_ids))
 

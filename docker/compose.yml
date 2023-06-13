@@ -6,6 +6,7 @@ services:
       context: ..
       dockerfile: docker/prometheus-exporter/Dockerfile
     pull_policy: build
+    env_file: prometheus-exporter/.env
     ports:
       - '127.0.0.1:9000:9000/tcp'
     volumes:
