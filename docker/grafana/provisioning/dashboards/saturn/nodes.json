@@ -525,7 +525,12 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "ID"
+          }
+        ]
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -825,6 +830,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
