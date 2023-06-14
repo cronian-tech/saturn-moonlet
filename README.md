@@ -57,6 +57,9 @@ touch docker/prometheus-exporter/.env
 Otherwise, list specific node IDs in a file and point Prometheus Exporter to that file:
 
 ```sh
+# Create conf directory if does not exist.
+mkdir -p docker/prometheus-exporter/conf
+
 # Specify node IDs.
 cat << EOF > docker/prometheus-exporter/conf/nodes.txt
 9b7c3402-e90f-4d12-833d-ccb50a3c261d
