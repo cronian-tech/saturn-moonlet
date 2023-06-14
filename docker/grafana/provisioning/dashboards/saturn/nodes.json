@@ -181,6 +181,10 @@
               },
               {
                 "id": "filterable"
+              },
+              {
+                "id": "custom.width",
+                "value": 130
               }
             ]
           },
@@ -487,7 +491,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 80
               },
               {
                 "id": "mappings",
@@ -502,6 +506,49 @@
                     "type": "value"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weight"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "orange",
+                        "index": 0
+                      },
+                      "-1": {
+                        "color": "red",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 80
               }
             ]
           }
@@ -679,6 +726,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "J"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_bias",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "K"
         }
       ],
       "transformations": [
@@ -726,65 +788,70 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 21,
-              "Time 2": 25,
-              "Time 3": 35,
-              "Time 4": 38,
-              "Time 5": 41,
-              "Time 6": 44,
-              "Time 7": 49,
-              "Time 8": 52,
-              "Time 9": 55,
-              "Trend": 6,
-              "Value #B": 13,
-              "Value #C": 34,
-              "Value #D": 7,
-              "Value #E": 8,
-              "Value #F": 9,
-              "Value #G": 10,
-              "Value #H": 11,
-              "Value #I": 12,
+              "Time 1": 22,
+              "Time 10": 57,
+              "Time 2": 26,
+              "Time 3": 36,
+              "Time 4": 39,
+              "Time 5": 42,
+              "Time 6": 45,
+              "Time 7": 50,
+              "Time 8": 53,
+              "Time 9": 56,
+              "Trend": 7,
+              "Value #B": 14,
+              "Value #C": 35,
+              "Value #D": 8,
+              "Value #E": 9,
+              "Value #F": 10,
+              "Value #G": 11,
+              "Value #H": 12,
+              "Value #I": 13,
               "Value #J": 5,
-              "__name__ 1": 18,
-              "__name__ 2": 22,
-              "__name__ 3": 26,
-              "__name__ 4": 45,
-              "cassini": 27,
-              "core": 28,
+              "Value #K": 6,
+              "__name__ 1": 19,
+              "__name__ 2": 23,
+              "__name__ 3": 27,
+              "__name__ 4": 46,
+              "__name__ 5": 58,
+              "cassini": 28,
+              "core": 29,
               "geoloc": 4,
-              "geoloc_city": 16,
-              "geoloc_country": 17,
-              "geoloc_country_code": 29,
-              "geoloc_region": 30,
-              "id": 15,
+              "geoloc_city": 17,
+              "geoloc_country": 18,
+              "geoloc_country_code": 30,
+              "geoloc_region": 31,
+              "id": 16,
               "id_short": 1,
-              "instance 1": 19,
-              "instance 2": 23,
-              "instance 3": 31,
-              "instance 4": 36,
-              "instance 5": 39,
-              "instance 6": 42,
-              "instance 7": 46,
-              "instance 8": 50,
-              "instance 9": 53,
+              "instance 1": 20,
+              "instance 10": 59,
+              "instance 2": 24,
+              "instance 3": 32,
+              "instance 4": 37,
+              "instance 5": 40,
+              "instance 6": 43,
+              "instance 7": 47,
+              "instance 8": 51,
+              "instance 9": 54,
               "ip_address": 3,
-              "job 1": 20,
-              "job 2": 24,
-              "job 3": 32,
-              "job 4": 37,
-              "job 5": 40,
-              "job 6": 43,
-              "job 7": 47,
-              "job 8": 51,
-              "job 9": 54,
-              "quantile": 48,
+              "job 1": 21,
+              "job 10": 60,
+              "job 2": 25,
+              "job 3": 33,
+              "job 4": 38,
+              "job 5": 41,
+              "job 6": 44,
+              "job 7": 48,
+              "job 8": 52,
+              "job 9": 55,
+              "quantile": 49,
               "state": 0,
-              "sunrise": 33,
-              "version": 14,
+              "sunrise": 34,
+              "version": 15,
               "version_short": 2
             },
             "renameByName": {
-              "Trend": "Weight",
+              "Trend": "Weight Trend",
               "Value": "Last Registration",
               "Value #B": "Last Registration",
               "Value #D": "Disk Usage",
@@ -794,6 +861,7 @@
               "Value #H": "Cache Hits",
               "Value #I": "Errors",
               "Value #J": "Health",
+              "Value #K": "Weight",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",
@@ -801,6 +869,7 @@
               "id": "",
               "id_short": "ID",
               "ip_address": "IP",
+              "job 10": "",
               "job 2": "",
               "state": "State",
               "version": "",
@@ -830,6 +899,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }
