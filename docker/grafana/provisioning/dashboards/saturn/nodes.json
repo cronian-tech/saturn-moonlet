@@ -813,19 +813,7 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-        },
-        "filters": [],
-        "hide": 0,
-        "name": "Filters",
-        "skipUrlSync": false,
-        "type": "adhoc"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-1h",
