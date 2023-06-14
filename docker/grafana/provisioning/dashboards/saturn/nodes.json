@@ -549,6 +549,10 @@
               {
                 "id": "custom.width",
                 "value": 80
+              },
+              {
+                "id": "custom.align",
+                "value": "right"
               }
             ]
           }
@@ -876,6 +880,18 @@
               "version_short": "Version"
             }
           }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "string",
+                "targetField": "Weight"
+              }
+            ],
+            "fields": {}
+          }
         }
       ],
       "transparent": true,
@@ -899,6 +915,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 5,
+  "version": 1,
   "weekStart": ""
 }
