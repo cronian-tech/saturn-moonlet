@@ -601,6 +601,14 @@
               {
                 "id": "custom.width",
                 "value": 120
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "fillOpacity": 20,
+                  "gradientMode": "none",
+                  "type": "sparkline"
+                }
               }
             ]
           }
@@ -639,7 +647,7 @@
             "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
           },
           "editorMode": "code",
-          "expr": "saturn_node_bias",
+          "expr": "avg_over_time(saturn_node_bias[5m])",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
