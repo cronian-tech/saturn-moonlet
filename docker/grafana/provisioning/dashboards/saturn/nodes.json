@@ -65,7 +65,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Last Registration"
+              "options": "Registered"
             },
             "properties": [
               {
@@ -191,7 +191,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Disk Usage"
+              "options": "Disk"
             },
             "properties": [
               {
@@ -214,7 +214,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 120
+                "value": 100
               }
             ]
           },
@@ -236,7 +236,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Memory Usage"
+              "options": "Memory"
             },
             "properties": [
               {
@@ -256,7 +256,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 120
+                "value": 100
               }
             ]
           },
@@ -283,7 +283,31 @@
               },
               {
                 "id": "custom.width",
-                "value": 132
+                "value": 100
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "percentage",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 70
+                    },
+                    {
+                      "color": "orange",
+                      "value": 80
+                    },
+                    {
+                      "color": "red",
+                      "value": 90
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -332,14 +356,14 @@
               },
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 80
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Cache Hits"
+              "options": "Hits"
             },
             "properties": [
               {
@@ -385,7 +409,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 70
               }
             ]
           },
@@ -438,7 +462,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 100
+                "value": 70
               }
             ]
           },
@@ -553,6 +577,30 @@
               {
                 "id": "custom.align",
                 "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Created"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeFromNow"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weight Trend"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
               }
             ]
           }
@@ -745,6 +793,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "K"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "saturn_node_creation_timestamp",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "L"
         }
       ],
       "transformations": [
@@ -792,19 +855,20 @@
               "version": true
             },
             "indexByName": {
-              "Time 1": 22,
-              "Time 10": 57,
-              "Time 2": 26,
-              "Time 3": 36,
-              "Time 4": 39,
-              "Time 5": 42,
-              "Time 6": 45,
-              "Time 7": 50,
-              "Time 8": 53,
-              "Time 9": 56,
+              "Time 1": 23,
+              "Time 10": 58,
+              "Time 11": 62,
+              "Time 2": 27,
+              "Time 3": 37,
+              "Time 4": 40,
+              "Time 5": 43,
+              "Time 6": 46,
+              "Time 7": 51,
+              "Time 8": 54,
+              "Time 9": 57,
               "Trend": 7,
               "Value #B": 14,
-              "Value #C": 35,
+              "Value #C": 36,
               "Value #D": 8,
               "Value #E": 9,
               "Value #F": 10,
@@ -813,59 +877,64 @@
               "Value #I": 13,
               "Value #J": 5,
               "Value #K": 6,
-              "__name__ 1": 19,
-              "__name__ 2": 23,
-              "__name__ 3": 27,
-              "__name__ 4": 46,
-              "__name__ 5": 58,
-              "cassini": 28,
-              "core": 29,
+              "Value #L": 15,
+              "__name__ 1": 20,
+              "__name__ 2": 24,
+              "__name__ 3": 28,
+              "__name__ 4": 47,
+              "__name__ 5": 59,
+              "__name__ 6": 63,
+              "cassini": 29,
+              "core": 30,
               "geoloc": 4,
-              "geoloc_city": 17,
-              "geoloc_country": 18,
-              "geoloc_country_code": 30,
-              "geoloc_region": 31,
-              "id": 16,
+              "geoloc_city": 18,
+              "geoloc_country": 19,
+              "geoloc_country_code": 31,
+              "geoloc_region": 32,
+              "id": 17,
               "id_short": 1,
-              "instance 1": 20,
-              "instance 10": 59,
-              "instance 2": 24,
-              "instance 3": 32,
-              "instance 4": 37,
-              "instance 5": 40,
-              "instance 6": 43,
-              "instance 7": 47,
-              "instance 8": 51,
-              "instance 9": 54,
+              "instance 1": 21,
+              "instance 10": 60,
+              "instance 11": 64,
+              "instance 2": 25,
+              "instance 3": 33,
+              "instance 4": 38,
+              "instance 5": 41,
+              "instance 6": 44,
+              "instance 7": 48,
+              "instance 8": 52,
+              "instance 9": 55,
               "ip_address": 3,
-              "job 1": 21,
-              "job 10": 60,
-              "job 2": 25,
-              "job 3": 33,
-              "job 4": 38,
-              "job 5": 41,
-              "job 6": 44,
-              "job 7": 48,
-              "job 8": 52,
-              "job 9": 55,
-              "quantile": 49,
+              "job 1": 22,
+              "job 10": 61,
+              "job 11": 65,
+              "job 2": 26,
+              "job 3": 34,
+              "job 4": 39,
+              "job 5": 42,
+              "job 6": 45,
+              "job 7": 49,
+              "job 8": 53,
+              "job 9": 56,
+              "quantile": 50,
               "state": 0,
-              "sunrise": 34,
-              "version": 15,
+              "sunrise": 35,
+              "version": 16,
               "version_short": 2
             },
             "renameByName": {
               "Trend": "Weight Trend",
               "Value": "Last Registration",
-              "Value #B": "Last Registration",
-              "Value #D": "Disk Usage",
-              "Value #E": "Memory Usage",
+              "Value #B": "Registered",
+              "Value #D": "Disk",
+              "Value #E": "Memory",
               "Value #F": "CPU",
               "Value #G": "TTFB",
-              "Value #H": "Cache Hits",
+              "Value #H": "Hits",
               "Value #I": "Errors",
               "Value #J": "Health",
               "Value #K": "Weight",
+              "Value #L": "Created",
               "__name__ 1": "",
               "geoloc": "Location",
               "geoloc_city": "",

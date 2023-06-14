@@ -19,6 +19,12 @@ def _bool_to_str(v):
     return str(v).lower()
 
 
+def _str_to_timestamp(v):
+    ts = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp()
+    # Grafana expects Unix timestamps in milliseconds, not seconds.
+    return ts * 1000
+
+
 class NodeInfoMetric(InfoMetricFamily):
     def __init__(self):
         super().__init__("saturn_node", "")
@@ -68,11 +74,17 @@ class NodeLastRegistrationMetric(GaugeMetricFamily):
         super().__init__("saturn_node_last_registration_timestamp", "", labels=["id"])
 
     def add(self, node):
-        last_registration_ts = datetime.strptime(
-            node["lastRegistration"], "%Y-%m-%dT%H:%M:%S.%fZ"
-        ).timestamp()
-        # Grafana expects Unix timestamps in milliseconds, not seconds.
-        self.add_metric([node["id"]], last_registration_ts * 1000)
+        last_registration_ts = _str_to_timestamp(node["lastRegistration"])
+        self.add_metric([node["id"]], last_registration_ts)
+
+
+class NodeCreationMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_creation_timestamp", "", labels=["id"])
+
+    def add(self, node):
+        creation_ts = _str_to_timestamp(node["createdAt"])
+        self.add_metric([node["id"]], creation_ts)
 
 
 class NodeDiskTotalMetric(GaugeMetricFamily):
@@ -236,6 +248,7 @@ class StatsCollector(object):
             info,
             NodeBiasMetric(),
             NodeLastRegistrationMetric(),
+            NodeCreationMetric(),
             NodeDiskTotalMetric(),
             NodeDiskUsedMetric(),
             NodeDiskAvailableMetric(),
