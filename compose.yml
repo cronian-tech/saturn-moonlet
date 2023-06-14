@@ -3,14 +3,14 @@ name: saturn-moonlet
 services:
   prometheus-exporter:
     build:
-      context: ..
+      context: .
       dockerfile: docker/prometheus-exporter/Dockerfile
     pull_policy: build
-    env_file: prometheus-exporter/.env
+    env_file: docker/prometheus-exporter/.env
     ports:
       - 127.0.0.1:9000:9000/tcp
     volumes:
-      - ./prometheus-exporter/conf:/conf:ro
+      - ./docker/prometheus-exporter/conf:/conf:ro
 
   prometheus:
     image: prom/prometheus:v2.44.0
@@ -19,25 +19,27 @@ services:
     ports:
       - 127.0.0.1:9090:9090/tcp
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus-data:/prometheus
 
   grafana:
     image: grafana/grafana-oss:9.5.3
-    env_file: grafana/production/.env
+    env_file: docker/grafana/production/.env
+    profiles:
+      - production
     depends_on:
       - prometheus
     ports:
       - 443:443/tcp
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/ssl:/etc/grafana/ssl:ro
-      - ./grafana/production/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/ssl:/etc/grafana/ssl:ro
+      - ./docker/grafana/production/grafana.ini:/etc/grafana/grafana.ini:ro
       - grafana-data:/var/lib/grafana
 
   grafana-local:
     image: grafana/grafana-oss:9.5.3
-    env_file: grafana/local/.env
+    env_file: docker/grafana/local/.env
     profiles:
       - local
     depends_on:
@@ -45,8 +47,8 @@ services:
     ports:
       - 127.0.0.1:3000:3000/tcp
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/local/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/local/grafana.ini:/etc/grafana/grafana.ini:ro
       - grafana-data:/var/lib/grafana
 
 volumes:

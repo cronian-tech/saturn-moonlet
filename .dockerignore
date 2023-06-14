@@ -1,3 +1,4 @@
+docker
 venv
 .gitignore
 .python-version
@@ -5,7 +6,6 @@ compose.yaml
 dev-requirements.in
 dev-requirements.txt
 LICENSE
-nodes.txt
 README.md
 requirements.in
 stats.json
