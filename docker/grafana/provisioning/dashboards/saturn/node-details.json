@@ -1,0 +1,64 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "links": [],
+    "liveNow": false,
+    "panels": [],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                },
+                "definition": "label_values(id)",
+                "hide": 0,
+                "includeAll": false,
+                "label": "Node ID",
+                "multi": false,
+                "name": "saturn_node_id",
+                "options": [],
+                "query": {
+                    "query": "label_values(id)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 1,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-6h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Saturn Node Details",
+    "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
+    "version": 2,
+    "weekStart": ""
+}

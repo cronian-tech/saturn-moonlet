@@ -139,14 +139,17 @@
                 "id": "filterable"
               },
               {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "json-view"
-                }
-              },
-              {
                 "id": "custom.width",
                 "value": 90
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/d21fb589-b20d-4f7c-b597-db9e6787fdae/saturn-node-details?var-saturn_node_id=${__data.fields.id}"
+                  }
+                ]
               }
             ]
           },
@@ -473,10 +476,6 @@
             },
             "properties": [
               {
-                "id": "noValue",
-                "value": "healthy"
-              },
-              {
                 "id": "custom.cellOptions",
                 "value": {
                   "type": "color-text"
@@ -522,6 +521,10 @@
                 "value": [
                   {
                     "options": {
+                      "0": {
+                        "index": 1,
+                        "text": "healthy"
+                      },
                       "1": {
                         "index": 0,
                         "text": "1 fail"
@@ -609,6 +612,18 @@
                   "gradientMode": "none",
                   "type": "sparkline"
                 }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
               }
             ]
           }
@@ -848,7 +863,7 @@
               "geoloc_country": true,
               "geoloc_country_code": true,
               "geoloc_region": true,
-              "id": true,
+              "id": false,
               "instance": true,
               "instance 1": true,
               "instance 2": true,
@@ -992,6 +1007,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }

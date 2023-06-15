@@ -202,6 +202,7 @@ class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
     def add(self, node):
         failures = node.get("HealthCheckFailures")
         if not failures:
+            self.add_metric([node["id"]], 0)
             return
 
         errors = defaultdict(int)
