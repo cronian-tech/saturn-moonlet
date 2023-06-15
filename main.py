@@ -48,6 +48,9 @@ class NodeInfoMetric(InfoMetricFamily):
                 "geoloc_city": node["geoloc"]["city"],
                 "geoloc_country": node["geoloc"]["country"],
                 "geoloc_country_code": node["geoloc"]["countryCode"],
+                "sppedtest_isp": node["speedtest"]["isp"],
+                "sppedtest_server_location": node["speedtest"]["server"]["location"],
+                "sppedtest_server_country": node["speedtest"]["server"]["country"],
             },
         )
 
