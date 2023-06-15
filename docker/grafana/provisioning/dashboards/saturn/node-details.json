@@ -385,7 +385,7 @@
                 ]
             },
             "gridPos": {
-                "h": 5,
+                "h": 6,
                 "w": 11,
                 "x": 0,
                 "y": 2
@@ -483,14 +483,12 @@
                     "id": "organize",
                     "options": {
                         "excludeByName": {
-                            "Time": true,
                             "Time 1": true,
                             "Time 2": true,
                             "Time 3": true,
                             "Time 4": true,
                             "Value #A": true,
                             "Value #B": false,
-                            "__name__": true,
                             "__name__ 1": true,
                             "__name__ 2": true,
                             "__name__ 3": true,
@@ -500,14 +498,12 @@
                             "geoloc_country": true,
                             "geoloc_country_code": true,
                             "geoloc_region": true,
-                            "id": true,
+                            "id": false,
                             "id_short": true,
-                            "instance": true,
                             "instance 1": true,
                             "instance 2": true,
                             "instance 3": true,
                             "ip_address": true,
-                            "job": true,
                             "job 1": true,
                             "job 2": true,
                             "job 3": true,
@@ -554,6 +550,7 @@
                             "Value #B": "Last Registration",
                             "Value #C": "Created",
                             "Value #D": "Health",
+                            "id": "ID",
                             "state": "State",
                             "version": "Version"
                         }
@@ -561,6 +558,120 @@
                 }
             ],
             "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "fixed",
+                        "seriesBy": "last"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Weight",
+                    "mappings": [
+                        {
+                            "options": {
+                                "0": {
+                                    "color": "orange",
+                                    "index": 1
+                                },
+                                "-1": {
+                                    "color": "red",
+                                    "index": 0
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "max": 100,
+                    "min": -1,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 11,
+                "x": 0,
+                "y": 8
+            },
+            "id": 5,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "last",
+                        "min",
+                        "max",
+                        "mean"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "9.5.3",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_bias{id=\"$saturn_node_id\"}",
+                    "format": "time_series",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Weight",
+            "type": "timeseries"
         }
     ],
     "refresh": "",
@@ -571,9 +682,9 @@
         "list": [
             {
                 "current": {
-                    "selected": false,
-                    "text": "00afa416-69db-462f-8834-3965532425c2",
-                    "value": "00afa416-69db-462f-8834-3965532425c2"
+                    "selected": true,
+                    "text": "02d2d7d1-5ef6-4d43-8f18-1e456f2ae7c1",
+                    "value": "02d2d7d1-5ef6-4d43-8f18-1e456f2ae7c1"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -606,6 +717,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 1,
+    "version": 6,
     "weekStart": ""
 }
