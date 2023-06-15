@@ -172,7 +172,7 @@ class NodeResponseDurationMetric(GaugeMetricFamily):
 
 class NodeRequestsMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requests", "", labels=["id"])
+        super().__init__("saturn_node_requests", "", labels=["id", "cache", "error"])
 
     def add(self, node):
         ttfb = node.get("ttfbStats")
@@ -180,39 +180,17 @@ class NodeRequestsMetric(GaugeMetricFamily):
             return
 
         try:
-            self.add_metric([node["id"]], ttfb["reqs_served_1h"])
+            total = ttfb["reqs_served_1h"]
+            cache = ttfb["hits_1h"]
+            errors = ttfb["errors_1h"]
         except KeyError:
             return
 
-
-class NodeRequestHitsMetric(GaugeMetricFamily):
-    def __init__(self):
-        super().__init__("saturn_node_request_hits", "", labels=["id"])
-
-    def add(self, node):
-        ttfb = node.get("ttfbStats")
-        if not ttfb:
-            return
-
-        try:
-            self.add_metric([node["id"]], ttfb["hits_1h"])
-        except KeyError:
-            return
-
-
-class NodeRequestErrorsMetric(GaugeMetricFamily):
-    def __init__(self):
-        super().__init__("saturn_node_request_errors", "", labels=["id"])
-
-    def add(self, node):
-        ttfb = node.get("ttfbStats")
-        if not ttfb:
-            return
-
-        try:
-            self.add_metric([node["id"]], ttfb["errors_1h"])
-        except KeyError:
-            return
+        self.add_metric([node["id"], "true", "false"], cache)
+        self.add_metric([node["id"], "false", "true"], errors)
+        # From my observations total number of requests does not include errors.
+        # Because if I substract errors from total here I get negative numbers for some nodes.
+        self.add_metric([node["id"], "false", "false"], total - cache)
 
 
 class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
@@ -259,8 +237,6 @@ class StatsCollector(object):
             NodeCPULoadAvgMetric(),
             NodeResponseDurationMetric(),
             NodeRequestsMetric(),
-            NodeRequestHitsMetric(),
-            NodeRequestErrorsMetric(),
             NodeHealthCheckFailuresMetric(),
         )
 
