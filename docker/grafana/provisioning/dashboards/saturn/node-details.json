@@ -20,7 +20,549 @@
     "graphTooltip": 0,
     "links": [],
     "liveNow": false,
-    "panels": [],
+    "panels": [
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Last Registration"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "dateTimeFromNow"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Created"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "dateTimeFromNow"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "State"
+                        },
+                        "properties": [
+                            {
+                                "id": "mappings",
+                                "value": [
+                                    {
+                                        "options": {
+                                            "active": {
+                                                "color": "green",
+                                                "index": 0
+                                            },
+                                            "down": {
+                                                "color": "red",
+                                                "index": 1
+                                            },
+                                            "draining": {
+                                                "color": "blue",
+                                                "index": 2
+                                            }
+                                        },
+                                        "type": "value"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Health"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "count:fails"
+                            },
+                            {
+                                "id": "mappings",
+                                "value": [
+                                    {
+                                        "options": {
+                                            "0": {
+                                                "index": 0,
+                                                "text": "healthy"
+                                            },
+                                            "1": {
+                                                "index": 1,
+                                                "text": "1 fail"
+                                            }
+                                        },
+                                        "type": "value"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "color"
+                            },
+                            {
+                                "id": "thresholds",
+                                "value": {
+                                    "mode": "absolute",
+                                    "steps": [
+                                        {
+                                            "color": "green",
+                                            "value": null
+                                        },
+                                        {
+                                            "color": "orange",
+                                            "value": 1
+                                        },
+                                        {
+                                            "color": "red",
+                                            "value": 4
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 2,
+                "w": 11,
+                "x": 0,
+                "y": 0
+            },
+            "id": 3,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "vertical",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/.*/",
+                    "values": true
+                },
+                "text": {
+                    "titleSize": 14,
+                    "valueSize": 14
+                },
+                "textMode": "value_and_name"
+            },
+            "pluginVersion": "9.5.3",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_info{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "transformations": [
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time": true,
+                            "Value": true,
+                            "__name__": true,
+                            "cassini": true,
+                            "core": true,
+                            "geoloc_country_code": true,
+                            "id": true,
+                            "id_short": true,
+                            "instance": true,
+                            "job": true,
+                            "sppedtest_server_country": true,
+                            "sppedtest_server_location": true,
+                            "state": true,
+                            "sunrise": true,
+                            "version": true,
+                            "version_short": true
+                        },
+                        "indexByName": {
+                            "Time": 5,
+                            "Value": 20,
+                            "__name__": 6,
+                            "cassini": 7,
+                            "core": 8,
+                            "geoloc_city": 2,
+                            "geoloc_country": 4,
+                            "geoloc_country_code": 9,
+                            "geoloc_region": 3,
+                            "id": 10,
+                            "id_short": 11,
+                            "instance": 12,
+                            "ip_address": 0,
+                            "job": 13,
+                            "sppedtest_isp": 1,
+                            "sppedtest_server_country": 14,
+                            "sppedtest_server_location": 15,
+                            "state": 16,
+                            "sunrise": 17,
+                            "version": 18,
+                            "version_short": 19
+                        },
+                        "renameByName": {
+                            "geoloc_city": "City",
+                            "geoloc_country": "Country",
+                            "geoloc_region": "Region",
+                            "ip_address": "IP",
+                            "sppedtest_isp": "ISP"
+                        }
+                    }
+                }
+            ],
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Last Registration"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "dateTimeFromNow"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Created"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "dateTimeFromNow"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "State"
+                        },
+                        "properties": [
+                            {
+                                "id": "mappings",
+                                "value": [
+                                    {
+                                        "options": {
+                                            "active": {
+                                                "color": "green",
+                                                "index": 0
+                                            },
+                                            "down": {
+                                                "color": "red",
+                                                "index": 1
+                                            },
+                                            "draining": {
+                                                "color": "blue",
+                                                "index": 2
+                                            }
+                                        },
+                                        "type": "value"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Health"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "count:fails"
+                            },
+                            {
+                                "id": "mappings",
+                                "value": [
+                                    {
+                                        "options": {
+                                            "0": {
+                                                "index": 0,
+                                                "text": "healthy"
+                                            },
+                                            "1": {
+                                                "index": 1,
+                                                "text": "1 fail"
+                                            }
+                                        },
+                                        "type": "value"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "color"
+                            },
+                            {
+                                "id": "thresholds",
+                                "value": {
+                                    "mode": "absolute",
+                                    "steps": [
+                                        {
+                                            "color": "green",
+                                            "value": null
+                                        },
+                                        {
+                                            "color": "orange",
+                                            "value": 1
+                                        },
+                                        {
+                                            "color": "red",
+                                            "value": 4
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 11,
+                "x": 0,
+                "y": 2
+            },
+            "id": 2,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/.*/",
+                    "values": true
+                },
+                "text": {
+                    "titleSize": 14,
+                    "valueSize": 14
+                },
+                "textMode": "value_and_name"
+            },
+            "pluginVersion": "9.5.3",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_info{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_last_registration_timestamp{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_creation_timestamp{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "sum(saturn_node_health_check_failures{id=\"$saturn_node_id\"}) by (id)",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "D"
+                }
+            ],
+            "transformations": [
+                {
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "id",
+                        "mode": "outer"
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time": true,
+                            "Time 1": true,
+                            "Time 2": true,
+                            "Time 3": true,
+                            "Time 4": true,
+                            "Value #A": true,
+                            "Value #B": false,
+                            "__name__": true,
+                            "__name__ 1": true,
+                            "__name__ 2": true,
+                            "__name__ 3": true,
+                            "cassini": true,
+                            "core": true,
+                            "geoloc_city": true,
+                            "geoloc_country": true,
+                            "geoloc_country_code": true,
+                            "geoloc_region": true,
+                            "id": true,
+                            "id_short": true,
+                            "instance": true,
+                            "instance 1": true,
+                            "instance 2": true,
+                            "instance 3": true,
+                            "ip_address": true,
+                            "job": true,
+                            "job 1": true,
+                            "job 2": true,
+                            "job 3": true,
+                            "sppedtest_isp": true,
+                            "sppedtest_server_country": true,
+                            "sppedtest_server_location": true,
+                            "sunrise": true,
+                            "version_short": true
+                        },
+                        "indexByName": {
+                            "Time 1": 1,
+                            "Time 2": 19,
+                            "Time 3": 24,
+                            "Time 4": 29,
+                            "Value #A": 18,
+                            "Value #B": 23,
+                            "Value #C": 28,
+                            "Value #D": 14,
+                            "__name__ 1": 2,
+                            "__name__ 2": 20,
+                            "__name__ 3": 25,
+                            "cassini": 3,
+                            "core": 4,
+                            "geoloc_city": 5,
+                            "geoloc_country": 6,
+                            "geoloc_country_code": 7,
+                            "geoloc_region": 8,
+                            "id": 0,
+                            "id_short": 9,
+                            "instance 1": 10,
+                            "instance 2": 21,
+                            "instance 3": 26,
+                            "ip_address": 11,
+                            "job 1": 12,
+                            "job 2": 22,
+                            "job 3": 27,
+                            "state": 13,
+                            "sunrise": 15,
+                            "version": 16,
+                            "version_short": 17
+                        },
+                        "renameByName": {
+                            "Value #A": "",
+                            "Value #B": "Last Registration",
+                            "Value #C": "Created",
+                            "Value #D": "Health",
+                            "state": "State",
+                            "version": "Version"
+                        }
+                    }
+                }
+            ],
+            "type": "stat"
+        }
+    ],
     "refresh": "",
     "schemaVersion": 38,
     "style": "dark",
@@ -28,6 +570,11 @@
     "templating": {
         "list": [
             {
+                "current": {
+                    "selected": false,
+                    "text": "00afa416-69db-462f-8834-3965532425c2",
+                    "value": "00afa416-69db-462f-8834-3965532425c2"
+                },
                 "datasource": {
                     "type": "prometheus",
                     "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
@@ -59,6 +606,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 2,
+    "version": 1,
     "weekStart": ""
 }
