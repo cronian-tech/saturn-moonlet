@@ -155,7 +155,7 @@
             },
             "gridPos": {
                 "h": 2,
-                "w": 11,
+                "w": 9,
                 "x": 0,
                 "y": 0
             },
@@ -206,6 +206,7 @@
                             "cassini": true,
                             "core": true,
                             "geoloc_country_code": true,
+                            "geoloc_region": true,
                             "id": true,
                             "id_short": true,
                             "instance": true,
@@ -320,9 +321,9 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 7,
+                "h": 8,
                 "w": 5,
-                "x": 11,
+                "x": 9,
                 "y": 0
             },
             "id": 6,
@@ -422,9 +423,9 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 7,
+                "h": 8,
                 "w": 5,
-                "x": 16,
+                "x": 14,
                 "y": 0
             },
             "id": 9,
@@ -454,6 +455,109 @@
                 }
             ],
             "title": "Memory Usage",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Value",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 49999
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 99999
+                            },
+                            {
+                                "color": "green",
+                                "value": 100000
+                            }
+                        ]
+                    },
+                    "unit": "decmbytes"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 19,
+                "y": 0
+            },
+            "id": 12,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_disk_available_megabytes{id=\"$saturn_node_id\"}",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Disk Available",
             "type": "timeseries"
         },
         {
@@ -590,7 +694,7 @@
             },
             "gridPos": {
                 "h": 6,
-                "w": 11,
+                "w": 9,
                 "x": 0,
                 "y": 2
             },
@@ -837,7 +941,7 @@
             },
             "gridPos": {
                 "h": 8,
-                "w": 11,
+                "w": 9,
                 "x": 0,
                 "y": 8
             },
@@ -887,8 +991,8 @@
             {
                 "current": {
                     "selected": true,
-                    "text": "050a1df0-b208-456f-8e2f-58fb73a0e83a",
-                    "value": "050a1df0-b208-456f-8e2f-58fb73a0e83a"
+                    "text": "05205ae3-6484-4efd-88fd-5d746275a41b",
+                    "value": "05205ae3-6484-4efd-88fd-5d746275a41b"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -921,6 +1025,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 15,
+    "version": 19,
     "weekStart": ""
 }
