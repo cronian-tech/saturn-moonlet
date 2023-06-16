@@ -417,7 +417,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "saturn_node_sent_bytes{id=\"$saturn_node_id\"}",
+                    "expr": "saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}",
                     "format": "table",
                     "hide": false,
                     "instant": true,
@@ -432,7 +432,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "saturn_node_received_bytes{id=\"$saturn_node_id\"}",
+                    "expr": "saturn_node_received_bytes_total{id=\"$saturn_node_id\"}",
                     "format": "table",
                     "hide": false,
                     "instant": true,
@@ -1335,7 +1335,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "increase(saturn_node_sent_bytes{id=\"$saturn_node_id\"}[10m])",
+                    "expr": "increase(saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}[10m])",
                     "format": "table",
                     "legendFormat": "__auto",
                     "range": true,
@@ -1347,7 +1347,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "increase(saturn_node_received_bytes{id=\"$saturn_node_id\"}[10m])",
+                    "expr": "increase(saturn_node_received_bytes_total{id=\"$saturn_node_id\"}[10m])",
                     "format": "table",
                     "hide": false,
                     "legendFormat": "__auto",
@@ -1367,9 +1367,9 @@
         "list": [
             {
                 "current": {
-                    "selected": false,
-                    "text": "00f17d42-810f-4202-bb24-c9982b0daa3b",
-                    "value": "00f17d42-810f-4202-bb24-c9982b0daa3b"
+                    "selected": true,
+                    "text": "0339efe9-ed7f-4ede-a68f-f2cc39454d00",
+                    "value": "0339efe9-ed7f-4ede-a68f-f2cc39454d00"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -1402,6 +1402,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 22,
+    "version": 25,
     "weekStart": ""
 }
