@@ -154,6 +154,22 @@ class NodeCPULoadAvgMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["cpuStats"]["loadAvgs"][0])
 
 
+class NodeSentBytesMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_sent_bytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["nicStats"]["bytesSent"])
+
+
+class NodeReceivedBytesMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_received_bytes", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["nicStats"]["bytesReceived"])
+
+
 class NodeResponseDurationMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__(
@@ -242,6 +258,8 @@ class StatsCollector(object):
             NodeResponseDurationMetric(),
             NodeRequestsMetric(),
             NodeHealthCheckFailuresMetric(),
+            NodeSentBytesMetric(),
+            NodeReceivedBytesMetric(),
         )
 
         found = set()
