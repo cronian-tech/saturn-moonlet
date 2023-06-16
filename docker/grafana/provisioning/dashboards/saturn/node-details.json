@@ -303,15 +303,15 @@
                             },
                             {
                                 "color": "#EAB839",
-                                "value": 0.8
+                                "value": 80
                             },
                             {
                                 "color": "orange",
-                                "value": 0.9
+                                "value": 90
                             },
                             {
                                 "color": "red",
-                                "value": 0.95
+                                "value": 95
                             }
                         ]
                     },
@@ -321,7 +321,7 @@
             },
             "gridPos": {
                 "h": 7,
-                "w": 6,
+                "w": 5,
                 "x": 11,
                 "y": 0
             },
@@ -351,8 +351,83 @@
                     "refId": "A"
                 }
             ],
-            "title": "CPU",
+            "title": "CPU Usage",
             "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "max": 1,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "percentage",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 80
+                            },
+                            {
+                                "color": "orange",
+                                "value": 90
+                            },
+                            {
+                                "color": "red",
+                                "value": 95
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 7,
+                "w": 5,
+                "x": 16,
+                "y": 0
+            },
+            "id": 8,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "last"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.5.3",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "(saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"} - saturn_node_memory_available_kilobytes{id=\"$saturn_node_id\"}) / saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"}",
+                    "hide": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Memory Usage",
+            "type": "gauge"
         },
         {
             "datasource": {
@@ -784,9 +859,9 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
-                    "text": "019488d4-8de9-41de-92f6-9d3fb1e3111e",
-                    "value": "019488d4-8de9-41de-92f6-9d3fb1e3111e"
+                    "selected": false,
+                    "text": "0081f8ff-76f6-4608-a3b6-cf4b7454bfbc",
+                    "value": "0081f8ff-76f6-4608-a3b6-cf4b7454bfbc"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -819,6 +894,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 12,
+    "version": 15,
     "weekStart": ""
 }
