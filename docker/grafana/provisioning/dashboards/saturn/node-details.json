@@ -282,7 +282,7 @@
                         "scaleDistribution": {
                             "type": "linear"
                         },
-                        "showPoints": "auto",
+                        "showPoints": "never",
                         "spanNulls": false,
                         "stacking": {
                             "group": "A",
@@ -303,15 +303,15 @@
                             },
                             {
                                 "color": "#EAB839",
-                                "value": 80
+                                "value": 0.8
                             },
                             {
                                 "color": "orange",
-                                "value": 90
+                                "value": 0.9
                             },
                             {
                                 "color": "red",
-                                "value": 95
+                                "value": 0.95
                             }
                         ]
                     },
@@ -364,27 +364,56 @@
                     "color": {
                         "mode": "thresholds"
                     },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Value",
                     "mappings": [],
-                    "max": 1,
-                    "min": 0,
                     "thresholds": {
-                        "mode": "percentage",
+                        "mode": "absolute",
                         "steps": [
                             {
                                 "color": "green",
                                 "value": null
                             },
                             {
-                                "color": "yellow",
-                                "value": 80
+                                "color": "#EAB839",
+                                "value": 0.8
                             },
                             {
                                 "color": "orange",
-                                "value": 90
+                                "value": 0.9
                             },
                             {
                                 "color": "red",
-                                "value": 95
+                                "value": 0.95
                             }
                         ]
                     },
@@ -398,20 +427,19 @@
                 "x": 16,
                 "y": 0
             },
-            "id": 8,
+            "id": 9,
             "options": {
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "last"
-                    ],
-                    "fields": "",
-                    "values": false
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
                 },
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
             },
-            "pluginVersion": "9.5.3",
             "targets": [
                 {
                     "datasource": {
@@ -420,14 +448,13 @@
                     },
                     "editorMode": "code",
                     "expr": "(saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"} - saturn_node_memory_available_kilobytes{id=\"$saturn_node_id\"}) / saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"}",
-                    "hide": false,
                     "legendFormat": "__auto",
                     "range": true,
                     "refId": "A"
                 }
             ],
             "title": "Memory Usage",
-            "type": "gauge"
+            "type": "timeseries"
         },
         {
             "datasource": {
@@ -859,9 +886,9 @@
         "list": [
             {
                 "current": {
-                    "selected": false,
-                    "text": "0081f8ff-76f6-4608-a3b6-cf4b7454bfbc",
-                    "value": "0081f8ff-76f6-4608-a3b6-cf4b7454bfbc"
+                    "selected": true,
+                    "text": "050a1df0-b208-456f-8e2f-58fb73a0e83a",
+                    "value": "050a1df0-b208-456f-8e2f-58fb73a0e83a"
                 },
                 "datasource": {
                     "type": "prometheus",
