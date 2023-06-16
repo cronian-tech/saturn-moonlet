@@ -261,39 +261,9 @@
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "thresholds"
+                        "fixedColor": "text",
+                        "mode": "fixed"
                     },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 20,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "never",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "displayName": "Value",
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
@@ -301,44 +271,87 @@
                             {
                                 "color": "green",
                                 "value": null
-                            },
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Memory"
+                        },
+                        "properties": [
                             {
-                                "color": "#EAB839",
-                                "value": 0.8
-                            },
-                            {
-                                "color": "orange",
-                                "value": 0.9
-                            },
-                            {
-                                "color": "red",
-                                "value": 0.95
+                                "id": "unit",
+                                "value": "deckbytes"
                             }
                         ]
                     },
-                    "unit": "percentunit"
-                },
-                "overrides": []
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "DIsk"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "decmbytes"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Upload"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "decbytes"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Download"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "decbytes"
+                            }
+                        ]
+                    }
+                ]
             },
             "gridPos": {
-                "h": 8,
-                "w": 5,
+                "h": 2,
+                "w": 11,
                 "x": 9,
                 "y": 0
             },
-            "id": 6,
+            "id": 13,
             "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": false
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "vertical",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/.*/",
+                    "values": true
                 },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
+                "text": {
+                    "titleSize": 14,
+                    "valueSize": 14
+                },
+                "textMode": "value_and_name"
             },
+            "pluginVersion": "9.5.3",
             "targets": [
                 {
                     "datasource": {
@@ -346,219 +359,121 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "saturn_node_cpu_load_avg{id=\"$saturn_node_id\"} / saturn_node_cpu_number{id=\"$saturn_node_id\"}",
+                    "exemplar": false,
+                    "expr": "saturn_node_cpu_number{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "instant": true,
                     "legendFormat": "__auto",
-                    "range": true,
+                    "range": false,
                     "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_disk_total_megabytes{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_sent_bytes{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_received_bytes{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "E"
                 }
             ],
-            "title": "CPU Usage",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 20,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
+            "transformations": [
+                {
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "id",
+                        "mode": "outer"
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time 1": true,
+                            "Time 2": true,
+                            "Time 3": true,
+                            "Time 4": true,
+                            "Time 5": true,
+                            "__name__ 1": true,
+                            "__name__ 2": true,
+                            "__name__ 3": true,
+                            "__name__ 4": true,
+                            "__name__ 5": true,
+                            "id": true,
+                            "instance 1": true,
+                            "instance 2": true,
+                            "instance 3": true,
+                            "instance 4": true,
+                            "instance 5": true,
+                            "job 1": true,
+                            "job 2": true,
+                            "job 3": true,
+                            "job 4": true,
+                            "job 5": true
                         },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "never",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
+                        "indexByName": {},
+                        "renameByName": {
+                            "Value #A": "CPU Cores",
+                            "Value #B": "Memory",
+                            "Value #C": "DIsk",
+                            "Value #D": "Upload",
+                            "Value #E": "Download"
                         }
-                    },
-                    "displayName": "Value",
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "#EAB839",
-                                "value": 0.8
-                            },
-                            {
-                                "color": "orange",
-                                "value": 0.9
-                            },
-                            {
-                                "color": "red",
-                                "value": 0.95
-                            }
-                        ]
-                    },
-                    "unit": "percentunit"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 5,
-                "x": 14,
-                "y": 0
-            },
-            "id": 9,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": false
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-                    },
-                    "editorMode": "code",
-                    "expr": "(saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"} - saturn_node_memory_available_kilobytes{id=\"$saturn_node_id\"}) / saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"}",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
+                    }
                 }
             ],
-            "title": "Memory Usage",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-            },
-            "description": "",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 20,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "never",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "displayName": "Value",
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "red",
-                                "value": null
-                            },
-                            {
-                                "color": "orange",
-                                "value": 49999
-                            },
-                            {
-                                "color": "#EAB839",
-                                "value": 99999
-                            },
-                            {
-                                "color": "green",
-                                "value": 100000
-                            }
-                        ]
-                    },
-                    "unit": "decmbytes"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 5,
-                "x": 19,
-                "y": 0
-            },
-            "id": 12,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": false
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-                    },
-                    "editorMode": "code",
-                    "expr": "saturn_node_disk_available_megabytes{id=\"$saturn_node_id\"}",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Disk Available",
-            "type": "timeseries"
+            "type": "stat"
         },
         {
             "datasource": {
@@ -872,6 +787,313 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Value",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.8
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.9
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.95
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 9,
+                "y": 2
+            },
+            "id": 6,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_cpu_load_avg{id=\"$saturn_node_id\"} / saturn_node_cpu_number{id=\"$saturn_node_id\"}",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "CPU Usage",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Value",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.8
+                            },
+                            {
+                                "color": "orange",
+                                "value": 0.9
+                            },
+                            {
+                                "color": "red",
+                                "value": 0.95
+                            }
+                        ]
+                    },
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 14,
+                "y": 2
+            },
+            "id": 9,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "(saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"} - saturn_node_memory_available_kilobytes{id=\"$saturn_node_id\"}) / saturn_node_memory_total_kilobytes{id=\"$saturn_node_id\"}",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Memory Usage",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 20,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "displayName": "Value",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 49999
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 99999
+                            },
+                            {
+                                "color": "green",
+                                "value": 100000
+                            }
+                        ]
+                    },
+                    "unit": "decmbytes"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 19,
+                "y": 2
+            },
+            "id": 12,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_disk_available_megabytes{id=\"$saturn_node_id\"}",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Disk Available",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
             "description": "",
             "fieldConfig": {
                 "defaults": {
@@ -991,8 +1213,8 @@
             {
                 "current": {
                     "selected": true,
-                    "text": "05205ae3-6484-4efd-88fd-5d746275a41b",
-                    "value": "05205ae3-6484-4efd-88fd-5d746275a41b"
+                    "text": "00afa416-69db-462f-8834-3965532425c2",
+                    "value": "00afa416-69db-462f-8834-3965532425c2"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -1025,6 +1247,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 19,
+    "version": 20,
     "weekStart": ""
 }
