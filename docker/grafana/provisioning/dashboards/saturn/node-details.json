@@ -1324,7 +1324,7 @@
                     "showLegend": true
                 },
                 "tooltip": {
-                    "mode": "single",
+                    "mode": "multi",
                     "sort": "none"
                 }
             },
@@ -1335,7 +1335,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "increase(saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}[10m])",
+                    "expr": "increase(saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}[15m])",
                     "format": "table",
                     "legendFormat": "__auto",
                     "range": true,
@@ -1347,7 +1347,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "increase(saturn_node_received_bytes_total{id=\"$saturn_node_id\"}[10m])",
+                    "expr": "increase(saturn_node_received_bytes_total{id=\"$saturn_node_id\"}[15m])",
                     "format": "table",
                     "hide": false,
                     "legendFormat": "__auto",
@@ -1356,6 +1356,169 @@
                 }
             ],
             "title": "Traffic",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 1000
+                            },
+                            {
+                                "color": "orange",
+                                "value": 1200
+                            },
+                            {
+                                "color": "red",
+                                "value": 1500
+                            }
+                        ]
+                    },
+                    "unit": "ms"
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "0.01"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "p1"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "0.05"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "p5"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "0.5"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "p50"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "0.95"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "p95"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "0.99"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "p99"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 18
+            },
+            "id": 15,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "right",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_response_duration_milliseconds{id=\"$saturn_node_id\"}",
+                    "format": "time_series",
+                    "legendFormat": "{{quantile}}",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "TTFB",
             "type": "timeseries"
         }
     ],
@@ -1368,8 +1531,8 @@
             {
                 "current": {
                     "selected": true,
-                    "text": "0339efe9-ed7f-4ede-a68f-f2cc39454d00",
-                    "value": "0339efe9-ed7f-4ede-a68f-f2cc39454d00"
+                    "text": "00af7c26-7e22-477e-a5f6-91f08ace1c8c",
+                    "value": "00af7c26-7e22-477e-a5f6-91f08ace1c8c"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -1402,6 +1565,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 25,
+    "version": 27,
     "weekStart": ""
 }
