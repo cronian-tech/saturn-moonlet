@@ -162,6 +162,32 @@ class NodeSentBytesTotalMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["nicStats"]["bytesSent"])
 
 
+class NodeSpeedtestUploadBandwidthMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_speedtest_upload_bandwidth", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["speedtest"]["upload"]["bandwidth"])
+
+
+class NodeSpeedtestDownloadBandwidthMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_speedtest_download_bandwidth", "", labels=["id"])
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["speedtest"]["download"]["bandwidth"])
+
+
+class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__(
+            "saturn_node_speedtest_ping_latency_milliseconds", "", labels=["id"]
+        )
+
+    def add(self, node):
+        self.add_metric([node["id"]], node["speedtest"]["ping"]["latency"])
+
+
 class NodeReceivedBytesTotalMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__("saturn_node_received_bytes_total", "", labels=["id"])
@@ -260,6 +286,9 @@ class StatsCollector(object):
             NodeHealthCheckFailuresMetric(),
             NodeSentBytesTotalMetric(),
             NodeReceivedBytesTotalMetric(),
+            NodeSpeedtestUploadBandwidthMetric(),
+            NodeSpeedtestDownloadBandwidthMetric(),
+            NodeSpeedtestPingLatencyMetric(),
         )
 
         found = set()
