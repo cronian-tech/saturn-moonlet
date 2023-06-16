@@ -32,27 +32,36 @@ class NodeInfoMetric(InfoMetricFamily):
     def add(self, node):
         version = _bool_to_str(node["version"])
         version_short = version.split("_")[0]
-        self.add_metric(
-            [],
-            {
-                "id": node["id"],
-                "id_short": node["id"][:8],
-                "state": node["state"],
-                "core": _bool_to_str(node["core"]),
-                "ip_address": node["ipAddress"],
-                "sunrise": _bool_to_str(node["sunrise"]),
-                "cassini": _bool_to_str(node["cassini"]),
-                "version": version,
-                "version_short": version_short,
-                "geoloc_region": node["geoloc"]["region"],
-                "geoloc_city": node["geoloc"]["city"],
-                "geoloc_country": node["geoloc"]["country"],
-                "geoloc_country_code": node["geoloc"]["countryCode"],
-                "sppedtest_isp": node["speedtest"]["isp"],
-                "sppedtest_server_location": node["speedtest"]["server"]["location"],
-                "sppedtest_server_country": node["speedtest"]["server"]["country"],
-            },
-        )
+
+        values = {
+            "id": node["id"],
+            "id_short": node["id"][:8],
+            "state": node["state"],
+            "core": _bool_to_str(node["core"]),
+            "ip_address": node["ipAddress"],
+            "sunrise": _bool_to_str(node["sunrise"]),
+            "cassini": _bool_to_str(node["cassini"]),
+            "version": version,
+            "version_short": version_short,
+            "geoloc_region": node["geoloc"]["region"],
+            "geoloc_city": node["geoloc"]["city"],
+            "geoloc_country": node["geoloc"]["country"],
+            "geoloc_country_code": node["geoloc"]["countryCode"],
+        }
+
+        speedtest = node.get("speedtest")
+        if speedtest:
+            values.update(
+                {
+                    "sppedtest_isp": node["speedtest"]["isp"],
+                    "sppedtest_server_location": node["speedtest"]["server"][
+                        "location"
+                    ],
+                    "sppedtest_server_country": node["speedtest"]["server"]["country"],
+                }
+            )
+
+        self.add_metric([], values)
 
     def add_inactive(self, node_id):
         self.add_metric(
@@ -167,7 +176,9 @@ class NodeSpeedtestUploadBandwidthMetric(GaugeMetricFamily):
         super().__init__("saturn_node_speedtest_upload_bandwidth", "", labels=["id"])
 
     def add(self, node):
-        self.add_metric([node["id"]], node["speedtest"]["upload"]["bandwidth"])
+        speedtest = node.get("speedtest")
+        if speedtest:
+            self.add_metric([node["id"]], speedtest["upload"]["bandwidth"])
 
 
 class NodeSpeedtestDownloadBandwidthMetric(GaugeMetricFamily):
@@ -175,7 +186,9 @@ class NodeSpeedtestDownloadBandwidthMetric(GaugeMetricFamily):
         super().__init__("saturn_node_speedtest_download_bandwidth", "", labels=["id"])
 
     def add(self, node):
-        self.add_metric([node["id"]], node["speedtest"]["download"]["bandwidth"])
+        speedtest = node.get("speedtest")
+        if speedtest:
+            self.add_metric([node["id"]], speedtest["download"]["bandwidth"])
 
 
 class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
@@ -185,7 +198,9 @@ class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
         )
 
     def add(self, node):
-        self.add_metric([node["id"]], node["speedtest"]["ping"]["latency"])
+        speedtest = node.get("speedtest")
+        if speedtest:
+            self.add_metric([node["id"]], speedtest["ping"]["latency"])
 
 
 class NodeReceivedBytesTotalMetric(GaugeMetricFamily):
