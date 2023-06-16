@@ -719,7 +719,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "saturn_node_memory_free_kilobytes / saturn_node_memory_total_kilobytes",
+          "expr": "(saturn_node_memory_total_kilobytes - saturn_node_memory_available_kilobytes) / saturn_node_memory_total_kilobytes",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1010,6 +1010,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
