@@ -224,6 +224,7 @@
                             "id_short": true,
                             "instance": true,
                             "job": true,
+                            "payout_status": true,
                             "sppedtest_server_country": true,
                             "sppedtest_server_location": true,
                             "state": true,
@@ -743,6 +744,7 @@
                             "job 1": true,
                             "job 2": true,
                             "job 3": true,
+                            "payout_status": true,
                             "sppedtest_isp": true,
                             "sppedtest_server_country": true,
                             "sppedtest_server_location": true,
@@ -782,11 +784,13 @@
                             "version_short": 17
                         },
                         "renameByName": {
+                            "Time 4": "",
                             "Value #A": "",
                             "Value #B": "Last Registration",
                             "Value #C": "Created",
                             "Value #D": "Health",
                             "id": "ID",
+                            "payout_status": "",
                             "state": "State",
                             "version": "Version"
                         }
@@ -1530,9 +1534,9 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
-                    "text": "00af7c26-7e22-477e-a5f6-91f08ace1c8c",
-                    "value": "00af7c26-7e22-477e-a5f6-91f08ace1c8c"
+                    "selected": false,
+                    "text": "00a0157b-9573-4d0c-9736-e828c95032f5",
+                    "value": "00a0157b-9573-4d0c-9736-e828c95032f5"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -1565,6 +1569,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 27,
+    "version": 28,
     "weekStart": ""
 }

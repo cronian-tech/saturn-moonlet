@@ -3,4 +3,5 @@ docker/prometheus-exporter/conf/nodes.txt
 venv/
 .env
 .python-version
+earnings.json
 stats.json

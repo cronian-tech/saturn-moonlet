@@ -872,6 +872,7 @@
               "job 1": true,
               "job 2": true,
               "job 3": true,
+              "payout_status": true,
               "quantile": true,
               "sppedtest_isp": true,
               "sppedtest_server_country": true,
@@ -1010,6 +1011,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }

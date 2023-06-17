@@ -2,7 +2,7 @@ import json
 import os
 import signal
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 from prometheus_client import (
@@ -60,6 +60,10 @@ class NodeInfoMetric(InfoMetricFamily):
                     "sppedtest_server_country": node["speedtest"]["server"]["country"],
                 }
             )
+
+        earnings = node["earnings"]
+        if earnings:
+            values["payout_status"] = earnings["payoutStatus"]
 
         self.add_metric([], values)
 
@@ -211,6 +215,42 @@ class NodeReceivedBytesTotalMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["nicStats"]["bytesReceived"])
 
 
+class NodeEstimatedEarningsMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
+
+    def add(self, node):
+        if node["earnings"]:
+            self.add_metric([node["id"]], node["earnings"]["filAmount"])
+
+
+class NodeUptimeCompletionMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_uptime_completion_ratio", "", labels=["id"])
+
+    def add(self, node):
+        if node["earnings"]:
+            self.add_metric([node["id"]], node["earnings"]["uptimeCompletion"])
+
+
+class NodeRetrievalsMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_retrievals", "", labels=["id"])
+
+    def add(self, node):
+        if node["earnings"]:
+            self.add_metric([node["id"]], node["earnings"]["numRequests"])
+
+
+class NodeBandwidthServedMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
+
+    def add(self, node):
+        if node["earnings"]:
+            self.add_metric([node["id"]], node["earnings"]["numBytes"])
+
+
 class NodeResponseDurationMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__(
@@ -281,7 +321,16 @@ class StatsCollector(object):
         """
         self._node_ids = frozenset(node_ids)
 
-    def _node_metrics_from_stats(self, stats):
+    def _earnings_per_node(self, earnings):
+        per_node = {}
+
+        for node in earnings["perNodeMetrics"]:
+            if not self._node_ids or node["nodeId"] in self._node_ids:
+                per_node[node["nodeId"]] = node
+
+        return per_node
+
+    def _node_metrics_from_stats(self, stats, earnings):
         info = NodeInfoMetric()
         metrics = (
             info,
@@ -304,6 +353,10 @@ class StatsCollector(object):
             NodeSpeedtestUploadBandwidthMetric(),
             NodeSpeedtestDownloadBandwidthMetric(),
             NodeSpeedtestPingLatencyMetric(),
+            NodeEstimatedEarningsMetric(),
+            NodeUptimeCompletionMetric(),
+            NodeRetrievalsMetric(),
+            NodeBandwidthServedMetric(),
         )
 
         found = set()
@@ -312,6 +365,7 @@ class StatsCollector(object):
                 continue
             found.add(node["id"])
 
+            node["earnings"] = earnings.get(node["id"])
             for m in metrics:
                 m.add(node)
 
@@ -334,7 +388,33 @@ class StatsCollector(object):
             )
             stats = r.json()
 
-        for m in self._node_metrics_from_stats(stats["nodes"]):
+        # Do not query lambda if "earnings.json" is present.
+        # Useful for development and testing.
+        try:
+            with open("earnings.json") as f:
+                earnings = json.loads(f.read())
+        except FileNotFoundError:
+            end = datetime.utcnow()
+            start = end - timedelta(hours=1)
+
+            # Lambda expects millisecond timestamps.
+            end = end.timestamp() * 1000
+            start = start.timestamp() * 1000
+
+            r = requests.get(
+                "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
+                params={
+                    "filAddress": "all",
+                    "startDate": start,
+                    "endDate": end,
+                    "step": "day",
+                    "perNode": "true",
+                },
+            )
+            earnings = r.json()
+
+        earnings = self._earnings_per_node(earnings)
+        for m in self._node_metrics_from_stats(stats["nodes"], earnings):
             yield m
 
 
