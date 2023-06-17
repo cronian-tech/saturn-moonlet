@@ -61,9 +61,8 @@ class NodeInfoMetric(InfoMetricFamily):
                 }
             )
 
-        earnings = node["earnings"]
-        if earnings:
-            values["payout_status"] = earnings["payoutStatus"]
+        if node["earnings"]:
+            values["payout_status"] = node["earnings"]["payoutStatus"]
 
         self.add_metric([], values)
 
@@ -217,7 +216,7 @@ class NodeReceivedBytesTotalMetric(GaugeMetricFamily):
 
 class NodeEstimatedEarningsMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
+        super().__init__("saturn_node_estimated_earnings_fil_total", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
@@ -235,7 +234,7 @@ class NodeUptimeCompletionMetric(GaugeMetricFamily):
 
 class NodeRetrievalsMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_retrievals", "", labels=["id"])
+        super().__init__("saturn_node_retrievals_total", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
@@ -244,7 +243,7 @@ class NodeRetrievalsMetric(GaugeMetricFamily):
 
 class NodeBandwidthServedMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
+        super().__init__("saturn_node_bandwidth_served_bytes_total", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
@@ -320,6 +319,11 @@ class StatsCollector(object):
         If node_ids is empty then collets stats for all nodes.
         """
         self._node_ids = frozenset(node_ids)
+        self._earnings_start = self._utcnow_timestamp()
+
+    @staticmethod
+    def _utcnow_timestamp():
+        return datetime.utcnow().timestamp() * 1000
 
     def _earnings_per_node(self, earnings):
         per_node = {}
@@ -394,19 +398,12 @@ class StatsCollector(object):
             with open("earnings.json") as f:
                 earnings = json.loads(f.read())
         except FileNotFoundError:
-            end = datetime.utcnow()
-            start = end - timedelta(hours=1)
-
-            # Lambda expects millisecond timestamps.
-            end = end.timestamp() * 1000
-            start = start.timestamp() * 1000
-
             r = requests.get(
                 "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
                 params={
                     "filAddress": "all",
-                    "startDate": start,
-                    "endDate": end,
+                    "startDate": self._earnings_start,
+                    "endDate": self._utcnow_timestamp(),
                     "step": "day",
                     "perNode": "true",
                 },
