@@ -12,7 +12,11 @@ from prometheus_client import (
     REGISTRY,
     start_http_server,
 )
-from prometheus_client.core import GaugeMetricFamily, InfoMetricFamily
+from prometheus_client.core import (
+    CounterMetricFamily,
+    GaugeMetricFamily,
+    InfoMetricFamily,
+)
 
 
 def _bool_to_str(v):
@@ -166,9 +170,9 @@ class NodeCPULoadAvgMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], node["cpuStats"]["loadAvgs"][0])
 
 
-class NodeSentBytesTotalMetric(GaugeMetricFamily):
+class NodeSentBytesTotalMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_sent_bytes_total", "", labels=["id"])
+        super().__init__("saturn_node_sent_bytes", "", labels=["id"])
 
     def add(self, node):
         self.add_metric([node["id"]], node["nicStats"]["bytesSent"])
@@ -206,17 +210,17 @@ class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
             self.add_metric([node["id"]], speedtest["ping"]["latency"])
 
 
-class NodeReceivedBytesTotalMetric(GaugeMetricFamily):
+class NodeReceivedBytesTotalMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_received_bytes_total", "", labels=["id"])
+        super().__init__("saturn_node_received_bytes", "", labels=["id"])
 
     def add(self, node):
         self.add_metric([node["id"]], node["nicStats"]["bytesReceived"])
 
 
-class NodeEstimatedEarningsMetric(GaugeMetricFamily):
+class NodeEstimatedEarningsMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_estimated_earnings_fil_total", "", labels=["id"])
+        super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
@@ -232,18 +236,18 @@ class NodeUptimeCompletionMetric(GaugeMetricFamily):
             self.add_metric([node["id"]], node["earnings"]["uptimeCompletion"])
 
 
-class NodeRetrievalsMetric(GaugeMetricFamily):
+class NodeRetrievalsMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_retrievals_total", "", labels=["id"])
+        super().__init__("saturn_node_retrievals", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
             self.add_metric([node["id"]], node["earnings"]["numRequests"])
 
 
-class NodeBandwidthServedMetric(GaugeMetricFamily):
+class NodeBandwidthServedMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_bandwidth_served_bytes_total", "", labels=["id"])
+        super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
 
     def add(self, node):
         if node["earnings"]:
