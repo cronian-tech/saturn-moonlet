@@ -7,3 +7,5 @@ datasources:
     uid: c0ccd6b9-e987-49dd-aac2-6049b75bb2fb
     url: http://prometheus:9090
     isDefault: true
+    jsonData:
+      timeInterval: 3m
