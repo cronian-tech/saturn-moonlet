@@ -1,6 +1,30 @@
+# Saturn Moonlet
+
+[Filecoin Saturn](https://saturn.tech) monitoring for node operators.
+More powerful and insightful alternative to [Saturn Node Dashboard](https://dashboard.saturn.tech/stats) that anyone can run.
+
+Saturn Moonlet provides a node operator with the following:
+
+* Real-time and historical metrics about node stats and earnings.
+* Ability to run arbitrary PromQL queries against node metrics.
+* Ability to build custom dashboards.
+* Alerts based on metrics.
+* Anything else that [Grafana](https://grafana.com) and [Prometheus](https://prometheus.io) can do 😉
+
+It does not require installing any additional software on a Saturn node.
+You only need [Docker Compose](https://docs.docker.com/compose) to run it locally or on you own server.
+
+If you're interested, you can see [how it's made](#how-its-made).
+
 ## Try it
 
-It's easy to run Saturn Moonlet locally using [Docker Compose](https://docs.docker.com/compose):
+Live demo is available at [https://demo.moonlet.zanko.dev](https://demo.moonlet.zanko.dev).
+
+Note that the demo offers limited features allowing you only to evaluate and test Saturn Moonlet. Demo is not an end product and provided **"AS IS"**.
+
+### Run locally
+
+It's easy to run Saturn Moonlet locally using Docker Compose:
 
 ```sh
 # Create empty environment files, so that you can customize service configuration if needed.
@@ -76,3 +100,19 @@ Now everything is ready to launch Saturn Moonlet 🚀
 ```sh
 docker compose --profile production up -d
 ```
+
+## How it's made
+
+Saturn Moonlet consists of thee main components.
+
+* **Prometheus Exporter** is a Python service that fetches node stats and earnings via the same public HTTP APIs that Saturn Node Dashboard uses.
+It exposes this info in a simple [text-based](https://prometheus.io/docs/instrumenting/exposition_formats/#text-based-format) format.
+* **Prometheus** periodically scrapes metrics exposed by Prometheus Exporter and persists these metrics in a local on-disk time series database.
+Prometheus stores historical data about node stats and earnings.
+* **Grafana** uses Prometheus as a data source and provides a node operator with powerfull web interface to query and visualize node metrics.
+It comes with two pre-defined dashboards to overview nodes in the network and see details about a particular node.
+It also allows to configure alerts.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
