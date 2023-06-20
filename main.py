@@ -33,13 +33,17 @@ class NodeInfoMetric(InfoMetricFamily):
     def __init__(self):
         super().__init__("saturn_node", "")
 
+    @staticmethod
+    def _id_short(v):
+        return v[:8]
+
     def add(self, node):
         version = _bool_to_str(node["version"])
         version_short = version.split("_")[0]
 
         values = {
             "id": node["id"],
-            "id_short": node["id"][:8],
+            "id_short": self._id_short(node["id"]),
             "state": node["state"],
             "core": _bool_to_str(node["core"]),
             "ip_address": node["ipAddress"],
@@ -75,6 +79,7 @@ class NodeInfoMetric(InfoMetricFamily):
             [],
             {
                 "id": node_id,
+                "id_short": self._id_short(node_id),
                 "state": "inactive",
             },
         )
