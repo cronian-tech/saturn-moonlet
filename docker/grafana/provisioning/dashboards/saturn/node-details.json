@@ -1765,7 +1765,7 @@
             },
             "gridPos": {
                 "h": 9,
-                "w": 8,
+                "w": 9,
                 "x": 0,
                 "y": 21
             },
@@ -1818,15 +1818,15 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 30,
+                        "fillOpacity": 41,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
                             "tooltip": false,
                             "viz": false
                         },
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 1,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 0,
                         "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
@@ -1889,13 +1889,60 @@
                                 "value": "Cache Hit"
                             }
                         ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Cache Hit Ratio"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.stacking",
+                                "value": {
+                                    "group": "A",
+                                    "mode": "none"
+                                }
+                            },
+                            {
+                                "id": "unit",
+                                "value": "percentunit"
+                            },
+                            {
+                                "id": "custom.fillOpacity",
+                                "value": 0
+                            },
+                            {
+                                "id": "custom.lineWidth",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Error Ratio"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "percentunit"
+                            },
+                            {
+                                "id": "custom.fillOpacity",
+                                "value": 0
+                            },
+                            {
+                                "id": "custom.lineWidth",
+                                "value": 1
+                            }
+                        ]
                     }
                 ]
             },
             "gridPos": {
                 "h": 9,
-                "w": 8,
-                "x": 8,
+                "w": 9,
+                "x": 9,
                 "y": 21
             },
             "id": 19,
@@ -1925,6 +1972,30 @@
                     "legendFormat": "error {{error}} cache {{cache}}",
                     "range": true,
                     "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_requests{cache=\"true\", id=\"$saturn_node_id\"} / on (id) sum(saturn_node_requests{error=\"false\", id=\"$saturn_node_id\"}) by (id)",
+                    "hide": false,
+                    "legendFormat": "Cache Hit Ratio",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "saturn_node_requests{error=\"true\", id=\"$saturn_node_id\"} / on (id) sum(saturn_node_requests{id=\"$saturn_node_id\"}) by (id)",
+                    "hide": false,
+                    "legendFormat": "Error Ratio",
+                    "range": true,
+                    "refId": "C"
                 }
             ],
             "title": "Requests",
@@ -2000,6 +2071,10 @@
                                     "fixedColor": "super-light-blue",
                                     "mode": "fixed"
                                 }
+                            },
+                            {
+                                "id": "custom.transform",
+                                "value": "negative-Y"
                             }
                         ]
                     },
@@ -2026,8 +2101,8 @@
             },
             "gridPos": {
                 "h": 9,
-                "w": 8,
-                "x": 16,
+                "w": 6,
+                "x": 18,
                 "y": 21
             },
             "id": 14,
@@ -2117,6 +2192,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 38,
+    "version": 10,
     "weekStart": ""
 }
