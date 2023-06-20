@@ -21,15 +21,15 @@
     "links": [
         {
             "asDropdown": false,
-            "icon": "external link",
+            "icon": "dashboard",
             "includeVars": false,
             "keepTime": false,
             "tags": [],
             "targetBlank": false,
             "title": "Saturn Nodes",
             "tooltip": "",
-            "type": "dashboards",
-            "url": ""
+            "type": "link",
+            "url": "/d/dc55e0c4-7fb5-4b78-965c-b5616aa6658a/saturn-nodes"
         }
     ],
     "liveNow": false,
@@ -2157,9 +2157,9 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
-                    "text": "00d221d4-42b4-4a1f-8170-e6d4c6711277",
-                    "value": "00d221d4-42b4-4a1f-8170-e6d4c6711277"
+                    "selected": false,
+                    "text": "00afa416-69db-462f-8834-3965532425c2",
+                    "value": "00afa416-69db-462f-8834-3965532425c2"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -2192,6 +2192,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 10,
+    "version": 1,
     "weekStart": ""
 }
