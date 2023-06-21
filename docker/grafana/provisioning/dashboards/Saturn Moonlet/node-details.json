@@ -30,6 +30,18 @@
             "tooltip": "",
             "type": "link",
             "url": "/d/dc55e0c4-7fb5-4b78-965c-b5616aa6658a/saturn-nodes"
+        },
+        {
+            "asDropdown": false,
+            "icon": "external link",
+            "includeVars": false,
+            "keepTime": false,
+            "tags": [],
+            "targetBlank": false,
+            "title": "GitHub",
+            "tooltip": "",
+            "type": "link",
+            "url": "http://github.com/31z4/saturn-moonlet"
         }
     ],
     "liveNow": false,

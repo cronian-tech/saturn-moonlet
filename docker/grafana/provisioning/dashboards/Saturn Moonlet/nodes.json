@@ -18,7 +18,20 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "GitHub",
+      "tooltip": "",
+      "type": "link",
+      "url": "http://github.com/31z4/saturn-moonlet"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
