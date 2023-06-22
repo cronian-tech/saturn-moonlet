@@ -228,8 +228,9 @@ class NodeEstimatedEarningsMetric(CounterMetricFamily):
         super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
 
     def add(self, node):
-        if node["earnings"]:
-            self.add_metric([node["id"]], node["earnings"]["filAmount"])
+        fil_amount = node["earnings"].get("filAmount")
+        if fil_amount is not None:
+            self.add_metric([node["id"]], fil_amount)
 
 
 class NodeUptimeCompletionMetric(GaugeMetricFamily):
@@ -237,8 +238,9 @@ class NodeUptimeCompletionMetric(GaugeMetricFamily):
         super().__init__("saturn_node_uptime_completion_ratio", "", labels=["id"])
 
     def add(self, node):
-        if node["earnings"]:
-            self.add_metric([node["id"]], node["earnings"]["uptimeCompletion"])
+        uptime_completion = node["earnings"].get("uptimeCompletion")
+        if uptime_completion is not None:
+            self.add_metric([node["id"]], uptime_completion)
 
 
 class NodeRetrievalsMetric(CounterMetricFamily):
@@ -246,8 +248,9 @@ class NodeRetrievalsMetric(CounterMetricFamily):
         super().__init__("saturn_node_retrievals", "", labels=["id"])
 
     def add(self, node):
-        if node["earnings"]:
-            self.add_metric([node["id"]], node["earnings"]["numRequests"])
+        num_requests = node["earnings"].get("numRequests")
+        if num_requests is not None:
+            self.add_metric([node["id"]], num_requests)
 
 
 class NodeBandwidthServedMetric(CounterMetricFamily):
@@ -255,8 +258,9 @@ class NodeBandwidthServedMetric(CounterMetricFamily):
         super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
 
     def add(self, node):
-        if node["earnings"]:
-            self.add_metric([node["id"]], node["earnings"]["numBytes"])
+        num_bytes = node["earnings"].get("numBytes")
+        if num_bytes is not None:
+            self.add_metric([node["id"]], num_bytes)
 
 
 class NodeResponseDurationMetric(GaugeMetricFamily):
@@ -378,7 +382,7 @@ class StatsCollector(object):
                 continue
             found.add(node["id"])
 
-            node["earnings"] = earnings.get(node["id"])
+            node["earnings"] = earnings.get(node["id"], {})
             for m in metrics:
                 m.add(node)
 
