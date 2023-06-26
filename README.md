@@ -1,5 +1,7 @@
 # Saturn Moonlet
 
+🚧 **This project is under active development. Things may break** 🚧
+
 [Filecoin Saturn](https://saturn.tech) monitoring for node operators.
 More powerful and insightful alternative to [Saturn Node Dashboard](https://dashboard.saturn.tech/stats) that anyone can run.
 
@@ -15,6 +17,9 @@ It does not require installing any additional software on a Saturn node.
 You only need [Docker Compose](https://docs.docker.com/compose) to run it locally or on you own server.
 
 If you're interested, you can see [how it's made](#how-its-made).
+
+This project is neither affiliated with the [Filecoin Saturn](https://github.com/filecoin-saturn) project nor the [Protocol Labs](https://protocol.ai) organization.
+Although, it was built during the [HackFS 2023](https://ethglobal.com/showcase/saturn-moonlet-c4583) hackaton and was nominated for the "Best use of Filecoin Saturn" prize.
 
 ## Try it
 
