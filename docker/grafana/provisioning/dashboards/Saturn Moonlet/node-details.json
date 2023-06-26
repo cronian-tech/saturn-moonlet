@@ -1206,6 +1206,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**Data may not be accurate.** For the source of truth, check the [official dashboard](https://dashboard.saturn.tech/address).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1264,7 +1265,7 @@
                     ],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "orientation": "auto",
                 "showValue": "never",
@@ -1284,28 +1285,15 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "increase(saturn_node_estimated_earnings_fil_total{id=\"$saturn_node_id\"}[4m])",
-                    "format": "table",
-                    "legendFormat": "__auto",
+                    "expr": "increase(saturn_node_estimated_earnings_fil_total{id=\"$saturn_node_id\"}[$__rate_interval])",
+                    "format": "time_series",
+                    "legendFormat": "Value",
                     "range": true,
                     "refId": "A"
                 }
             ],
-            "title": "Estimated Earnings",
-            "transformations": [
-                {
-                    "id": "organize",
-                    "options": {
-                        "excludeByName": {
-                            "id": true,
-                            "instance": true,
-                            "job": true
-                        },
-                        "indexByName": {},
-                        "renameByName": {}
-                    }
-                }
-            ],
+            "title": "Approximate Estimated Earnings",
+            "transformations": [],
             "type": "barchart"
         },
         {
@@ -1424,6 +1412,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**Data may not be accurate.** For the source of truth, check the [official dashboard](https://dashboard.saturn.tech/address).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1482,7 +1471,7 @@
                     ],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "orientation": "auto",
                 "showValue": "never",
@@ -1503,29 +1492,16 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "increase(saturn_node_bandwidth_served_bytes_total{id=\"$saturn_node_id\"}[4m])",
-                    "format": "table",
+                    "expr": "increase(saturn_node_bandwidth_served_bytes_total{id=\"$saturn_node_id\"}[$__rate_interval])",
+                    "format": "time_series",
                     "instant": false,
-                    "legendFormat": "__auto",
+                    "legendFormat": "Value",
                     "range": true,
                     "refId": "A"
                 }
             ],
-            "title": "Bandwidth Served",
-            "transformations": [
-                {
-                    "id": "organize",
-                    "options": {
-                        "excludeByName": {
-                            "id": true,
-                            "instance": true,
-                            "job": true
-                        },
-                        "indexByName": {},
-                        "renameByName": {}
-                    }
-                }
-            ],
+            "title": "Approximate Bandwidth Served",
+            "transformations": [],
             "type": "barchart"
         },
         {
@@ -1533,6 +1509,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**Data may not be accurate.** For the source of truth, check the [official dashboard](https://dashboard.saturn.tech/address).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1591,7 +1568,7 @@
                     ],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": true
+                    "showLegend": false
                 },
                 "orientation": "auto",
                 "showValue": "never",
@@ -1612,29 +1589,16 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "increase(saturn_node_retrievals_total{id=\"$saturn_node_id\"}[4m])",
-                    "format": "table",
+                    "expr": "increase(saturn_node_retrievals_total{id=\"$saturn_node_id\"}[$__rate_interval])",
+                    "format": "time_series",
                     "instant": false,
-                    "legendFormat": "__auto",
+                    "legendFormat": "Value",
                     "range": true,
                     "refId": "A"
                 }
             ],
-            "title": "Retrievals",
-            "transformations": [
-                {
-                    "id": "organize",
-                    "options": {
-                        "excludeByName": {
-                            "id": true,
-                            "instance": true,
-                            "job": true
-                        },
-                        "indexByName": {},
-                        "renameByName": {}
-                    }
-                }
-            ],
+            "title": "Approximate Retrievals",
+            "transformations": [],
             "type": "barchart"
         },
         {
@@ -2169,9 +2133,9 @@
         "list": [
             {
                 "current": {
-                    "selected": false,
-                    "text": "00afa416-69db-462f-8834-3965532425c2",
-                    "value": "00afa416-69db-462f-8834-3965532425c2"
+                    "selected": true,
+                    "text": "00af7c26-7e22-477e-a5f6-91f08ace1c8c",
+                    "value": "00af7c26-7e22-477e-a5f6-91f08ace1c8c"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -2204,6 +2168,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 1,
+    "version": 2,
     "weekStart": ""
 }
