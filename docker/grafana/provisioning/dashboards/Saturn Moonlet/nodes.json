@@ -26,6 +26,18 @@
       "keepTime": false,
       "tags": [],
       "targetBlank": false,
+      "title": "Official Saturn Node Dashboard",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://dashboard.saturn.tech"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
       "title": "GitHub",
       "tooltip": "",
       "type": "link",

@@ -38,6 +38,18 @@
             "keepTime": false,
             "tags": [],
             "targetBlank": false,
+            "title": "Official Saturn Node Dashboard",
+            "tooltip": "",
+            "type": "link",
+            "url": "https://dashboard.saturn.tech"
+        },
+        {
+            "asDropdown": false,
+            "icon": "external link",
+            "includeVars": false,
+            "keepTime": false,
+            "tags": [],
+            "targetBlank": false,
             "title": "GitHub",
             "tooltip": "",
             "type": "link",
@@ -2133,9 +2145,9 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
-                    "text": "00af7c26-7e22-477e-a5f6-91f08ace1c8c",
-                    "value": "00af7c26-7e22-477e-a5f6-91f08ace1c8c"
+                    "selected": false,
+                    "text": "00d221d4-42b4-4a1f-8170-e6d4c6711277",
+                    "value": "00d221d4-42b4-4a1f-8170-e6d4c6711277"
                 },
                 "datasource": {
                     "type": "prometheus",
