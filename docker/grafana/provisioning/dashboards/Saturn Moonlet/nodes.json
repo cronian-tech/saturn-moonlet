@@ -649,6 +649,7 @@
         "y": 0
       },
       "id": 2,
+      "interval": "1h",
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -675,7 +676,7 @@
             "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
           },
           "editorMode": "code",
-          "expr": "avg_over_time(saturn_node_bias[5m])",
+          "expr": "saturn_node_bias",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -1024,6 +1025,6 @@
   "timezone": "",
   "title": "Saturn Nodes",
   "uid": "dc55e0c4-7fb5-4b78-965c-b5616aa6658a",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }
