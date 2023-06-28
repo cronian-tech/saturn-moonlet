@@ -325,6 +325,62 @@ class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
             self.add_metric([node["id"], k], v)
 
 
+class NodeRequirementsMinCPUCoresMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_cpu_cores", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minCPUCores"])
+
+
+class NodeRequirementsMinMemoryMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_memory_gigabytes", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minMemoryGB"])
+
+
+class NodeRequirementsMinUploadSpeedMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_upload_speed_mbps", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minUploadSpeedMbps"])
+
+
+class NodeRequirementsMinDownloadSpeedMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_download_speed_mbps", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minDownloadSpeedMbps"])
+
+
+class NodeRequirementsMinDiskMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_disk_gigabytes", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minDiskGB"])
+
+
+class NodeRequirementsLastVersionMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_last_version", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["lastVersion"])
+
+
+class NodeRequirementsMinVersionMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_requirements_min_version", "")
+
+    def add(self, requirements):
+        self.add_metric([], requirements["minVersion"])
+
+
 class StatsCollector(object):
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
@@ -428,6 +484,38 @@ class StatsCollector(object):
             yield m
 
 
+class RequirementsCollector:
+    @staticmethod
+    def _node_requirements_metrics(requirements):
+        metrics = (
+            NodeRequirementsMinCPUCoresMetric(),
+            NodeRequirementsMinMemoryMetric(),
+            NodeRequirementsMinUploadSpeedMetric(),
+            NodeRequirementsMinDownloadSpeedMetric(),
+            NodeRequirementsMinDiskMetric(),
+            NodeRequirementsLastVersionMetric(),
+            NodeRequirementsMinVersionMetric(),
+        )
+
+        for m in metrics:
+            m.add(requirements)
+
+        return metrics
+
+    def collect(self):
+        # Do not query orchestrator if "requirements.json" is present.
+        # Useful for development and testing.
+        try:
+            with open("requirements.json") as f:
+                requirements = json.loads(f.read())
+        except FileNotFoundError:
+            r = requests.get("https://orchestrator.strn.pl/requirements")
+            requirements = r.json()
+
+        for m in self._node_requirements_metrics(requirements):
+            yield m
+
+
 if __name__ == "__main__":
     # Disable default collector metrics.
     REGISTRY.unregister(GC_COLLECTOR)
@@ -442,6 +530,7 @@ if __name__ == "__main__":
             node_ids = [l.strip() for l in f]
 
     REGISTRY.register(StatsCollector(node_ids))
+    REGISTRY.register(RequirementsCollector())
 
     start_http_server(9000)
 
