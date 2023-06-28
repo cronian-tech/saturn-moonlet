@@ -38,9 +38,6 @@ class NodeInfoMetric(InfoMetricFamily):
         return v[:8]
 
     def add(self, node):
-        version = _bool_to_str(node["version"])
-        version_short = version.split("_")[0]
-
         values = {
             "id": node["id"],
             "id_short": self._id_short(node["id"]),
@@ -49,8 +46,6 @@ class NodeInfoMetric(InfoMetricFamily):
             "ip_address": node["ipAddress"],
             "sunrise": _bool_to_str(node["sunrise"]),
             "cassini": _bool_to_str(node["cassini"]),
-            "version": version,
-            "version_short": version_short,
             "geoloc_region": node["geoloc"]["region"],
             "geoloc_city": node["geoloc"]["city"],
             "geoloc_country": node["geoloc"]["country"],
@@ -83,6 +78,15 @@ class NodeInfoMetric(InfoMetricFamily):
                 "state": "inactive",
             },
         )
+
+
+class NodeVersionMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_version", "", labels=["id"])
+
+    def add(self, node):
+        version = node["version"].split("_")[0]
+        self.add_metric([node["id"]], version)
 
 
 class NodeBiasMetric(GaugeMetricFamily):
@@ -407,6 +411,7 @@ class StatsCollector(object):
         info = NodeInfoMetric()
         metrics = (
             info,
+            NodeVersionMetric(),
             NodeBiasMetric(),
             NodeLastRegistrationMetric(),
             NodeCreationMetric(),
