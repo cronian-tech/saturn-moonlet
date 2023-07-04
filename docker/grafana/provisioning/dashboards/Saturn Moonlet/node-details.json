@@ -1801,7 +1801,7 @@
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "palette-classic"
+                        "mode": "fixed"
                     },
                     "custom": {
                         "axisCenteredZero": false,
@@ -1849,36 +1849,57 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "error false cache false"
+                            "options": "ok"
                         },
                         "properties": [
                             {
                                 "id": "displayName",
                                 "value": "OK"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "green",
+                                    "mode": "fixed"
+                                }
                             }
                         ]
                     },
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "error true cache false"
+                            "options": "error"
                         },
                         "properties": [
                             {
                                 "id": "displayName",
                                 "value": "Error"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "red",
+                                    "mode": "fixed"
+                                }
                             }
                         ]
                     },
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "error false cache true"
+                            "options": "ok_hit"
                         },
                         "properties": [
                             {
                                 "id": "displayName",
                                 "value": "Cache Hit"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "blue",
+                                    "mode": "fixed"
+                                }
                             }
                         ]
                     },
@@ -1906,6 +1927,13 @@
                             {
                                 "id": "custom.lineWidth",
                                 "value": 1
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "blue",
+                                    "mode": "fixed"
+                                }
                             }
                         ]
                     },
@@ -1926,6 +1954,32 @@
                             {
                                 "id": "custom.lineWidth",
                                 "value": 1
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "red",
+                                    "mode": "fixed"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "ok_slow_hit"
+                        },
+                        "properties": [
+                            {
+                                "id": "displayName",
+                                "value": "Slow Cache Hit"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "purple",
+                                    "mode": "fixed"
+                                }
                             }
                         ]
                     }
@@ -1961,7 +2015,7 @@
                     "expr": "saturn_node_requests{id=\"$saturn_node_id\"}",
                     "format": "time_series",
                     "instant": false,
-                    "legendFormat": "error {{error}} cache {{cache}}",
+                    "legendFormat": "{{result}}",
                     "range": true,
                     "refId": "A"
                 },
@@ -1971,7 +2025,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "saturn_node_requests{cache=\"true\", id=\"$saturn_node_id\"} / on (id) sum(saturn_node_requests{error=\"false\", id=\"$saturn_node_id\"}) by (id)",
+                    "expr": "saturn_node_requests{result=\"ok_hit\", id=\"$saturn_node_id\"} / on (id) saturn_node_requests{result=\"ok\", id=\"$saturn_node_id\"}",
                     "hide": false,
                     "legendFormat": "Cache Hit Ratio",
                     "range": true,
@@ -1983,7 +2037,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "saturn_node_requests{error=\"true\", id=\"$saturn_node_id\"} / on (id) sum(saturn_node_requests{id=\"$saturn_node_id\"}) by (id)",
+                    "expr": "saturn_node_requests{result=\"error\", id=\"$saturn_node_id\"} / on (id) saturn_node_requests{result=\"ok\", id=\"$saturn_node_id\"}",
                     "hide": false,
                     "legendFormat": "Error Ratio",
                     "range": true,

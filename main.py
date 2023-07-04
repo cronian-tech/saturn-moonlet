@@ -288,7 +288,7 @@ class NodeResponseDurationMetric(GaugeMetricFamily):
 
 class NodeRequestsMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requests", "", labels=["id", "cache", "error"])
+        super().__init__("saturn_node_requests", "", labels=["id", "result"])
 
     def add(self, node):
         ttfb = node.get("ttfbStats")
@@ -296,17 +296,17 @@ class NodeRequestsMetric(GaugeMetricFamily):
             return
 
         try:
-            total = ttfb["reqs_served_1h"]
-            cache = ttfb["hits_1h"]
+            ok = ttfb["reqs_served_1h"]
+            hits = ttfb["hits_1h"]
             errors = ttfb["errors_1h"]
+            slow_hits = ttfb["slow_hits_1h"]
         except KeyError:
             return
 
-        self.add_metric([node["id"], "true", "false"], cache)
-        self.add_metric([node["id"], "false", "true"], errors)
-        # From my observations total number of requests does not include errors.
-        # Because if I substract errors from total here I get negative numbers for some nodes.
-        self.add_metric([node["id"], "false", "false"], total - cache)
+        self.add_metric([node["id"], "ok"], ok)
+        self.add_metric([node["id"], "ok_hit"], hits)
+        self.add_metric([node["id"], "error"], errors)
+        self.add_metric([node["id"], "ok_slow_hit"], slow_hits)
 
 
 class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
