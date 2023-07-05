@@ -228,7 +228,7 @@
                 },
                 "textMode": "value_and_name"
             },
-            "pluginVersion": "9.5.3",
+            "pluginVersion": "10.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -402,7 +402,7 @@
                 },
                 "textMode": "value_and_name"
             },
-            "pluginVersion": "9.5.3",
+            "pluginVersion": "10.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -713,7 +713,7 @@
                 },
                 "textMode": "value_and_name"
             },
-            "pluginVersion": "9.5.3",
+            "pluginVersion": "10.0.1",
             "targets": [
                 {
                     "datasource": {
