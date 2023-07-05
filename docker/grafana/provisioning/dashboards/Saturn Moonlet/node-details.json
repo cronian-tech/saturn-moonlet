@@ -1413,7 +1413,7 @@
                         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
                     },
                     "editorMode": "code",
-                    "expr": "saturn_node_bias{id=\"$saturn_node_id\"}",
+                    "expr": "saturn_node_weight{id=\"$saturn_node_id\"}",
                     "format": "time_series",
                     "legendFormat": "__auto",
                     "range": true,
@@ -2238,6 +2238,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 1,
+    "version": 3,
     "weekStart": ""
 }

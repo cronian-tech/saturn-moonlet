@@ -89,12 +89,91 @@ class NodeVersionMetric(GaugeMetricFamily):
         self.add_metric([node["id"]], version)
 
 
-class NodeBiasMetric(GaugeMetricFamily):
+class NodeWeightMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_bias", "", labels=["id"])
+        super().__init__("saturn_node_weight", "", labels=["id"])
 
     def add(self, node):
         self.add_metric([node["id"]], node["bias"])
+
+
+class NodeBiasMetric(GaugeMetricFamily):
+    _BIASES = {
+        "ageBias": "age",
+        "ttfbBias": "ttfb",
+        "randomBias": "random",
+        "uptimeBias": "uptime",
+        "speedtestBias": "speedtest",
+    }
+
+    def __init__(self):
+        super().__init__("saturn_node_bias", "", labels=["id", "kind"])
+
+    def add(self, node):
+        for k, v in self._BIASES.items():
+            bias = node["biases"].get(k)
+            if bias is not None:
+                self.add_metric([node["id"], v], bias)
+
+
+class NodePenaltyMetric(GaugeMetricFamily):
+    _PENALTIES = {
+        "speedPenalty": "speed",
+        "cpuLoadPenalty": "cpu_load",
+        "errorRatePenalty": "error_rate",
+        "oldVersionPenalty": "old_version",
+        "cacheHitRatePenalty": "cache_hit_rate",
+        "healthCheckFailuresPenalty": "health_check_failures",
+    }
+
+    def __init__(self):
+        super().__init__("saturn_node_penalty", "", labels=["id", "kind"])
+
+    def add(self, node):
+        for k, v in self._PENALTIES.items():
+            penalty = node["biases"].get(k)
+            if penalty is not None:
+                self.add_metric([node["id"], v], penalty)
+
+
+class NodeWeightedTTFBMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_weighted_ttfb_milliseconds", "", labels=["id"])
+
+    def add(self, node):
+        v = node["biases"].get("weightedTtfb")
+        if v is not None:
+            self.add_metric([node["id"]], v)
+
+
+class NodeWeightedHitsRatioMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_weighted_hits_ratio", "", labels=["id"])
+
+    def add(self, node):
+        v = node["biases"].get("weightedHitsRatio")
+        if v is not None:
+            self.add_metric([node["id"]], v)
+
+
+class NodeWeightedErrorsRatioMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_weighted_errors_ratio", "", labels=["id"])
+
+    def add(self, node):
+        v = node["biases"].get("weightedErrorsRatio")
+        if v is not None:
+            self.add_metric([node["id"]], v)
+
+
+class NodeWeightedDupCacheMissRatioMetric(GaugeMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_weighted_dup_cache_miss_ratio", "", labels=["id"])
+
+    def add(self, node):
+        v = node["biases"].get("weightedDupCacheMissRatio")
+        if v is not None:
+            self.add_metric([node["id"]], v)
 
 
 class NodeLastRegistrationMetric(GaugeMetricFamily):
@@ -412,7 +491,13 @@ class StatsCollector(object):
         metrics = (
             info,
             NodeVersionMetric(),
+            NodeWeightMetric(),
             NodeBiasMetric(),
+            NodePenaltyMetric(),
+            NodeWeightedTTFBMetric(),
+            NodeWeightedHitsRatioMetric(),
+            NodeWeightedErrorsRatioMetric(),
+            NodeWeightedDupCacheMissRatioMetric(),
             NodeLastRegistrationMetric(),
             NodeCreationMetric(),
             NodeDiskTotalMetric(),
