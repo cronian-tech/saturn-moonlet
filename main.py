@@ -2,7 +2,7 @@ import json
 import os
 import signal
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from prometheus_client import (
@@ -539,37 +539,25 @@ class StatsCollector(object):
         return metrics
 
     def collect(self):
-        # Do not query orchestrator if "stats.json" is present.
-        # Useful for development and testing.
-        try:
-            with open("stats.json") as f:
-                stats = json.loads(f.read())
-        except FileNotFoundError:
-            r = requests.get(
-                "https://orchestrator.strn.pl/stats",
-                headers={"Accept": "application/json"},
-            )
-            stats = r.json()
-
-        # Do not query lambda if "earnings.json" is present.
-        # Useful for development and testing.
-        try:
-            with open("earnings.json") as f:
-                earnings = json.loads(f.read())
-        except FileNotFoundError:
-            r = requests.get(
-                "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
-                params={
-                    "filAddress": "all",
-                    "startDate": self._earnings_start,
-                    "endDate": self._utcnow_timestamp(),
-                    "step": "day",
-                    "perNode": "true",
-                },
-            )
-            earnings = r.json()
-
+        r = requests.get(
+            "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
+            params={
+                "filAddress": "all",
+                "startDate": self._earnings_start,
+                "endDate": self._utcnow_timestamp(),
+                "step": "day",
+                "perNode": "true",
+            },
+        )
+        earnings = r.json()
         earnings = self._earnings_per_node(earnings)
+
+        r = requests.get(
+            "https://orchestrator.strn.pl/stats",
+            headers={"Accept": "application/json", "Accept-Encoding": "gzip, deflate"},
+        )
+        stats = r.json()
+
         for m in self._node_metrics_from_stats(stats["nodes"], earnings):
             yield m
 
@@ -593,14 +581,8 @@ class RequirementsCollector:
         return metrics
 
     def collect(self):
-        # Do not query orchestrator if "requirements.json" is present.
-        # Useful for development and testing.
-        try:
-            with open("requirements.json") as f:
-                requirements = json.loads(f.read())
-        except FileNotFoundError:
-            r = requests.get("https://orchestrator.strn.pl/requirements")
-            requirements = r.json()
+        r = requests.get("https://orchestrator.strn.pl/requirements")
+        requirements = r.json()
 
         for m in self._node_requirements_metrics(requirements):
             yield m
