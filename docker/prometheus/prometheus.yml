@@ -2,7 +2,7 @@ scrape_configs:
   - job_name: saturn
 
     scrape_interval: 3m
-    scrape_timeout: 2m
+    scrape_timeout: 3m
     metrics_path: /
 
     static_configs:
