@@ -1,4 +1,3 @@
-import json
 import os
 import signal
 from collections import defaultdict
@@ -64,9 +63,6 @@ class NodeInfoMetric(InfoMetricFamily):
                 }
             )
 
-        if node["earnings"]:
-            values["payout_status"] = node["earnings"]["payoutStatus"]
-
         self.add_metric([], values)
 
     def add_inactive(self, node_id):
@@ -78,6 +74,14 @@ class NodeInfoMetric(InfoMetricFamily):
                 "state": "inactive",
             },
         )
+
+
+class NodePayoutInfoMetric(InfoMetricFamily):
+    def __init__(self):
+        super().__init__("saturn_node_payout", "")
+
+    def add(self, node):
+        self.add_metric([], {"id": node["nodeId"], "status": node["payoutStatus"]})
 
 
 class NodeVersionMetric(GaugeMetricFamily):
@@ -311,9 +315,9 @@ class NodeEstimatedEarningsMetric(CounterMetricFamily):
         super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
 
     def add(self, node):
-        fil_amount = node["earnings"].get("filAmount")
+        fil_amount = node.get("filAmount")
         if fil_amount is not None:
-            self.add_metric([node["id"]], fil_amount)
+            self.add_metric([node["nodeId"]], fil_amount)
 
 
 class NodeUptimeCompletionMetric(GaugeMetricFamily):
@@ -321,9 +325,9 @@ class NodeUptimeCompletionMetric(GaugeMetricFamily):
         super().__init__("saturn_node_uptime_completion_ratio", "", labels=["id"])
 
     def add(self, node):
-        uptime_completion = node["earnings"].get("uptimeCompletion")
+        uptime_completion = node.get("uptimeCompletion")
         if uptime_completion is not None:
-            self.add_metric([node["id"]], uptime_completion)
+            self.add_metric([node["nodeId"]], uptime_completion)
 
 
 class NodeRetrievalsMetric(CounterMetricFamily):
@@ -331,9 +335,9 @@ class NodeRetrievalsMetric(CounterMetricFamily):
         super().__init__("saturn_node_retrievals", "", labels=["id"])
 
     def add(self, node):
-        num_requests = node["earnings"].get("numRequests")
+        num_requests = node.get("numRequests")
         if num_requests is not None:
-            self.add_metric([node["id"]], num_requests)
+            self.add_metric([node["nodeId"]], num_requests)
 
 
 class NodeBandwidthServedMetric(CounterMetricFamily):
@@ -341,9 +345,9 @@ class NodeBandwidthServedMetric(CounterMetricFamily):
         super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
 
     def add(self, node):
-        num_bytes = node["earnings"].get("numBytes")
+        num_bytes = node.get("numBytes")
         if num_bytes is not None:
-            self.add_metric([node["id"]], num_bytes)
+            self.add_metric([node["nodeId"]], num_bytes)
 
 
 class NodeResponseDurationMetric(GaugeMetricFamily):
@@ -464,29 +468,15 @@ class NodeRequirementsMinVersionMetric(GaugeMetricFamily):
         self.add_metric([], requirements["minVersion"])
 
 
-class StatsCollector(object):
+class StatsCollector:
     def __init__(self, node_ids):
         """Collects stats for the specified node IDs.
 
         If node_ids is empty then collets stats for all nodes.
         """
         self._node_ids = frozenset(node_ids)
-        self._earnings_start = self._utcnow_timestamp()
 
-    @staticmethod
-    def _utcnow_timestamp():
-        return datetime.utcnow().timestamp() * 1000
-
-    def _earnings_per_node(self, earnings):
-        per_node = {}
-
-        for node in earnings["perNodeMetrics"]:
-            if not self._node_ids or node["nodeId"] in self._node_ids:
-                per_node[node["nodeId"]] = node
-
-        return per_node
-
-    def _node_metrics_from_stats(self, stats, earnings):
+    def _node_metrics_from_stats(self, stats):
         info = NodeInfoMetric()
         metrics = (
             info,
@@ -516,10 +506,6 @@ class StatsCollector(object):
             NodeSpeedtestUploadBandwidthMetric(),
             NodeSpeedtestDownloadBandwidthMetric(),
             NodeSpeedtestPingLatencyMetric(),
-            NodeEstimatedEarningsMetric(),
-            NodeUptimeCompletionMetric(),
-            NodeRetrievalsMetric(),
-            NodeBandwidthServedMetric(),
         )
 
         found = set()
@@ -528,7 +514,6 @@ class StatsCollector(object):
                 continue
             found.add(node["id"])
 
-            node["earnings"] = earnings.get(node["id"], {})
             for m in metrics:
                 m.add(node)
 
@@ -540,25 +525,60 @@ class StatsCollector(object):
 
     def collect(self):
         r = requests.get(
+            "https://orchestrator.strn.pl/stats",
+            headers={"Accept": "application/json", "Accept-Encoding": "gzip, deflate"},
+        )
+        stats = r.json()
+
+        for m in self._node_metrics_from_stats(stats["nodes"]):
+            yield m
+
+
+class EarningsAndRetrievalsCollector:
+    def __init__(self, node_ids):
+        """Collects earnings and retrievals for the specified node IDs.
+
+        If node_ids is empty then collets stats for all nodes.
+        """
+        self._node_ids = frozenset(node_ids)
+        self._start_ts = self._utcnow_timestamp()
+
+    @staticmethod
+    def _utcnow_timestamp():
+        return datetime.utcnow().timestamp() * 1000
+
+    def _node_earnings_and_retrievals_metrics(self, earnings):
+        metrics = (
+            NodePayoutInfoMetric(),
+            NodeEstimatedEarningsMetric(),
+            NodeUptimeCompletionMetric(),
+            NodeRetrievalsMetric(),
+            NodeBandwidthServedMetric(),
+        )
+
+        for node in earnings:
+            if self._node_ids and node["nodeId"] not in self._node_ids:
+                continue
+
+            for m in metrics:
+                m.add(node)
+
+        return metrics
+
+    def collect(self):
+        r = requests.get(
             "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
             params={
                 "filAddress": "all",
-                "startDate": self._earnings_start,
+                "startDate": self._start_ts,
                 "endDate": self._utcnow_timestamp(),
                 "step": "day",
                 "perNode": "true",
             },
         )
         earnings = r.json()
-        earnings = self._earnings_per_node(earnings)
 
-        r = requests.get(
-            "https://orchestrator.strn.pl/stats",
-            headers={"Accept": "application/json", "Accept-Encoding": "gzip, deflate"},
-        )
-        stats = r.json()
-
-        for m in self._node_metrics_from_stats(stats["nodes"], earnings):
+        for m in self._node_earnings_and_retrievals_metrics(earnings["perNodeMetrics"]):
             yield m
 
 
@@ -602,6 +622,7 @@ if __name__ == "__main__":
             node_ids = [l.strip() for l in f]
 
     REGISTRY.register(StatsCollector(node_ids))
+    REGISTRY.register(EarningsAndRetrievalsCollector(node_ids))
     REGISTRY.register(RequirementsCollector())
 
     start_http_server(9000)
