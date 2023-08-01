@@ -455,7 +455,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}",
+                    "expr": "increase(saturn_node_sent_bytes_total{id=\"$saturn_node_id\"}[$__range])",
                     "format": "table",
                     "hide": false,
                     "instant": true,
@@ -470,7 +470,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "saturn_node_received_bytes_total{id=\"$saturn_node_id\"}",
+                    "expr": "increase(saturn_node_received_bytes_total{id=\"$saturn_node_id\"}[$__range])",
                     "format": "table",
                     "hide": false,
                     "instant": true,
@@ -788,20 +788,6 @@
                     "legendFormat": "__auto",
                     "range": false,
                     "refId": "E"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
-                    },
-                    "editorMode": "code",
-                    "exemplar": false,
-                    "expr": "saturn_node_payout_info{id=\"$saturn_node_id\"}",
-                    "format": "table",
-                    "hide": false,
-                    "instant": true,
-                    "range": false,
-                    "refId": "F"
                 }
             ],
             "transformations": [
@@ -901,7 +887,6 @@
                             "sunrise": 16
                         },
                         "renameByName": {
-                            "Time 3": "",
                             "Time 4": "",
                             "Value #A": "",
                             "Value #B": "Last Registration",
@@ -910,7 +895,6 @@
                             "Value #E": "Version",
                             "id": "ID",
                             "job 4": "",
-                            "job 5": "",
                             "payout_status": "Payout Status",
                             "state": "State",
                             "status": "Payout Status",
@@ -1238,8 +1222,270 @@
             },
             "id": 22,
             "panels": [],
-            "title": "Earnings and Retrievals",
+            "title": "Estimated Earnings and Retrievals",
             "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "text",
+                        "mode": "fixed"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Payout Eligibility"
+                        },
+                        "properties": [
+                            {
+                                "id": "mappings",
+                                "value": [
+                                    {
+                                        "options": {
+                                            "pending": {
+                                                "color": "orange",
+                                                "index": 1
+                                            },
+                                            "postponed": {
+                                                "color": "purple",
+                                                "index": 2
+                                            },
+                                            "valid": {
+                                                "color": "green",
+                                                "index": 0
+                                            }
+                                        },
+                                        "type": "value"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Approximate Estimated Earnings"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "FIL"
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Approximate Bandwidth Served"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "decbytes"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 9,
+                "x": 0,
+                "y": 11
+            },
+            "id": 33,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "/.*/",
+                    "values": true
+                },
+                "text": {
+                    "titleSize": 14,
+                    "valueSize": 14
+                },
+                "textMode": "value_and_name"
+            },
+            "pluginVersion": "10.0.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "saturn_node_payout_info{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "increase(saturn_node_estimated_earnings_fil_total{id=\"$saturn_node_id\"}[$__range])",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "increase(saturn_node_bandwidth_served_bytes_total{id=\"$saturn_node_id\"}[$__range])",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "range": false,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "increase(saturn_node_retrievals_total{id=\"$saturn_node_id\"}[$__range])",
+                    "format": "table",
+                    "hide": false,
+                    "instant": true,
+                    "range": false,
+                    "refId": "D"
+                }
+            ],
+            "transformations": [
+                {
+                    "id": "joinByField",
+                    "options": {
+                        "byField": "id",
+                        "mode": "outer"
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time": true,
+                            "Time 1": true,
+                            "Time 2": true,
+                            "Time 3": true,
+                            "Time 4": true,
+                            "Time 5": true,
+                            "Time 6": true,
+                            "Value": true,
+                            "Value #A": true,
+                            "Value #B": false,
+                            "Value #F": true,
+                            "__name__": true,
+                            "__name__ 1": true,
+                            "__name__ 2": true,
+                            "__name__ 3": true,
+                            "__name__ 4": true,
+                            "__name__ 5": true,
+                            "cassini": true,
+                            "core": true,
+                            "geoloc_city": true,
+                            "geoloc_country": true,
+                            "geoloc_country_code": true,
+                            "geoloc_region": true,
+                            "id": true,
+                            "id_short": true,
+                            "instance": true,
+                            "instance 1": true,
+                            "instance 2": true,
+                            "instance 3": true,
+                            "instance 4": true,
+                            "instance 5": true,
+                            "ip_address": true,
+                            "job": true,
+                            "job 1": true,
+                            "job 2": true,
+                            "job 3": true,
+                            "job 4": true,
+                            "job 5": true,
+                            "payout_status": false,
+                            "sppedtest_isp": true,
+                            "sppedtest_server_country": true,
+                            "sppedtest_server_location": true,
+                            "sunrise": true,
+                            "version_short": true
+                        },
+                        "indexByName": {
+                            "Time 1": 5,
+                            "Time 2": 9,
+                            "Time 3": 12,
+                            "Time 4": 15,
+                            "Value #A": 8,
+                            "Value #B": 1,
+                            "Value #C": 2,
+                            "Value #D": 3,
+                            "__name__": 18,
+                            "id": 4,
+                            "instance 1": 6,
+                            "instance 2": 10,
+                            "instance 3": 13,
+                            "instance 4": 16,
+                            "job 1": 7,
+                            "job 2": 11,
+                            "job 3": 14,
+                            "job 4": 17,
+                            "status": 0
+                        },
+                        "renameByName": {
+                            "Time 4": "",
+                            "Value #A": "",
+                            "Value #B": "Approximate Estimated Earnings",
+                            "Value #C": "Approximate Bandwidth Served",
+                            "Value #D": "Approximate Retrievals",
+                            "Value #E": "Version",
+                            "id": "",
+                            "job 4": "",
+                            "payout_status": "Payout Status",
+                            "state": "State",
+                            "status": "Payout Eligibility",
+                            "version": "Version"
+                        }
+                    }
+                }
+            ],
+            "type": "stat"
         },
         {
             "datasource": {
@@ -1258,16 +1504,26 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
-                        "fillOpacity": 60,
+                        "barAlignment": -1,
+                        "drawStyle": "line",
+                        "fillOpacity": 70,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
                             "tooltip": false,
                             "viz": false
                         },
+                        "lineInterpolation": "stepBefore",
                         "lineWidth": 0,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
                         },
                         "thresholdsStyle": {
                             "mode": "off"
@@ -1288,35 +1544,23 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
+                "h": 7,
+                "w": 7,
+                "x": 9,
                 "y": 11
             },
             "id": 16,
             "options": {
-                "barRadius": 0,
-                "barWidth": 1,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
                 "legend": {
-                    "calcs": [
-                        "sum"
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": false
                 },
-                "orientation": "auto",
-                "showValue": "never",
-                "stacking": "none",
                 "tooltip": {
                     "mode": "multi",
                     "sort": "none"
-                },
-                "xField": "Time",
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 100
+                }
             },
             "targets": [
                 {
@@ -1334,7 +1578,7 @@
             ],
             "title": "Approximate Estimated Earnings",
             "transformations": [],
-            "type": "barchart"
+            "type": "timeseries"
         },
         {
             "datasource": {
@@ -1353,16 +1597,26 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
-                        "fillOpacity": 60,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 70,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
                             "tooltip": false,
                             "viz": false
                         },
+                        "lineInterpolation": "stepBefore",
                         "lineWidth": 0,
+                        "pointSize": 5,
                         "scaleDistribution": {
                             "type": "linear"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
                         },
                         "thresholdsStyle": {
                             "mode": "off"
@@ -1380,38 +1634,61 @@
                     },
                     "unit": "decbytes"
                 },
-                "overrides": []
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Retrievals"
+                        },
+                        "properties": [
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "semi-dark-green",
+                                    "mode": "fixed"
+                                }
+                            },
+                            {
+                                "id": "unit"
+                            },
+                            {
+                                "id": "custom.drawStyle",
+                                "value": "line"
+                            },
+                            {
+                                "id": "custom.spanNulls",
+                                "value": true
+                            },
+                            {
+                                "id": "custom.lineWidth",
+                                "value": 1
+                            },
+                            {
+                                "id": "custom.fillOpacity",
+                                "value": 0
+                            }
+                        ]
+                    }
+                ]
             },
             "gridPos": {
-                "h": 8,
+                "h": 7,
                 "w": 8,
-                "x": 8,
+                "x": 16,
                 "y": 11
             },
             "id": 18,
             "options": {
-                "barRadius": 0,
-                "barWidth": 1,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
                 "legend": {
-                    "calcs": [
-                        "sum"
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
-                    "showLegend": false
+                    "showLegend": true
                 },
-                "orientation": "auto",
-                "showValue": "never",
-                "stacking": "none",
                 "tooltip": {
                     "mode": "multi",
                     "sort": "none"
-                },
-                "xField": "Time",
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 100
+                }
             },
             "targets": [
                 {
@@ -1424,92 +1701,104 @@
                     "expr": "increase(saturn_node_bandwidth_served_bytes_total{id=\"$saturn_node_id\"}[$__rate_interval])",
                     "format": "time_series",
                     "instant": false,
-                    "legendFormat": "Value",
+                    "legendFormat": "Bandwidth",
                     "range": true,
                     "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
+                    },
+                    "editorMode": "code",
+                    "expr": "increase(saturn_node_retrievals_total{id=\"$saturn_node_id\"}[$__rate_interval])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Retrievals",
+                    "range": true,
+                    "refId": "B"
                 }
             ],
-            "title": "Approximate Bandwidth Served",
-            "transformations": [],
-            "type": "barchart"
+            "title": "Approximate Retrievals",
+            "transformations": [
+                {
+                    "id": "filterByValue",
+                    "options": {
+                        "filters": [
+                            {
+                                "config": {
+                                    "id": "equal",
+                                    "options": {
+                                        "value": ""
+                                    }
+                                },
+                                "fieldName": "Retrievals"
+                            }
+                        ],
+                        "match": "any",
+                        "type": "exclude"
+                    }
+                }
+            ],
+            "type": "timeseries"
         },
         {
             "datasource": {
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
-            "description": "**Data may not be accurate.** For the source of truth, check the [official dashboard](https://dashboard.saturn.tech/address).",
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "fixedColor": "green",
-                        "mode": "fixed"
+                        "mode": "thresholds"
                     },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "fillOpacity": 60,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineWidth": 0,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
+                    "links": [],
                     "mappings": [],
+                    "max": 1,
+                    "min": 0,
                     "thresholds": {
-                        "mode": "absolute",
+                        "mode": "percentage",
                         "steps": [
                             {
-                                "color": "green",
+                                "color": "orange",
                                 "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 100
                             }
                         ]
                     },
-                    "unit": "none"
+                    "unit": "percentunit"
                 },
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 11
+                "h": 2,
+                "w": 9,
+                "x": 0,
+                "y": 16
             },
-            "id": 20,
+            "id": 34,
             "options": {
-                "barRadius": 0,
-                "barWidth": 1,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
-                "legend": {
+                "displayMode": "basic",
+                "minVizHeight": 10,
+                "minVizWidth": 0,
+                "orientation": "horizontal",
+                "reduceOptions": {
                     "calcs": [
-                        "sum"
+                        "lastNotNull"
                     ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": false
+                    "fields": "",
+                    "values": false
                 },
-                "orientation": "auto",
-                "showValue": "never",
-                "stacking": "none",
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
+                "showUnfilled": true,
+                "text": {
+                    "valueSize": 14
                 },
-                "xField": "Time",
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 100
+                "valueMode": "color"
             },
+            "pluginVersion": "10.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -1518,26 +1807,26 @@
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "increase(saturn_node_retrievals_total{id=\"$saturn_node_id\"}[$__rate_interval])",
-                    "format": "time_series",
-                    "instant": false,
-                    "legendFormat": "Value",
-                    "range": true,
+                    "expr": "saturn_node_uptime_completion_ratio{id=\"$saturn_node_id\"}",
+                    "format": "table",
+                    "instant": true,
+                    "range": false,
                     "refId": "A"
                 }
             ],
-            "title": "Approximate Retrievals",
-            "transformations": [],
-            "type": "barchart"
+            "title": "Uptime Requirement Completion",
+            "type": "bargauge"
         },
         {
+            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 19
+                "y": 18
             },
             "id": 21,
+            "panels": [],
             "title": "Traffic",
             "type": "row"
         },
@@ -1642,7 +1931,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 20
+                "y": 19
             },
             "id": 14,
             "options": {
@@ -1818,7 +2107,7 @@
                 "h": 8,
                 "w": 9,
                 "x": 6,
-                "y": 20
+                "y": 19
             },
             "id": 15,
             "options": {
@@ -2048,7 +2337,7 @@
                 "h": 8,
                 "w": 9,
                 "x": 15,
-                "y": 20
+                "y": 19
             },
             "id": 19,
             "options": {
@@ -2113,9 +2402,9 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 28
+                "y": 27
             },
-            "id": 24,
+            "id": 29,
             "panels": [],
             "title": "Bias and Penalty",
             "type": "row"
@@ -2125,12 +2414,10 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
-            "description": "",
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "mode": "fixed",
-                        "seriesBy": "last"
+                        "mode": "fixed"
                     },
                     "custom": {
                         "axisCenteredZero": false,
@@ -2162,7 +2449,6 @@
                             "mode": "off"
                         }
                     },
-                    "displayName": "Value",
                     "mappings": [
                         {
                             "options": {
@@ -2196,9 +2482,9 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 29
+                "y": 28
             },
-            "id": 5,
+            "id": 32,
             "options": {
                 "legend": {
                     "calcs": [
@@ -2213,7 +2499,6 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "9.5.3",
             "targets": [
                 {
                     "datasource": {
@@ -2222,8 +2507,8 @@
                     },
                     "editorMode": "code",
                     "expr": "saturn_node_weight{id=\"$saturn_node_id\"}",
-                    "format": "time_series",
-                    "legendFormat": "__auto",
+                    "instant": false,
+                    "legendFormat": "Value",
                     "range": true,
                     "refId": "A"
                 }
@@ -2236,7 +2521,6 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
-            "description": "",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2293,9 +2577,9 @@
                 "h": 8,
                 "w": 9,
                 "x": 6,
-                "y": 29
+                "y": 28
             },
-            "id": 25,
+            "id": 30,
             "options": {
                 "legend": {
                     "calcs": [
@@ -2318,10 +2602,11 @@
                     },
                     "editorMode": "code",
                     "expr": "saturn_node_bias{id=\"$saturn_node_id\"}",
+                    "hide": false,
                     "instant": false,
                     "legendFormat": "{{kind}}",
                     "range": true,
-                    "refId": "A"
+                    "refId": "B"
                 }
             ],
             "title": "Bias",
@@ -2389,9 +2674,9 @@
                 "h": 8,
                 "w": 9,
                 "x": 15,
-                "y": 29
+                "y": 28
             },
-            "id": 26,
+            "id": 31,
             "options": {
                 "legend": {
                     "calcs": [
@@ -2433,8 +2718,8 @@
             {
                 "current": {
                     "selected": true,
-                    "text": "d3c00500-b5ae-44d3-8940-40b72f21c569",
-                    "value": "d3c00500-b5ae-44d3-8940-40b72f21c569"
+                    "text": "013727d8-9286-4c98-a783-70e568420a9f",
+                    "value": "013727d8-9286-4c98-a783-70e568420a9f"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -2467,6 +2752,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 1,
+    "version": 31,
     "weekStart": ""
 }
