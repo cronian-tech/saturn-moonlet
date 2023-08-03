@@ -25,7 +25,7 @@ Although, it was built during the [HackFS 2023](https://ethglobal.com/showcase/s
 
 Live demo is available at [https://demo.moonlet.zanko.dev](https://demo.moonlet.zanko.dev).
 
-![demo](https://github.com/31z4/saturn-moonlet/assets/3657959/a71feac1-ac79-4513-be12-797103546ab7)
+![demo](assets/demo.gif)
 
 Note that the demo offers limited features allowing you only to evaluate and test Saturn Moonlet. Demo is not an end product and provided **"AS IS"**.
 
