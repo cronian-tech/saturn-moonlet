@@ -16,6 +16,15 @@ services:
   prometheus:
     image: prom/prometheus:v2.44.0
     restart: unless-stopped
+    command:
+      # Store 30 days of data.
+      - --storage.tsdb.retention.time=30d
+      # Below are the command line arguments taken from the upstream Dockerfile.
+      # See https://github.com/prometheus/prometheus/blob/1ac5131f698ebc60f13fe2727f89b115a41f6558/Dockerfile
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
     ports:
       - 127.0.0.1:9090:9090/tcp
     volumes:
