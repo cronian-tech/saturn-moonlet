@@ -124,9 +124,10 @@ class NodePenaltyMetric(GaugeMetricFamily):
     _PENALTIES = {
         "speedPenalty": "speed",
         "cpuLoadPenalty": "cpu_load",
-        "errorRatePenalty": "error_rate",
+        "errorRatioPenalty": "error_ratio",
         "oldVersionPenalty": "old_version",
-        "cacheHitRatePenalty": "cache_hit_rate",
+        "cacheHitRatioPenalty": "cache_hit_ratio",
+        "dupCacheMissRatioPenalty": "dup_cache_miss_ratio",
         "healthCheckFailuresPenalty": "health_check_failures",
     }
 
