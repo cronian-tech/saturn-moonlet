@@ -2,3 +2,4 @@
 black<24
 isort<6
 ruff<0.1
+pip-audit<3
