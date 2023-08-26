@@ -1,4 +1,4 @@
-check: black-check isort-check ruff-check pip-audit
+check: black-check isort-check ruff-check pip-audit docker-compose-validate
 
 black-check:
 	black --check main.py
@@ -11,3 +11,6 @@ ruff-check:
 
 pip-audit:
 	pip-audit --strict --desc -r dev-requirements.txt -r requirements.txt
+
+docker-compose-validate:
+	docker compose config -q
