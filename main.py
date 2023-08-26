@@ -751,7 +751,7 @@ if __name__ == "__main__":
     nodes_file = os.environ.get("SATURN_PROMETHEUS_EXPORTER_NODES")
     if nodes_file:
         with open(nodes_file) as f:
-            node_ids = [l.strip() for l in f]
+            node_ids = [line.strip() for line in f]
 
     REGISTRY.register(StatsCollector(node_ids))
     REGISTRY.register(EarningsAndRetrievalsCollector(node_ids))
