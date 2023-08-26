@@ -18,5 +18,9 @@ jobs:
           pip install --upgrade pip
           pip install --no-deps -r dev-requirements.txt
 
+      # This file is required for Docker Compose validation.
+      - name: Create empty .env file
+        run: touch docker/prometheus-exporter/.env
+
       - name: Run checks
         run: make check
