@@ -30,7 +30,7 @@ def _str_to_timestamp(v):
 
 class NodeInfoMetric(InfoMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node", "")
+        super().__init__("saturn_node", "Information about the node.")
 
     @staticmethod
     def _id_short(v):
@@ -78,7 +78,7 @@ class NodeInfoMetric(InfoMetricFamily):
 
 class NodePayoutInfoMetric(InfoMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_payout", "")
+        super().__init__("saturn_node_payout", "Payout status of the node.")
 
     def add(self, node):
         self.add_metric([], {"id": node["nodeId"], "status": node["payoutStatus"]})
@@ -86,7 +86,11 @@ class NodePayoutInfoMetric(InfoMetricFamily):
 
 class NodeVersionMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_version", "", labels=["id"])
+        super().__init__(
+            "saturn_node_version",
+            "The version of the software the node is running.",
+            labels=["id"],
+        )
 
     def add(self, node):
         version = node["version"].split("_")[0]
@@ -95,7 +99,9 @@ class NodeVersionMetric(GaugeMetricFamily):
 
 class NodeWeightMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_weight", "", labels=["id"])
+        super().__init__(
+            "saturn_node_weight", "Weight of the node in the network.", labels=["id"]
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["bias"])
@@ -111,7 +117,11 @@ class NodeBiasMetric(GaugeMetricFamily):
     }
 
     def __init__(self):
-        super().__init__("saturn_node_bias", "", labels=["id", "kind"])
+        super().__init__(
+            "saturn_node_bias",
+            "Various bias values that affect the weight of the node in the network.",
+            labels=["id", "kind"],
+        )
 
     def add(self, node):
         for k, v in self._BIASES.items():
@@ -132,7 +142,11 @@ class NodePenaltyMetric(GaugeMetricFamily):
     }
 
     def __init__(self):
-        super().__init__("saturn_node_penalty", "", labels=["id", "kind"])
+        super().__init__(
+            "saturn_node_penalty",
+            "Various penalty values that affect the weight of the node in the network.",
+            labels=["id", "kind"],
+        )
 
     def add(self, node):
         for k, v in self._PENALTIES.items():
@@ -143,7 +157,11 @@ class NodePenaltyMetric(GaugeMetricFamily):
 
 class NodeWeightedTTFBMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_weighted_ttfb_milliseconds", "", labels=["id"])
+        super().__init__(
+            "saturn_node_weighted_ttfb_milliseconds",
+            "Weighted time to first byte.",
+            labels=["id"],
+        )
 
     def add(self, node):
         v = node["biases"].get("weightedTtfb")
@@ -153,7 +171,11 @@ class NodeWeightedTTFBMetric(GaugeMetricFamily):
 
 class NodeWeightedHitsRatioMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_weighted_hits_ratio", "", labels=["id"])
+        super().__init__(
+            "saturn_node_weighted_hits_ratio",
+            "Weighted cache hits ratio of the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         v = node["biases"].get("weightedHitsRatio")
@@ -163,7 +185,11 @@ class NodeWeightedHitsRatioMetric(GaugeMetricFamily):
 
 class NodeWeightedErrorsRatioMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_weighted_errors_ratio", "", labels=["id"])
+        super().__init__(
+            "saturn_node_weighted_errors_ratio",
+            "Weighted error ratio of the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         v = node["biases"].get("weightedErrorsRatio")
@@ -173,7 +199,11 @@ class NodeWeightedErrorsRatioMetric(GaugeMetricFamily):
 
 class NodeWeightedDupCacheMissRatioMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_weighted_dup_cache_miss_ratio", "", labels=["id"])
+        super().__init__(
+            "saturn_node_weighted_dup_cache_miss_ratio",
+            "Weighted duplicate cache miss ratio of the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         v = node["biases"].get("weightedDupCacheMissRatio")
@@ -183,7 +213,11 @@ class NodeWeightedDupCacheMissRatioMetric(GaugeMetricFamily):
 
 class NodeLastRegistrationMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_last_registration_timestamp", "", labels=["id"])
+        super().__init__(
+            "saturn_node_last_registration_timestamp",
+            "When the node was last registered.",
+            labels=["id"],
+        )
 
     def add(self, node):
         last_registration_ts = _str_to_timestamp(node["lastRegistration"])
@@ -192,7 +226,11 @@ class NodeLastRegistrationMetric(GaugeMetricFamily):
 
 class NodeCreationMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_creation_timestamp", "", labels=["id"])
+        super().__init__(
+            "saturn_node_creation_timestamp",
+            "When the node was created.",
+            labels=["id"],
+        )
 
     def add(self, node):
         creation_ts = _str_to_timestamp(node["createdAt"])
@@ -201,7 +239,11 @@ class NodeCreationMetric(GaugeMetricFamily):
 
 class NodeDiskTotalMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_disk_total_megabytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_disk_total_megabytes",
+            "Total amount of storage on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["diskStats"]["totalDiskMB"])
@@ -209,7 +251,11 @@ class NodeDiskTotalMetric(GaugeMetricFamily):
 
 class NodeDiskUsedMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_disk_used_megabytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_disk_used_megabytes",
+            "The amount of storage used on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["diskStats"]["usedDiskMB"])
@@ -217,7 +263,11 @@ class NodeDiskUsedMetric(GaugeMetricFamily):
 
 class NodeDiskAvailableMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_disk_available_megabytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_disk_available_megabytes",
+            "The amount of storage available on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["diskStats"]["availableDiskMB"])
@@ -225,7 +275,11 @@ class NodeDiskAvailableMetric(GaugeMetricFamily):
 
 class NodeMemoryTotalMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_memory_total_kilobytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_memory_total_kilobytes",
+            "Total amount of RAM on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["memoryStats"]["totalMemoryKB"])
@@ -233,7 +287,11 @@ class NodeMemoryTotalMetric(GaugeMetricFamily):
 
 class NodeMemoryFreeMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_memory_free_kilobytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_memory_free_kilobytes",
+            "Free amount of RAM on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["memoryStats"]["freeMemoryKB"])
@@ -241,7 +299,11 @@ class NodeMemoryFreeMetric(GaugeMetricFamily):
 
 class NodeMemoryAvailableMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_memory_available_kilobytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_memory_available_kilobytes",
+            "The amount of RAM available on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["memoryStats"]["availableMemoryKB"])
@@ -249,7 +311,11 @@ class NodeMemoryAvailableMetric(GaugeMetricFamily):
 
 class NodeCPUNumberMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_cpu_number", "", labels=["id"])
+        super().__init__(
+            "saturn_node_cpu_number",
+            "The number of CPU cores on the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["cpuStats"]["numCPUs"])
@@ -257,7 +323,9 @@ class NodeCPUNumberMetric(GaugeMetricFamily):
 
 class NodeCPULoadAvgMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_cpu_load_avg", "", labels=["id"])
+        super().__init__(
+            "saturn_node_cpu_load_avg", "CPU load average of the node.", labels=["id"]
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["cpuStats"]["loadAvgs"][0])
@@ -265,7 +333,11 @@ class NodeCPULoadAvgMetric(GaugeMetricFamily):
 
 class NodeSentBytesTotalMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_sent_bytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_sent_bytes",
+            "Total amount of traffic sent by the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["nicStats"]["bytesSent"])
@@ -273,7 +345,11 @@ class NodeSentBytesTotalMetric(CounterMetricFamily):
 
 class NodeSpeedtestUploadBandwidthMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_speedtest_upload_bandwidth", "", labels=["id"])
+        super().__init__(
+            "saturn_node_speedtest_upload_bandwidth",
+            "Node upload bandwidth as measured by Speedtest.",
+            labels=["id"],
+        )
 
     def add(self, node):
         speedtest = node.get("speedtest")
@@ -283,7 +359,11 @@ class NodeSpeedtestUploadBandwidthMetric(GaugeMetricFamily):
 
 class NodeSpeedtestDownloadBandwidthMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_speedtest_download_bandwidth", "", labels=["id"])
+        super().__init__(
+            "saturn_node_speedtest_download_bandwidth",
+            "Node download bandwidth as measured by Speedtest.",
+            labels=["id"],
+        )
 
     def add(self, node):
         speedtest = node.get("speedtest")
@@ -294,7 +374,9 @@ class NodeSpeedtestDownloadBandwidthMetric(GaugeMetricFamily):
 class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__(
-            "saturn_node_speedtest_ping_latency_milliseconds", "", labels=["id"]
+            "saturn_node_speedtest_ping_latency_milliseconds",
+            "Node ping latency as measured by Speedtest.",
+            labels=["id"],
         )
 
     def add(self, node):
@@ -305,7 +387,11 @@ class NodeSpeedtestPingLatencyMetric(GaugeMetricFamily):
 
 class NodeReceivedBytesTotalMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_received_bytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_received_bytes",
+            "Total amount of traffic received by the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         self.add_metric([node["id"]], node["nicStats"]["bytesReceived"])
@@ -313,7 +399,11 @@ class NodeReceivedBytesTotalMetric(CounterMetricFamily):
 
 class NodeEstimatedEarningsMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_estimated_earnings_fil", "", labels=["id"])
+        super().__init__(
+            "saturn_node_estimated_earnings_fil",
+            "Estimated earnings of the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         fil_amount = node.get("filAmount")
@@ -323,7 +413,11 @@ class NodeEstimatedEarningsMetric(CounterMetricFamily):
 
 class NodeUptimeCompletionMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_uptime_completion_ratio", "", labels=["id"])
+        super().__init__(
+            "saturn_node_uptime_completion_ratio",
+            "Node uptime requirement completion ratio.",
+            labels=["id"],
+        )
 
     def add(self, node):
         uptime_completion = node.get("uptimeCompletion")
@@ -333,7 +427,11 @@ class NodeUptimeCompletionMetric(GaugeMetricFamily):
 
 class NodeRetrievalsMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_retrievals", "", labels=["id"])
+        super().__init__(
+            "saturn_node_retrievals",
+            "The number of retrievals served by the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         num_requests = node.get("numRequests")
@@ -343,7 +441,11 @@ class NodeRetrievalsMetric(CounterMetricFamily):
 
 class NodeBandwidthServedMetric(CounterMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_bandwidth_served_bytes", "", labels=["id"])
+        super().__init__(
+            "saturn_node_bandwidth_served_bytes",
+            "The amount of traffic served by the node.",
+            labels=["id"],
+        )
 
     def add(self, node):
         num_bytes = node.get("numBytes")
@@ -354,7 +456,9 @@ class NodeBandwidthServedMetric(CounterMetricFamily):
 class NodeResponseDurationMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__(
-            "saturn_node_response_duration_milliseconds", "", labels=["id", "quantile"]
+            "saturn_node_response_duration_milliseconds",
+            "The time it takes by average for the node to respond to a request.",
+            labels=["id", "quantile"],
         )
 
     def add(self, node):
@@ -372,7 +476,11 @@ class NodeResponseDurationMetric(GaugeMetricFamily):
 
 class NodeRequestsMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requests", "", labels=["id", "result"])
+        super().__init__(
+            "saturn_node_requests",
+            "The number of requests served by the node.",
+            labels=["id", "result"],
+        )
 
     def add(self, node):
         ttfb = node.get("ttfbStats")
@@ -396,7 +504,9 @@ class NodeRequestsMetric(GaugeMetricFamily):
 class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
     def __init__(self):
         super().__init__(
-            "saturn_node_health_check_failures", "", labels=["id", "error"]
+            "saturn_node_health_check_failures",
+            "The number of node health check failures.",
+            labels=["id", "error"],
         )
 
     def add(self, node):
@@ -415,7 +525,10 @@ class NodeHealthCheckFailuresMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinCPUCoresMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_cpu_cores", "")
+        super().__init__(
+            "saturn_node_requirements_min_cpu_cores",
+            "The minimum number of CPU cores required for a node.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minCPUCores"])
@@ -423,7 +536,10 @@ class NodeRequirementsMinCPUCoresMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinMemoryMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_memory_gigabytes", "")
+        super().__init__(
+            "saturn_node_requirements_min_memory_gigabytes",
+            "The minimum amount of RAM required for a node.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minMemoryGB"])
@@ -431,7 +547,10 @@ class NodeRequirementsMinMemoryMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinUploadSpeedMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_upload_speed_mbps", "")
+        super().__init__(
+            "saturn_node_requirements_min_upload_speed_mbps",
+            "The minimum upload speed required for a node.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minUploadSpeedMbps"])
@@ -439,7 +558,10 @@ class NodeRequirementsMinUploadSpeedMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinDownloadSpeedMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_download_speed_mbps", "")
+        super().__init__(
+            "saturn_node_requirements_min_download_speed_mbps",
+            "The minimum download speed required for a node.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minDownloadSpeedMbps"])
@@ -447,7 +569,10 @@ class NodeRequirementsMinDownloadSpeedMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinDiskMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_disk_gigabytes", "")
+        super().__init__(
+            "saturn_node_requirements_min_disk_gigabytes",
+            "The minimum amount of storage required for a node.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minDiskGB"])
@@ -455,7 +580,10 @@ class NodeRequirementsMinDiskMetric(GaugeMetricFamily):
 
 class NodeRequirementsLastVersionMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_last_version", "")
+        super().__init__(
+            "saturn_node_requirements_last_version",
+            "The latest version of the node's software.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["lastVersion"])
@@ -463,7 +591,10 @@ class NodeRequirementsLastVersionMetric(GaugeMetricFamily):
 
 class NodeRequirementsMinVersionMetric(GaugeMetricFamily):
     def __init__(self):
-        super().__init__("saturn_node_requirements_min_version", "")
+        super().__init__(
+            "saturn_node_requirements_min_version",
+            "The minimum required version of the node's software.",
+        )
 
     def add(self, requirements):
         self.add_metric([], requirements["minVersion"])
