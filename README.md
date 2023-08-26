@@ -1,7 +1,5 @@
 # Saturn Moonlet
 
-🚧 **This project is under active development. Things may break** 🚧
-
 [Filecoin Saturn](https://saturn.tech) monitoring for node operators.
 More powerful and insightful alternative to [Saturn Node Dashboard](https://dashboard.saturn.tech/stats) that anyone can run.
 
