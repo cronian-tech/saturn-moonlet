@@ -51,6 +51,7 @@
         "type": "prometheus",
         "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
       },
+      "description": "**ID**<br/>\nUnique ID of the node (only first part of the ID is shown).\n\n**Version**<br/>\nThe version of the software the node is running.\n\n**Location**<br/>\nPhysical location of the node based on the IP address.\n\n**Health**<br/>\nThe number node health check failures in last 24 hours.\nHealthy means no failures.\n\n**Weight**<br/>\nThis value indicates what is the probability of the node being selected to serve the traffic – the higher the value, the higher the probability.\n\n**Weight Trend**<br/>\n24 hour weight trend of the node in the network.\n\n**TTFB (Time To First Byte)**<br/>\nThe time it takes by average for the node to respond to a request.\nMeasured at the 95th percentile of the response times from last hour.\n\n**Hits**<br/>\nThe percentage of requests that were served from cache during last hour.\n\n**Errors**<br/>\nThe percentage of requests that were responded with server or gateway error (only 5xx status codes) during last hour.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -874,6 +875,7 @@
           "refId": "M"
         }
       ],
+      "title": "Saturn Nodes",
       "transformations": [
         {
           "id": "timeSeriesTable",
@@ -925,8 +927,8 @@
             "indexByName": {
               "Time 1": 22,
               "Time 10": 57,
-              "Time 11": 59,
-              "Time 12": 64,
+              "Time 11": 61,
+              "Time 12": 67,
               "Time 2": 26,
               "Time 3": 36,
               "Time 4": 39,
@@ -953,8 +955,8 @@
               "__name__ 3": 27,
               "__name__ 4": 46,
               "__name__ 5": 58,
-              "__name__ 6": 60,
-              "__name__ 7": 66,
+              "__name__ 6": 62,
+              "__name__ 7": 68,
               "cassini": 28,
               "core": 29,
               "geoloc": 4,
@@ -965,7 +967,7 @@
               "id": 16,
               "id_short": 1,
               "instance 1": 20,
-              "instance 10": 67,
+              "instance 10": 59,
               "instance 2": 24,
               "instance 3": 32,
               "instance 4": 37,
@@ -976,7 +978,7 @@
               "instance 9": 54,
               "ip_address": 3,
               "job 1": 21,
-              "job 10": 68,
+              "job 10": 60,
               "job 2": 25,
               "job 3": 33,
               "job 4": 38,
@@ -985,11 +987,11 @@
               "job 7": 48,
               "job 8": 52,
               "job 9": 55,
-              "payout_status": 65,
+              "payout_status": 63,
               "quantile": 49,
-              "sppedtest_isp": 61,
-              "sppedtest_server_country": 62,
-              "sppedtest_server_location": 63,
+              "sppedtest_isp": 64,
+              "sppedtest_server_country": 65,
+              "sppedtest_server_location": 66,
               "state": 0,
               "sunrise": 34
             },
@@ -1008,6 +1010,7 @@
               "Value #L": "Created",
               "Value #M": "Version",
               "__name__ 1": "",
+              "__name__ 7": "",
               "geoloc": "Location",
               "geoloc_city": "",
               "geoloc_country": "",
