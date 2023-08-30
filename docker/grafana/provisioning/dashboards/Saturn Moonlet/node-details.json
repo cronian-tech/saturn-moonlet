@@ -76,6 +76,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**IP**<br/>\nIP address is obscured and not available publicly to protect the node from direct access.\n\n**ISP**<br/>\nISP of the node is currently provided by an external service and can be inaccurate.\n\n**City, Country**<br/>\nPhysical location of the node based on the IP address.\nLocation plays important role in determining node profitability.\nNodes in the same location will share the traffic and therefore the revenue.\nIt is best to set up nodes in locations that have potentially high traffic and limited coverage.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -97,109 +98,9 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "Last Registration"
+                            "options": "IP"
                         },
-                        "properties": [
-                            {
-                                "id": "unit",
-                                "value": "dateTimeFromNow"
-                            }
-                        ]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "Created"
-                        },
-                        "properties": [
-                            {
-                                "id": "unit",
-                                "value": "dateTimeFromNow"
-                            }
-                        ]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "State"
-                        },
-                        "properties": [
-                            {
-                                "id": "mappings",
-                                "value": [
-                                    {
-                                        "options": {
-                                            "active": {
-                                                "color": "green",
-                                                "index": 0
-                                            },
-                                            "down": {
-                                                "color": "red",
-                                                "index": 1
-                                            },
-                                            "draining": {
-                                                "color": "blue",
-                                                "index": 2
-                                            }
-                                        },
-                                        "type": "value"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "Health"
-                        },
-                        "properties": [
-                            {
-                                "id": "unit",
-                                "value": "count:fails"
-                            },
-                            {
-                                "id": "mappings",
-                                "value": [
-                                    {
-                                        "options": {
-                                            "0": {
-                                                "index": 0,
-                                                "text": "healthy"
-                                            },
-                                            "1": {
-                                                "index": 1,
-                                                "text": "1 fail"
-                                            }
-                                        },
-                                        "type": "value"
-                                    }
-                                ]
-                            },
-                            {
-                                "id": "color"
-                            },
-                            {
-                                "id": "thresholds",
-                                "value": {
-                                    "mode": "absolute",
-                                    "steps": [
-                                        {
-                                            "color": "green",
-                                            "value": null
-                                        },
-                                        {
-                                            "color": "orange",
-                                            "value": 1
-                                        },
-                                        {
-                                            "color": "red",
-                                            "value": 4
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
+                        "properties": []
                     }
                 ]
             },
@@ -309,6 +210,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**CPU Cores**<br/>\nThe number of CPU cores on the node.\n\n**Memory**<br/>\nTotal amount of RAM on the node.\n\n**Disk**<br/>\nTotal amount of storage on the node.\n\n**Upload**<br/>\nTotal amount of traffic sent by the node.\nThis value is taken from the node's network interface and updated on every node registration.\nIt does not impact node's weight and is only used for informational purposes.\n\n**Download**<br/>\nTotal amount of traffic received by the node.\nThis value is taken from the node's network interface and updated on every node registration.\nIt does not impact node's weight and is only used for informational purposes.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -531,6 +433,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "**State**<br/>\nActive – the node is active and accepting new connections.\n\nDraining – the ode is draining connections (waiting for existing connections to finish and not accepting any new connections) most likely in preparation for a software update and graceful restart.\nThis is a temporary state, the node will become active again after the update.\n\nInactive – the node has not updated its status for a while and has been removed from the network until it reports its status again.\n\nDown – the node has failed at least one health check in recent minutes and has been removed from the network until it reports successful health checks again.\nIt is also possible that node with that status has been manually blocked by the network operator for malicious activities.\n\n**Health**<br/>\nThe number node health check failures in last 24 hours.\nHealthy means no failures.\n\n**Version**<br/>\nThe version of the software the node is running.\nVersion is an incrementable number that is increased with each software update.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -910,6 +813,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "The percentage of CPU usage on the node.\n\nHigh CPU usage will affect node performance and impact weight of the node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1012,6 +916,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
+            "description": "The percentage of RAM used on the node.\n\nThis value doesn't impact weight of the node.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -1114,7 +1019,7 @@
                 "type": "prometheus",
                 "uid": "c0ccd6b9-e987-49dd-aac2-6049b75bb2fb"
             },
-            "description": "",
+            "description": "The amount of storage available on the node.\n\nThis value doesn't impact weight of the node. Although, when the disk is full node's cache will be rotated and affect node performance severely.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -2718,8 +2623,8 @@
             {
                 "current": {
                     "selected": true,
-                    "text": "013727d8-9286-4c98-a783-70e568420a9f",
-                    "value": "013727d8-9286-4c98-a783-70e568420a9f"
+                    "text": "028c0c0a-8c74-4902-93ea-d32d80f64f9b",
+                    "value": "028c0c0a-8c74-4902-93ea-d32d80f64f9b"
                 },
                 "datasource": {
                     "type": "prometheus",
@@ -2752,6 +2657,6 @@
     "timezone": "",
     "title": "Saturn Node Details",
     "uid": "d21fb589-b20d-4f7c-b597-db9e6787fdae",
-    "version": 31,
+    "version": 38,
     "weekStart": ""
 }
