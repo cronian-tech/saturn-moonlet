@@ -1,2 +1,2 @@
-prometheus-client<1
+prometheus-client<0.18
 requests<3

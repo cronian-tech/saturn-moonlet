@@ -1,5 +1,5 @@
 -c requirements.txt
 black<24
 isort<6
-ruff<0.1
+ruff<0.2
 pip-audit<3
