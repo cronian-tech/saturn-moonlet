@@ -14,7 +14,7 @@ services:
       - ./docker/prometheus-exporter/conf:/conf:ro
 
   prometheus:
-    image: prom/prometheus:v2.44.0
+    image: prom/prometheus:v2.45.1
     restart: unless-stopped
     command:
       # Store 30 days of data.
