@@ -111,8 +111,8 @@ docker compose --profile production up -d
 The following is the non-exhaustive list of highlights about what's coming in the upcoming versions of Saturn Moonlet.
 Please leave feedback in the linked issues if you're interested in particular features.
 
-- [ ] [Automate TLS certificate management for self-hosted](https://github.com/31z4/saturn-moonlet/issues/5)
-- [ ] [Improve Prometheus Exporter reliability](https://github.com/31z4/saturn-moonlet/issues/6)
+- [ ] [Automate TLS certificate management for self-hosted](https://github.com/cronian-tech/saturn-moonlet/issues/5)
+- [ ] [Improve Prometheus Exporter reliability](https://github.com/cronian-tech/saturn-moonlet/issues/6)
 
 ## How it's made
 
