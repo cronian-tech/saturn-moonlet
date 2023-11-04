@@ -108,11 +108,16 @@ docker compose --profile production up -d
 
 ## TODO
 
-The following is the non-exhaustive list of highlights about what's coming in the upcoming versions of Saturn Moonlet.
+The following is the non-exhaustive list of highlights about what's expected in the upcoming versions of Saturn Moonlet.
 Please leave feedback in the linked issues if you're interested in particular features.
 
 - [ ] [Automate TLS certificate management for self-hosted](https://github.com/cronian-tech/saturn-moonlet/issues/5)
 - [ ] [Improve Prometheus Exporter reliability](https://github.com/cronian-tech/saturn-moonlet/issues/6)
+- [ ] [Add metrics for failed scrapes to Prometheus Exporter](https://github.com/cronian-tech/saturn-moonlet/issues/7)
+- [ ] [Add charts for health check failures to Saturn Node Details dashboard](https://github.com/cronian-tech/saturn-moonlet/issues/10)
+- [ ] [Visualise node state on Saturn Node Details dashboard](https://github.com/cronian-tech/saturn-moonlet/issues/11)
+- [ ] [Optional metrics backfill for self-hosted](https://github.com/cronian-tech/saturn-moonlet/issues/12)
+- [ ] [Optional Saturn node logs ingestion for self-hosted](https://github.com/cronian-tech/saturn-moonlet/issues/13)
 
 ## How it's made
 
