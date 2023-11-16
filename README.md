@@ -1,5 +1,9 @@
 # Saturn Moonlet
 
+**Saturn Moonlet participates in Web 3 Open Source Software Gitcoin Grants program 🎉 Which means that now you can support our efforts to bring better observability tools and increase the transparency of the 🪐Filecoin Saturn network. Every little bit helps!**
+
+🙏 **[Support Saturn Moonlet on GitCoin](https://explorer.gitcoin.co/#/round/424/0xd4cc0dd193c7dc1d665ae244ce12d7fab337a008/0xd4cc0dd193c7dc1d665ae244ce12d7fab337a008-37)** 🙏
+
 [Filecoin Saturn](https://saturn.tech) monitoring for node operators.
 More powerful and insightful alternative to [Saturn Node Dashboard](https://dashboard.saturn.tech/stats) that anyone can run.
 
