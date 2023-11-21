@@ -36,6 +36,10 @@ Note that the demo offers limited features allowing you only to evaluate and tes
 It's easy to run Saturn Moonlet locally using Docker Compose:
 
 ```sh
+# Clone the repo and change the current directory.
+git clone https://github.com/cronian-tech/saturn-moonlet.git
+cd saturn-moonlet
+
 # Create empty environment files, so that you can customize service configuration if needed.
 touch docker/prometheus-exporter/.env
 touch docker/grafana/local/.env
