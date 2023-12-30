@@ -1,3 +1,4 @@
+import logging
 import os
 import signal
 from collections import defaultdict
@@ -656,14 +657,21 @@ class StatsCollector:
         return metrics
 
     def collect(self):
-        r = requests.get(
-            "https://orchestrator.strn.pl/stats",
-            headers={"Accept": "application/json", "Accept-Encoding": "gzip, deflate"},
-        )
-        stats = r.json()
+        try:
+            r = requests.get(
+                "https://orchestrator.strn.pl/stats",
+                headers={
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip, deflate",
+                },
+            )
+            r.raise_for_status()
 
-        for m in self._node_metrics_from_stats(stats["nodes"]):
-            yield m
+            stats = r.json()
+            for m in self._node_metrics_from_stats(stats["nodes"]):
+                yield m
+        except Exception:
+            logging.exception("Could not collect stats")
 
 
 class EarningsAndRetrievalsCollector:
@@ -698,20 +706,26 @@ class EarningsAndRetrievalsCollector:
         return metrics
 
     def collect(self):
-        r = requests.get(
-            "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
-            params={
-                "filAddress": "all",
-                "startDate": self._start_ts,
-                "endDate": self._utcnow_timestamp(),
-                "step": "day",
-                "perNode": "true",
-            },
-        )
-        earnings = r.json()
+        try:
+            r = requests.get(
+                "https://uc2x7t32m6qmbscsljxoauwoae0yeipw.lambda-url.us-west-2.on.aws",
+                params={
+                    "filAddress": "all",
+                    "startDate": self._start_ts,
+                    "endDate": self._utcnow_timestamp(),
+                    "step": "day",
+                    "perNode": "true",
+                },
+            )
+            r.raise_for_status()
 
-        for m in self._node_earnings_and_retrievals_metrics(earnings["perNodeMetrics"]):
-            yield m
+            earnings = r.json()
+            for m in self._node_earnings_and_retrievals_metrics(
+                earnings["perNodeMetrics"]
+            ):
+                yield m
+        except Exception:
+            logging.exception("Could not collect earnings and retrievals")
 
 
 class RequirementsCollector:
@@ -733,11 +747,15 @@ class RequirementsCollector:
         return metrics
 
     def collect(self):
-        r = requests.get("https://orchestrator.strn.pl/requirements")
-        requirements = r.json()
+        try:
+            r = requests.get("https://orchestrator.strn.pl/requirements")
+            r.raise_for_status()
 
-        for m in self._node_requirements_metrics(requirements):
-            yield m
+            requirements = r.json()
+            for m in self._node_requirements_metrics(requirements):
+                yield m
+        except Exception:
+            logging.exception("Could not collect requirements")
 
 
 if __name__ == "__main__":
