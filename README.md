@@ -21,11 +21,11 @@ Although, it was built during the [HackFS 2023](https://ethglobal.com/showcase/s
 
 ## Try it
 
-Live demo is available at [https://demo.moonlet.zanko.dev](https://demo.moonlet.zanko.dev).
+Public version is available at [moonlet.cronian.tech](https://moonlet.cronian.tech).
 
 ![demo](assets/demo.gif)
 
-Note that the demo offers limited features allowing you only to evaluate and test Saturn Moonlet. Demo is not an end product and provided **"AS IS"**.
+Note that public version offers limited features allowing you only to evaluate and test Saturn Moonlet. It is not an end product and provided **"AS IS"**.
 
 ### Run locally
 
