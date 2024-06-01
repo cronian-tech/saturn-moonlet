@@ -1,3 +1,5 @@
+**On June 1st, 2024, the Saturn node provider program was concluded.**
+
 # Saturn Moonlet
 
 [Filecoin Saturn](https://saturn.tech) monitoring for node operators.
@@ -5,11 +7,11 @@ More powerful and insightful alternative to [Saturn Node Dashboard](https://dash
 
 Saturn Moonlet provides a node operator with the following:
 
-* Real-time and historical metrics about node stats and earnings.
-* Ability to run arbitrary PromQL queries against node metrics.
-* Ability to build custom dashboards.
-* Alerts based on metrics.
-* Anything else that [Grafana](https://grafana.com) and [Prometheus](https://prometheus.io) can do 😉
+- Real-time and historical metrics about node stats and earnings.
+- Ability to run arbitrary PromQL queries against node metrics.
+- Ability to build custom dashboards.
+- Alerts based on metrics.
+- Anything else that [Grafana](https://grafana.com) and [Prometheus](https://prometheus.io) can do 😉
 
 It does not require installing any additional software on a Saturn node.
 You only need [Docker Compose](https://docs.docker.com/compose) to run it locally or on your server.
@@ -127,13 +129,13 @@ Please leave feedback in the linked issues if you're interested in particular fe
 
 Saturn Moonlet consists of thee main components.
 
-* **Prometheus Exporter** is a Python service that fetches node stats and earnings via the same public HTTP APIs that Saturn Node Dashboard uses.
-It exposes this info in a simple [text-based](https://prometheus.io/docs/instrumenting/exposition_formats/#text-based-format) format.
-* **Prometheus** periodically scrapes metrics exposed by Prometheus Exporter and persists these metrics in a local on-disk time series database.
-Prometheus stores historical data about node stats and earnings.
-* **Grafana** uses Prometheus as a data source and provides a node operator with powerfull web interface to query and visualize node metrics.
-It comes with two pre-defined dashboards to overview nodes in the network and see details about a particular node.
-It also allows to configure alerts.
+- **Prometheus Exporter** is a Python service that fetches node stats and earnings via the same public HTTP APIs that Saturn Node Dashboard uses.
+  It exposes this info in a simple [text-based](https://prometheus.io/docs/instrumenting/exposition_formats/#text-based-format) format.
+- **Prometheus** periodically scrapes metrics exposed by Prometheus Exporter and persists these metrics in a local on-disk time series database.
+  Prometheus stores historical data about node stats and earnings.
+- **Grafana** uses Prometheus as a data source and provides a node operator with powerfull web interface to query and visualize node metrics.
+  It comes with two pre-defined dashboards to overview nodes in the network and see details about a particular node.
+  It also allows to configure alerts.
 
 ## License
 
